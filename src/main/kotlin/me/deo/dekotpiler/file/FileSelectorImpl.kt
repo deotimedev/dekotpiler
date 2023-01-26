@@ -25,7 +25,7 @@ class FileSelectorImpl : FileSelector {
         directories: Boolean,
         filter: (File?) -> Boolean
     ): File? {
-        val frame = JFrame().apply { isVisible = true }
+        val frame = JFrame()
         frame.defaultCloseOperation = JFrame.DISPOSE_ON_CLOSE
         val selector = JFileChooser().apply {
             fileSelectionMode = when {
@@ -43,6 +43,7 @@ class FileSelectorImpl : FileSelector {
 
 
         return withContext(Dispatchers.IO + NonCancellable) {
+            frame.isVisible = true
             frame.requestFocus()
             selector.showOpenDialog(frame)
             launch {
