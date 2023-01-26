@@ -1,7 +1,9 @@
 package me.deo.dekotpiler
 
 import kotlinx.coroutines.runBlocking
+import kotlinx.metadata.jvm.KotlinClassMetadata
 import me.deo.dekotpiler.file.FileSelector
+import me.deo.dekotpiler.metadata.KotlinMetadataReader
 import me.deo.dekotpiler.metadata.MetadataResolver
 import org.springframework.boot.ApplicationRunner
 import org.springframework.boot.Banner
@@ -15,7 +17,8 @@ import java.io.File
 @Component
 class Main(
     private val metadataResolver: MetadataResolver,
-    private val fileSelector: FileSelector
+    private val fileSelector: FileSelector,
+    private val reader : KotlinMetadataReader
 ) : CommandLineRunner {
     // This will eventually be replaced by command argument processor
     override fun run(vararg args: String) = runBlocking {
