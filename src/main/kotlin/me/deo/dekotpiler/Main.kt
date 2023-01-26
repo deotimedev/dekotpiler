@@ -1,5 +1,7 @@
 package me.deo.dekotpiler
 
+import kotlinx.coroutines.runBlocking
+import me.deo.dekotpiler.file.FileSelector
 import me.deo.dekotpiler.metadata.MetadataResolver
 import org.springframework.boot.ApplicationRunner
 import org.springframework.boot.Banner
@@ -12,10 +14,12 @@ import java.io.File
 
 @Component
 class Main(
-    private val metadataResolver: MetadataResolver
+    private val metadataResolver: MetadataResolver,
+    private val fileSelector: FileSelector
 ) : CommandLineRunner {
-    override fun run(vararg args: String) {
-        val file = File(File("").absolutePath, "/build/classes/kotlin/main/me/deo/dekotpiler/TestKt.class")
+    // This will eventually be replaced by command argument processor
+    override fun run(vararg args: String) = runBlocking {
+        val file = fileSelector.selectFile() ?: return@runBlocking
         val meta = metadataResolver.resolve(file)
         println(meta)
     }
@@ -28,6 +32,7 @@ class Main(
                 .web(WebApplicationType.NONE)
                 .bannerMode(Banner.Mode.OFF)
                 .logStartupInfo(false)
+                .headless(false)
                 .run()
         }
 
