@@ -21,10 +21,11 @@ class Main(
     private val reader : KotlinMetadataReader
 ) : CommandLineRunner {
     // This will eventually be replaced by command argument processor
-    override fun run(vararg args: String) = runBlocking {
+    override fun run(vararg args: String): Unit = runBlocking {
         val file = fileSelector.selectFile() ?: return@runBlocking
         val meta = metadataResolver.resolve(file)
-        println(meta)
+        val converted = reader.read(meta) ?: return@runBlocking
+        println(converted::class.java)
     }
 
     private companion object {

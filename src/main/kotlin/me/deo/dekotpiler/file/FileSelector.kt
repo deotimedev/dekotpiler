@@ -5,8 +5,7 @@ import java.io.File
 interface FileSelector {
     suspend fun selectFile(
         prompt: String = "Select file",
-        files: Boolean = true,
-        directories: Boolean = true,
-        filter: (File?) -> Boolean = { true }
+        description: String = "All Files",
+        vararg allowed: String = arrayOf("*.*")
     ): File?
 }

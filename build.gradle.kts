@@ -5,6 +5,7 @@ plugins {
     id("org.springframework.boot") version "3.0.2"
     id("io.spring.dependency-management") version "1.1.0"
     id("org.jetbrains.kotlin.plugin.spring") version "1.8.0"
+    id("org.openjfx.javafxplugin") version "0.0.9"
     application
 }
 
@@ -13,6 +14,19 @@ version = "1.0.0"
 
 repositories {
     mavenCentral()
+
+    maven {
+        name = "kotlin-poet-dsl"
+        url = uri("https://repo.q64.io/deotime")
+        content {
+            includeGroup("me.deotime")
+        }
+    }
+}
+
+javafx {
+    version = "19"
+    modules = listOf("javafx.controls")
 }
 
 dependencies {
@@ -29,13 +43,20 @@ dependencies {
     implementation("org.benf:cfr:0.152")
 
     // asm
-    implementation("org.ow2.asm:asm:7.3.1")
+    implementation("org.ow2.asm:asm:9.4")
 
     // metadata
     implementation("org.jetbrains.kotlinx:kotlinx-metadata-jvm:0.6.0")
 
     // teting
     testImplementation(kotlin("test"))
+
+    // ui (temp)
+    implementation("org.openjfx:javafx-base:19")
+
+    // code
+    implementation("me.deotime:kotlin-poet-dsl-dsl:2.0.0")
+    implementation("me.deotime:kotlin-poet-dsl-metadata:2.0.0")
 }
 
 tasks.test {
