@@ -6,7 +6,10 @@ import org.springframework.stereotype.Component
 import java.io.File
 
 @Component
-class CfrJavaDecompiler : JavaDecompiler {
+class CfrDecompilerEngine : DecompilerEngine {
+
+    override val name = "CFR"
+
     override fun decompile(file: File) = buildString {
         CfrDriver.Builder()
             .withOutputSink(object : OutputSinkFactory {
