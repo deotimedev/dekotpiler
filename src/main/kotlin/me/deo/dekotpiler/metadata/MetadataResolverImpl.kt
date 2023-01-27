@@ -11,6 +11,9 @@ import java.io.File
 @Component
 class MetadataResolverImpl : MetadataResolver {
     override fun resolve(file: File): Metadata {
+        // TODO classreader will sometimes throw an exception due
+        // to some weird class version error of 25888 and theres
+        // no way to disable it even though it doesn't change anything...
         val reader = ClassReader(file.inputStream())
         val visitor = MetadataClassVisitor()
         reader.accept(visitor, Opcodes.ASM7)
