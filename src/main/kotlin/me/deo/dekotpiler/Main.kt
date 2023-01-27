@@ -1,7 +1,7 @@
 package me.deo.dekotpiler
 
 import kotlinx.coroutines.runBlocking
-import me.deo.dekotpiler.decompile.CfrDecompilerEngine
+import me.deo.dekotpiler.decompile.CFRDecompilerEngine
 import me.deo.dekotpiler.decompile.DecompilerEngine
 import me.deo.dekotpiler.file.FileSelector
 import me.deo.dekotpiler.metadata.MetadataReader
@@ -26,7 +26,7 @@ class Main(
     @OptIn(ExperimentalKotlinPoetDSL::class)
     override fun run(vararg args: String): Unit = runBlocking {
         // using cfr for testing
-        val cfr = engines.filterIsInstance<CfrDecompilerEngine>().first()
+        val cfr = engines.filterIsInstance<CFRDecompilerEngine>().first()
 
         // testing
         val file = File(File("").absolutePath, "/build/classes/kotlin/main/me/deo/dekotpiler/TestKt.class")

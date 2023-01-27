@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component
 import java.io.File
 
 @Component
-class CfrDecompilerEngine : DecompilerEngine {
+class CFRDecompilerEngine : DecompilerEngine {
 
     override val name = "CFR"
 
