@@ -40,7 +40,7 @@ class Main(
         }
 
         @SpringBootApplication
-        open class App
+        class App
 
     }
 }

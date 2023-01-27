@@ -43,9 +43,9 @@ class FileSelectorImpl : FileSelector {
 
 
         return withContext(Dispatchers.IO + NonCancellable) {
-            frame.isVisible = true
             frame.requestFocus()
             selector.showOpenDialog(frame)
+            frame.isVisible = true
             launch {
                 delay(1)
                 frame.dispose()
