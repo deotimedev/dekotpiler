@@ -1,15 +1,18 @@
 package me.deo.dekotpiler
 
 import kotlinx.coroutines.runBlocking
+import kotlinx.metadata.jvm.KotlinClassMetadata
 import me.deo.dekotpiler.file.FileSelector
 import me.deo.dekotpiler.metadata.KotlinMetadataReader
 import me.deo.dekotpiler.metadata.MetadataResolver
-import me.deo.dekotpiler.spring.DekotpileSpringApplication
+import org.springframework.boot.ApplicationRunner
 import org.springframework.boot.Banner
 import org.springframework.boot.CommandLineRunner
 import org.springframework.boot.WebApplicationType
+import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.builder.SpringApplicationBuilder
 import org.springframework.stereotype.Component
+import java.io.File
 
 @Component
 class Main(
@@ -29,13 +32,16 @@ class Main(
 
         @JvmStatic
         fun main(args: Array<String>) {
-            SpringApplicationBuilder(DekotpileSpringApplication::class.java)
+            SpringApplicationBuilder(App::class.java)
                 .web(WebApplicationType.NONE)
                 .bannerMode(Banner.Mode.OFF)
                 .logStartupInfo(false)
                 .headless(false)
                 .run()
         }
+
+        @SpringBootApplication
+        class App
 
     }
 }

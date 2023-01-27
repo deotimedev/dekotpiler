@@ -5,7 +5,7 @@ import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 
 @Configuration
-internal class DekotpileSpringConfiguration {
+internal class SpringConfiguration {
     @Bean
     fun kotlinMetadataReader() = KotlinClassMetadata.Companion
 }
