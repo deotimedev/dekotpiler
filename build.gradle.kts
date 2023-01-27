@@ -55,6 +55,7 @@ dependencies {
     implementation("org.openjfx:javafx-base:19")
 
     // code
+    implementation("com.squareup:kotlinpoet:1.12.0")
     implementation("me.deotime:kotlin-poet-dsl-dsl:2.0.0")
     implementation("me.deotime:kotlin-poet-dsl-metadata:2.0.0")
 }
@@ -65,6 +66,7 @@ tasks.test {
 
 tasks.withType<KotlinCompile> {
     kotlinOptions.jvmTarget = "1.8"
+    kotlinOptions.freeCompilerArgs = listOf("-Xskip-prerelease-check")
 }
 
 application {
