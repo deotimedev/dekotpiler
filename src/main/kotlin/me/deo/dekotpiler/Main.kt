@@ -1,5 +1,7 @@
 package me.deo.dekotpiler
 
+import com.github.javaparser.JavaParser
+import com.github.javaparser.utils.SourceRoot
 import kotlinx.coroutines.runBlocking
 import kotlinx.metadata.jvm.KotlinClassMetadata
 import me.deo.dekotpiler.decompile.JavaDecompiler
@@ -7,6 +9,8 @@ import me.deo.dekotpiler.file.FileSelector
 import me.deo.dekotpiler.metadata.MetadataReader
 import me.deo.dekotpiler.metadata.MetadataResolver
 import me.deotime.kpoetdsl.ExperimentalKotlinPoetDSL
+import me.deotime.kpoetdsl.FunctionBuilder.Initializer.invoke
+import me.deotime.kpoetdsl.kotlin
 import me.deotime.kpoetdsl.metadata.toSpec
 import org.benf.cfr.reader.CfrDriverImpl
 import org.benf.cfr.reader.api.CfrDriver
@@ -20,6 +24,7 @@ import org.springframework.boot.WebApplicationType
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.builder.SpringApplicationBuilder
 import org.springframework.stereotype.Component
+import java.io.File
 
 @Component
 class Main(
@@ -31,11 +36,39 @@ class Main(
     // This will eventually be replaced by command argument processor
     @OptIn(ExperimentalKotlinPoetDSL::class)
     override fun run(vararg args: String): Unit = runBlocking {
-        val file = fileSelector.selectFile() ?: return@runBlocking
-        val meta = metadataResolver.resolve(file)
-        val converted = reader.read(meta) as? KotlinClassMetadata.Class ?: return@runBlocking
-        println(converted.toKmClass().toSpec())
-        println(javaDecompiler.decompile(file))
+//        val file = fileSelector.selectFile() ?: return@runBlocking
+//        val meta = metadataResolver.resolve(file)
+//        val converted = reader.read(meta) as? KotlinClassMetadata.Class ?: return@runBlocking
+
+        // testing
+        val file = File(File("").absolutePath, "/build/classes/kotlin/main/me/deo/dekotpiler/TestKt.class")
+        val spec = (reader.read(metadataResolver.resolve(file)) as KotlinClassMetadata.FileFacade).toKmPackage()
+            .functions.map { it.toSpec() }
+        val decomp = javaDecompiler.decompile(file)
+        val parser = JavaParser()
+        val result = parser.parse(decomp).result.get()
+//        println(result)
+        val functions = spec.associateBy { it.name }.toMutableMap()
+        result.types.forEach { type ->
+            type.methods.forEach { method ->
+                println(method.body)
+                val body = method.body.get()
+                functions.computeIfPresent(method.nameAsString) { _, spec ->
+                    spec {
+                        body.childNodes.forEach {
+
+                        }
+                    }
+                }
+            }
+        }
+        val kotlin = kotlin {
+            name("test") packaged "no"
+            functions.forEach {
+                +it.value
+            }
+        }
+        println(kotlin.withoutPublic().properFormatting())
     }
 
     private companion object {

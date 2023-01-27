@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component
 import java.io.File
 
 @Component
-class JavaDecompilerImpl : JavaDecompiler {
+class CfrJavaDecompiler : JavaDecompiler {
     override fun decompile(file: File) = buildString {
         CfrDriver.Builder()
             .withOutputSink(object : OutputSinkFactory {
@@ -19,7 +19,8 @@ class JavaDecompilerImpl : JavaDecompiler {
                     sinkType: OutputSinkFactory.SinkType?,
                     sinkClass: OutputSinkFactory.SinkClass?
                 ) = OutputSinkFactory.Sink<T> {
-                    append(it)
+                    if (sinkType == OutputSinkFactory.SinkType.JAVA)
+                        append(it)
                 }
             })
             .build().analyse(listOf(file.absolutePath))

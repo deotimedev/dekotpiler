@@ -58,6 +58,7 @@ dependencies {
     implementation("com.squareup:kotlinpoet:1.12.0")
     implementation("me.deotime:kotlin-poet-dsl-dsl:2.0.0")
     implementation("me.deotime:kotlin-poet-dsl-metadata:2.0.0")
+    implementation("com.github.javaparser:javaparser-core:3.24.10")
 }
 
 tasks.test {
