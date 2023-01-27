@@ -36,39 +36,8 @@ class Main(
     // This will eventually be replaced by command argument processor
     @OptIn(ExperimentalKotlinPoetDSL::class)
     override fun run(vararg args: String): Unit = runBlocking {
-//        val file = fileSelector.selectFile() ?: return@runBlocking
-//        val meta = metadataResolver.resolve(file)
-//        val converted = reader.read(meta) as? KotlinClassMetadata.Class ?: return@runBlocking
-
         // testing
         val file = File(File("").absolutePath, "/build/classes/kotlin/main/me/deo/dekotpiler/TestKt.class")
-        val spec = (reader.read(metadataResolver.resolve(file)) as KotlinClassMetadata.FileFacade).toKmPackage()
-            .functions.map { it.toSpec() }
-        val decomp = javaDecompiler.decompile(file)
-        val parser = JavaParser()
-        val result = parser.parse(decomp).result.get()
-//        println(result)
-        val functions = spec.associateBy { it.name }.toMutableMap()
-        result.types.forEach { type ->
-            type.methods.forEach { method ->
-                println(method.body)
-                val body = method.body.get()
-                functions.computeIfPresent(method.nameAsString) { _, spec ->
-                    spec {
-                        body.childNodes.forEach {
-
-                        }
-                    }
-                }
-            }
-        }
-        val kotlin = kotlin {
-            name("test") packaged "no"
-            functions.forEach {
-                +it.value
-            }
-        }
-        println(kotlin.withoutPublic().properFormatting())
     }
 
     private companion object {
