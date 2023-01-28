@@ -1,5 +1,7 @@
 package me.deo.dekotpiler
 
+import com.github.javaparser.JavaParser
+import com.github.javaparser.ast.body.Parameter
 import kotlinx.coroutines.runBlocking
 import me.deo.dekotpiler.decompile.CFRDecompilerEngine
 import me.deo.dekotpiler.decompile.DecompilerEngine
@@ -20,7 +22,8 @@ class Main(
     private val metadataResolver: MetadataResolver,
     private val fileSelector: FileSelector,
     private val reader : MetadataReader,
-    private val engines: List<DecompilerEngine>
+    private val engines: List<DecompilerEngine>,
+    private val parser: JavaParser
 ) : CommandLineRunner {
     // This will eventually be replaced by a CLI
     @OptIn(ExperimentalKotlinPoetDSL::class)
