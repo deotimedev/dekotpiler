@@ -26,6 +26,7 @@ class CFRDecompilerEngine : DecompilerEngine {
                         append(it)
                 }
             })
-            .build().analyse(listOf(file.absolutePath))
+            .build()
+            .analyse(listOf(file.absolutePath))
     }
 }

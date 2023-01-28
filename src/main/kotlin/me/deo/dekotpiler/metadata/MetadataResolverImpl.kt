@@ -63,8 +63,9 @@ class MetadataResolverImpl : MetadataResolver {
                     "d2" -> data2
                     else -> error("Unknown metadata array \"$name\"")
                 }
+
                 override fun visit(_name: String?, value: Any) {
-                     holder += value as String
+                    holder += value as String
                 }
             }
         }

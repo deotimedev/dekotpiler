@@ -1,5 +1,5 @@
 package me.deo.dekotpiler.processing
 
-fun interface FunctionVisitor : Visitor<FunctionVisitor.Context> {
+fun interface ExpressionVisitor : Visitor<ExpressionVisitor.Context> {
     interface Context : Visitor.Context
 }
