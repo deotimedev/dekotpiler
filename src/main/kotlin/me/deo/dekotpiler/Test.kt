@@ -1,5 +1,6 @@
 package me.deo.dekotpiler
 
+import java.io.Serializable
 import kotlin.random.Random
 
 fun test() {
@@ -11,6 +12,7 @@ fun test() {
         count += thing
         println(thing)
     }
-    val message = if (count % 2 == 0) "Even" else "Odd"
+    val message = (if (count % 2 == 0) "Even" else "Odd") as Any
+    message as String
     error(message)
 }
