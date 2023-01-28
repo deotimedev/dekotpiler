@@ -16,8 +16,9 @@ class VariableDeclarationExpressionTranslator : ExpressionTranslator<VariableDec
         // don't think multi-variable declaration can happen in decompiled kotlin
         val variable = value.variables.first.get()
 
+        append(variable.nameAsString)
         variable.initializer.getOrNull()?.let { initializer ->
-            append(variable.nameAsString, " = ") // be aware of delegation in the future
+            append(" = ") // be aware of delegation in the future
             append(translateExpression(initializer))
         } ?: append(": ${variable.type.asString()}")
 

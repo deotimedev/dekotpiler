@@ -1,19 +1,21 @@
 package me.deo.dekotpiler.processing.impl
 
 import com.github.javaparser.ast.body.MethodDeclaration
+import com.github.javaparser.ast.body.Parameter
 import com.github.javaparser.ast.expr.Expression
 import com.github.javaparser.ast.stmt.Statement
 import me.deo.dekotpiler.processing.ExpressionTranslator
-import me.deo.dekotpiler.processing.MethodTranslator
 import me.deo.dekotpiler.processing.StatementTranslator
 import me.deo.dekotpiler.processing.TranslationHelper
 import me.deo.dekotpiler.processing.Translator
+import me.deo.dekotpiler.processing.provided.MethodTranslator
+import me.deo.dekotpiler.processing.provided.ParameterTranslator
 import org.springframework.stereotype.Component
-import kotlin.math.exp
 
 @Component
 class TranslationHelperImpl(
     private val methodTranslator: MethodTranslator,
+    private val parameterTranslator: ParameterTranslator,
     expressionTranslators: List<ExpressionTranslator<*>>,
     statementTranslators: List<StatementTranslator<*>>
 ) : TranslationHelper {
@@ -29,4 +31,6 @@ class TranslationHelperImpl(
         (statementTranslatorsByType[statement::class.java] as? StatementTranslator<Statement>)?.run { translate(statement) } ?: statement.toString()
 
     override fun Translator.Context.translateMethod(method: MethodDeclaration) = with(methodTranslator) { translate(method) }
+
+    override fun Translator.Context.translateParameter(param: Parameter) = with(parameterTranslator) { translate(param) }
 }

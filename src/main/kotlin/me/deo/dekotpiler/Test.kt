@@ -1,18 +1,15 @@
 package me.deo.dekotpiler
 
+import com.github.javaparser.ast.stmt.TryStmt
+import java.io.FileNotFoundException
 import java.io.Serializable
 import kotlin.random.Random
 
 fun test() {
-    println("Hello everyone!")
-    val rand = Random.nextInt(5, 10)
-    println("Rand: $rand")
-    var count = 0
-    for (thing in 0..rand) {
-        count += thing
-        println(thing)
+    val num = Random.nextInt()
+    when (num) {
+        0 -> println("Number is false")
+        1, 100 -> println("Number is true")
+        else -> println("Number is a troolean+")
     }
-    val message = (if (count % 2 == 0) "Even" else "Odd") as Any
-    message as String
-    error(message)
 }
