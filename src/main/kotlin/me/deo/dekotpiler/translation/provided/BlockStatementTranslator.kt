@@ -17,6 +17,7 @@ class BlockStatementTranslator : StatementTranslator<Block, KtBlockStatement> {
             println("type: ${stmt.statement::class.java.simpleName}")
             // todo remove this only for testing
             runCatching { translateStatement(stmt.statement) }.getOrElse {
+                println("failed: $it")
                 KtUnknown(stmt.statement.toString())
             }
         })

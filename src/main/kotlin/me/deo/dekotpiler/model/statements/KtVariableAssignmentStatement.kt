@@ -10,7 +10,7 @@ data class KtVariableAssignmentStatement(
     val variable: KtVariable,
     val expression: KtExpression
 ) : KtStatement {
-    override fun asCode() = codeWriter {
+    override fun writeCode() = codeWriter {
         if (declaring) write(if (variable.final) "val" else "var", " ")
         write(variable.name, " = ", expression) // TODO delegation could instead happen here
     }

@@ -42,7 +42,7 @@ class Main(
         clazz.methods.forEach { cfrMethod ->
             cfrMethod.analysis.statement.let { stmt ->
                 val translated = translation.translateStatement(stmt)
-                println(translated.asCode())
+                println(translated.writeCode())
             }
         }
         // testing only

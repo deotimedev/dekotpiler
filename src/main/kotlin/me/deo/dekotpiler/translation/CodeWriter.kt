@@ -22,8 +22,9 @@ class Code(
     }
 
     fun endBlock() = apply {
+        newline()
         unindent()
-        +"}"
+        +"} "
     }
 
     fun newline() = apply { lines += "\t".repeat(indent) }
@@ -42,9 +43,9 @@ class Code(
         }
     }
 
-    fun braced(value: Any, left: Char = '(', right: Char = ')') = apply {
+    fun braced(vararg values: Any, left: Char = '(', right: Char = ')') = apply {
         +left
-        +value
+        values.forEach { +it }
         +right
     }
 
@@ -53,11 +54,11 @@ class Code(
     }
 
     private fun stringify(value: Any?) = when (value) {
-        is CodeWritable -> value.asCode().toString()
+        is CodeWritable -> value.writeCode().toString()
         is String -> value
         else -> value.toString()
     }
 
-    override fun toString() = lines.joinToString("\n")
+    override fun toString() = if (lines.size == 1) lines.first() else lines.joinToString("\n")
 
 }

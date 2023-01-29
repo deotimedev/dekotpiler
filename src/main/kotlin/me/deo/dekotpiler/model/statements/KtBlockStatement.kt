@@ -7,10 +7,11 @@ data class KtBlockStatement(
     val statements: List<KtStatement>
 ) : KtStatement {
 
-    override fun asCode() = codeWriter {
-        statements.forEach {
-            newline()
-            write(it)
+    override fun writeCode() = codeWriter {
+        statements.fold(false) { prev, value ->
+            if (prev) newline()
+            write(value)
+            true
         }
     }
 

@@ -8,7 +8,7 @@ data class KtIfElseExpression(
     val then: KtExpression,
     val orElse: KtExpression
 ) : KtExpression {
-    override fun asCode() = codeWriter {
+    override fun writeCode() = codeWriter {
         write("if ")
         braced(condition)
         write(" ", then, " else ", orElse)
