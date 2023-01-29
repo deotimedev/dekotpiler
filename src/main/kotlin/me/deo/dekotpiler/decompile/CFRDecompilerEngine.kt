@@ -9,35 +9,20 @@ import java.io.File
 
 import org.benf.cfr.reader.util.getopt.OptionsImpl.*
 import org.benf.cfr.reader.util.getopt.PermittedOptionProvider
+import kotlin.jvm.optionals.getOrNull
 
 @Component
 class CFRDecompilerEngine : DecompilerEngine {
 
     override val name = "CFR"
 
-    override fun decompile(file: File) = buildString {
-        val config = cfrConfig {
-            ANTI_OBF set false
-        }
-        CfrDriver.Builder()
-            .withOutputSink(object : OutputSinkFactory {
-                override fun getSupportedSinks(
-                    sinkType: OutputSinkFactory.SinkType?,
-                    available: MutableCollection<OutputSinkFactory.SinkClass>?
-                ) = listOf(OutputSinkFactory.SinkClass.STRING)
-
-                override fun <T : Any?> getSink(
-                    sinkType: OutputSinkFactory.SinkType?,
-                    sinkClass: OutputSinkFactory.SinkClass?
-                ) = OutputSinkFactory.Sink<T> {
-                    if (sinkType == OutputSinkFactory.SinkType.JAVA)
-                        append(it)
-                }
-            })
-            .withOptions(config)
-            .build()
-            .analyse(listOf(file.absolutePath))
+    private val config = cfrConfig {
+        ANTI_OBF set false
     }
+    override fun decompile(file: File) = CfrDriver.Builder()
+        .withOptions(config)
+        .build()
+        .analyse(file.absolutePath).getOrNull()
 
     private fun cfrConfig(closure: CFRConfig.() -> Unit) =
         CFRConfig().apply(closure).options

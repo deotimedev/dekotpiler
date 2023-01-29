@@ -1,29 +1,17 @@
-package me.deo.dekotpiler.processing
+package me.deo.dekotpiler.translation
 
-import com.github.javaparser.ast.expr.Expression
-import com.github.javaparser.ast.stmt.Statement
 import me.deo.dekotpiler.util.update
 
-inline fun Translator.Context.codeWriter(closure: Code.() -> Unit) =
-    Code(this).apply(closure)
-
+inline fun codeWriter(closure: Code.() -> Unit) =
+    Code().apply(closure)
 
 class Code(
-    private val context: Translator.Context,
     private val lines: MutableList<String> = mutableListOf(""),
 ) {
     private var indent = 0
 
     operator fun String.unaryPlus() = apply { append(this) }
     fun write(value: String) = apply { +value }
-
-    fun writeStatement(statement: Statement) = apply {
-        writeCode(with(context) { translateStatement(statement) })
-    }
-
-    fun writeExpression(expression: Expression) = apply {
-        writeCode(with(context) { translateExpression(expression) })
-    }
 
     fun writeCode(code: Code) = apply {
         +code.toString()
@@ -52,7 +40,6 @@ class Code(
 
     fun dropNewlines() {
         lines.dropLastWhile {
-            println("ittt: $it")
             it.replace("\t", "").isBlank()
         }
     }

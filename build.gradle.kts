@@ -14,6 +14,7 @@ version = "1.0.0"
 
 repositories {
     mavenCentral()
+    mavenLocal()
 
     maven {
         name = "kotlin-poet-dsl"
@@ -41,7 +42,7 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter")
 
     // cfr
-    implementation("org.benf:cfr:0.152")
+    implementation("org.benf:cfr-kt:0.153-SNAPSHOT")
 
     // asm
     implementation("org.ow2.asm:asm:9.4")
@@ -59,7 +60,6 @@ dependencies {
     implementation("com.squareup:kotlinpoet:1.12.0")
     implementation("me.deotime:kotlin-poet-dsl-dsl:2.0.0")
     implementation("me.deotime:kotlin-poet-dsl-metadata:2.0.0")
-    implementation("com.github.javaparser:javaparser-core:3.24.10")
 }
 
 tasks.test {
