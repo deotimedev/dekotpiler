@@ -49,8 +49,8 @@ class Main(
         val rawData by async { cfr.decompile(file) }
         val parsed = analyzer.parse(rawData)
 
-        val context = contextFactory.create(parsed)
         parsed.getClassByName("TestKt").get().methods.forEach { method ->
+            val context = contextFactory.create(parsed)
             with(translationHelper) { context.translateMethod(method) }.also { println(it) }
         }
 
