@@ -4,8 +4,7 @@ import kotlin.random.Random
 
 class Test {
     fun test() {
-        val num = Random.nextInt()
-        val display = if (num > 100) "Big number!" else "Small number"
-        println(display)
+        val array = Array<Any>(10) { Any() }
+        println(array.toList())
     }
 }
