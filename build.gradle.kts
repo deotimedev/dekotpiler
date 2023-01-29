@@ -30,8 +30,6 @@ javafx {
 }
 
 dependencies {
-    
-    implementation("org.jetbrains.kotlinx:kotlinx-collections-immutable:0.3.5")
 
     // cli
     implementation("com.github.ajalt.clikt:clikt:3.5.0")
