@@ -3,18 +3,14 @@ package me.deo.dekotpiler
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.runBlocking
-import kotlinx.metadata.jvm.KotlinClassMetadata
 import me.deo.dekotpiler.decompile.CFRDecompilerEngine
 import me.deo.dekotpiler.decompile.DecompilerEngine
-import me.deo.dekotpiler.file.FileSelector
+import me.deo.dekotpiler.util.helper.FileSelector
 import me.deo.dekotpiler.metadata.MetadataReader
 import me.deo.dekotpiler.metadata.MetadataResolver
+import me.deo.dekotpiler.translation.Translation
 import me.deo.dekotpiler.util.getValue
 import me.deotime.kpoetdsl.ExperimentalKotlinPoetDSL
-import me.deotime.kpoetdsl.FunctionBuilder.Initializer.invoke
-import me.deotime.kpoetdsl.TypeBuilder.Initializer.invoke
-import me.deotime.kpoetdsl.metadata.toSpec
-import org.benf.cfr.reader.bytecode.analysis.structured.statement.Block
 import org.springframework.boot.Banner
 import org.springframework.boot.CommandLineRunner
 import org.springframework.boot.WebApplicationType
@@ -29,6 +25,7 @@ class Main(
     private val fileSelector: FileSelector,
     private val reader: MetadataReader,
     private val engines: List<DecompilerEngine>,
+    private val translation: Translation
 ) : CommandLineRunner {
     // This will eventually be replaced by a CLI
     @OptIn(ExperimentalKotlinPoetDSL::class)
@@ -44,7 +41,8 @@ class Main(
 
         clazz.methods.forEach { cfrMethod ->
             cfrMethod.analysis.statement.let { stmt ->
-                println(stmt::class.java)
+                val translated = translation.translateStatement(stmt)
+                println(translated.asCode())
             }
         }
         // testing only

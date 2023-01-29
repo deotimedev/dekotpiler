@@ -1,4 +1,4 @@
-package me.deo.dekotpiler.file
+package me.deo.dekotpiler.util.helper
 
 import java.io.File
 

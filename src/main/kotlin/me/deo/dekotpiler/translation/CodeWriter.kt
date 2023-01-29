@@ -5,17 +5,15 @@ import me.deo.dekotpiler.util.update
 inline fun codeWriter(closure: Code.() -> Unit) =
     Code().apply(closure)
 
+fun emptyCode() = Code()
+fun codeOf(vararg values: String) = codeWriter { values.forEach { +it } }
 class Code(
     private val lines: MutableList<String> = mutableListOf(""),
 ) {
     private var indent = 0
 
-    operator fun String.unaryPlus() = apply { append(this) }
-    fun write(value: String) = apply { +value }
-
-    fun writeCode(code: Code) = apply {
-        +code.toString()
-    }
+    operator fun Any?.unaryPlus() = apply { append(this) }
+    fun write(vararg values: Any) = apply { values.forEach { +it } }
 
     fun startBlock() = apply {
         +" {"
@@ -44,8 +42,20 @@ class Code(
         }
     }
 
-    private fun append(value: String) {
-        lines.update(lines.lastIndex) { it + value }
+    fun braced(value: Any, left: Char = '(', right: Char = ')') = apply {
+        +left
+        +value
+        +right
+    }
+
+    private fun append(value: Any?) {
+        lines.update(lines.lastIndex) { it + stringify(value) }
+    }
+
+    private fun stringify(value: Any?) = when (value) {
+        is CodeWritable -> value.asCode().toString()
+        is String -> value
+        else -> value.toString()
     }
 
     override fun toString() = lines.joinToString("\n")

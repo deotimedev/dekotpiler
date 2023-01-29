@@ -1,4 +1,6 @@
 package me.deo.dekotpiler.model
 
-interface KtExpression {
+import me.deo.dekotpiler.translation.CodeWritable
+
+interface KtExpression : CodeWritable {
 }
