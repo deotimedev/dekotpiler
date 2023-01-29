@@ -13,17 +13,20 @@ class Code(
     private val lines: MutableList<String> = mutableListOf(""),
 ) {
     private var indent = 0
-    private var pendingNewline = -1
 
     operator fun String.unaryPlus() = apply { append(this) }
     fun write(value: String) = apply { +value }
 
     fun writeStatement(statement: Statement) = apply {
-        +with(context) { translateStatement(statement) }
+        writeCode(with(context) { translateStatement(statement) })
     }
 
     fun writeExpression(expression: Expression) = apply {
-        +with(context) { translateExpression(expression) }
+        writeCode(with(context) { translateExpression(expression) })
+    }
+
+    fun writeCode(code: Code) = apply {
+        +code.toString()
     }
 
     fun startBlock() = apply {

@@ -12,6 +12,7 @@ import me.deo.dekotpiler.processing.codeWriter
 import me.deo.dekotpiler.processing.provided.MethodTranslator
 import me.deo.dekotpiler.processing.provided.ParameterTranslator
 import org.springframework.stereotype.Component
+import kotlin.math.exp
 
 @Component
 class TranslationHelperImpl(
@@ -27,13 +28,13 @@ class TranslationHelperImpl(
     override fun Translator.Context.translateExpression(expression: Expression) =
         (expressionTranslatorsByType[expression::class.java] as? ExpressionTranslator<Expression>)?.run {
             translate(expression).also { code += it }
-        } ?: codeWriter { writeExpression(expression) }
+        } ?: codeWriter { +expression.toString() }
 
     @Suppress("UNCHECKED_CAST")
     override fun Translator.Context.translateStatement(statement: Statement) =
         (statementTranslatorsByType[statement::class.java] as? StatementTranslator<Statement>)?.run {
             translate(statement).also { code += it }
-        } ?: codeWriter { writeStatement(statement) }
+        } ?: codeWriter { +statement.toString() }
 
     override fun Translator.Context.translateMethod(method: MethodDeclaration) = with(methodTranslator) { translate(method) }
 
