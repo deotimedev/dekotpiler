@@ -13,8 +13,10 @@ data class KtIfStatement(
 
     override fun writeCode() = codeWriter {
         write("if ")
-        braced(condition).write(" ")
+        braced(condition)
+        startBlock()
         write(then)
+        endBlock()
         orElse?.let {
             write(" else ", it)
         }
