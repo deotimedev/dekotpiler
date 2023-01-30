@@ -5,17 +5,17 @@ import me.deo.dekotpiler.translation.codeWriter
 
 data class KtConditional(
     var underlying: KtExpression,
-    var joined: Joined?
+    var joined: Joined? = null
 ) : KtExpression {
 
     override val type = KtType.Boolean
 
     override fun writeCode() = codeWriter {
-        if (joined == null) write(underlying)
-        else {
+        write(underlying)
+
+        joined?.let { it ->
             write("(")
-            write(underlying)
-            generateSequence(this@KtConditional.joined) { it.conditional.joined }
+            generateSequence(it) { it.conditional.joined }
                 .forEach {
                     write(" ${it.operation.symbol} ", it.conditional, ")")
                 }

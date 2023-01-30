@@ -16,7 +16,7 @@ import org.springframework.stereotype.Component
 class IfStatementTranslator : StatementTranslator<StructuredIf, KtIfStatement> {
     override val type = StructuredIf::class
     override fun Translation.translation(value: StructuredIf) = KtIfStatement(
-        KtConditional(translateExpression(value.conditionalExpression), null), // Big TODO
+        KtConditional(translateExpression(value.conditionalExpression.also { println("bool: ${it::class}") }), null), // Big TODO
         translateStatement(value.ifTaken),
         value.elseBlock?.let { translateStatement(it) }
     )

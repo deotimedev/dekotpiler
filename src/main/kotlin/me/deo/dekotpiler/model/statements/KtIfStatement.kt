@@ -11,7 +11,6 @@ data class KtIfStatement(
     var then: KtStatement,
     var orElse: KtStatement?
 ) : KtStatement {
-
     override val type: KtType
         get() = super.type // TODO HOW TO FIND COMMON SUPER TYPE!?
     override fun writeCode() = codeWriter {

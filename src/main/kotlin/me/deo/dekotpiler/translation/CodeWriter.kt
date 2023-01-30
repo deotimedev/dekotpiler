@@ -13,7 +13,7 @@ class Code(
     private var indent = 0
 
     operator fun Any?.unaryPlus() = apply { append(this) }
-    fun write(vararg values: Any) = apply { values.forEach { +it } }
+    fun write(vararg values: Any?) = apply { values.forEach { +it } }
 
     fun startBlock() = apply {
         +" {"
@@ -53,14 +53,28 @@ class Code(
         lines.dropLast(amount)
     }
 
-    private fun append(value: Any?) {
-        lines.update(lines.lastIndex) { it + stringify(value) }
+    fun line(value: Any?) {
+        newline()
+        write(value)
     }
 
-    private fun stringify(value: Any?) = when (value) {
-        is CodeWritable -> value.writeCode().toString()
-        is String -> value
-        else -> value.toString()
+    // warning: majorly cursed alert
+    // i will maybe fix sometime
+    private fun append(value: Any?) {
+        when (value) {
+            is CodeWritable -> append(value.writeCode())
+            else ->  {
+                val str = value.toString()
+                str.split("\n").fold(false) { new, line ->
+                    if (new) newline()
+                    lines.update(lines.lastIndex) {
+                        it + line.toString()
+                    }
+                    true
+                }
+
+            }
+        }
     }
 
     override fun toString() = if (lines.size == 1) lines.first() else lines.joinToString("\n")

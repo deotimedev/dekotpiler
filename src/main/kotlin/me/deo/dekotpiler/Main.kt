@@ -8,6 +8,7 @@ import me.deo.dekotpiler.decompile.DecompilerEngine
 import me.deo.dekotpiler.util.helper.FileSelector
 import me.deo.dekotpiler.metadata.MetadataReader
 import me.deo.dekotpiler.metadata.MetadataResolver
+import me.deo.dekotpiler.model.KtBlock
 import me.deo.dekotpiler.model.KtType
 import me.deo.dekotpiler.translation.Translation
 import me.deo.dekotpiler.util.getValue
@@ -40,15 +41,15 @@ class Main(
         val metadata by async { reader.read(metadataResolver.resolve(file)) }
         val clazz by async { cfr.decompile(file) ?: error("Couldn't read class.") }
 
-        println(KtType.Boolean)
-//        clazz.methods.forEach { cfrMethod ->
-//            cfrMethod.analysis.statement.let { stmt ->
-//                val translated = translation.translateStatement(stmt)
-//                println("---------------------------")
-//                println(translated.writeCode())
-//                println("---------------------------")
-//            }
-//        }
+        clazz.methods.forEach { cfrMethod ->
+            cfrMethod.analysis.statement.let { stmt ->
+                val translated = translation.translateStatement(stmt)
+                println("------------${cfrMethod.name}---------------")
+                println(translated.writeCode())
+                println("------------${cfrMethod.name}---------------")
+                println((translated as KtBlock).statements.lastOrNull()?.let { it::class })
+            }
+        }
         // testing only
 //        (metadata as KotlinClassMetadata.Class).let { meta ->
 //            (meta.toKmClass().toSpec()) {

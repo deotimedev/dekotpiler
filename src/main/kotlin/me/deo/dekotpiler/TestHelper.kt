@@ -37,4 +37,6 @@ object TestHelper {
 
         }
     }
+
+    fun bool(value: Boolean) = value
 }

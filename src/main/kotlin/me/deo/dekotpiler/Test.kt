@@ -7,6 +7,9 @@ import kotlin.reflect.typeOf
 
 class Test {
     fun test() {
-        println(+TestHelper.Opable)
+        if (TestHelper.bool(true) && TestHelper.bool(false)) {
+            val test = 55
+            println(test)
+        }
     }
 }

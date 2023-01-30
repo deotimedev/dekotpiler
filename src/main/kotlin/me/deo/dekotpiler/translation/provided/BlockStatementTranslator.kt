@@ -18,6 +18,7 @@ class BlockStatementTranslator : StatementTranslator<Block, KtBlock> {
             // todo remove this only for testing
             runCatching { translateStatement(stmt.statement) }.getOrElse {
                 println("failed: $it")
+                it.printStackTrace()
                 KtUnknown(stmt.statement.toString())
             }
         })
