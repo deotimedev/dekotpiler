@@ -8,11 +8,15 @@ data class KtBlockStatement(
 ) : KtStatement {
 
     override fun writeCode() = codeWriter {
-        statements.fold(false) { prev, value ->
-            if (prev) newline()
-            write(value)
-            true
+        write("{")
+        indent()
+        statements.forEach {
+            newline()
+            write(it)
         }
+        newline()
+        unindent()
+        write("}")
     }
 
 }

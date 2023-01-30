@@ -11,7 +11,9 @@ object TestHelper {
     }
 
     inline fun inlinedClosure(closure: () -> Unit) {
+        println("start of inline closure")
         closure()
+        println("end of inline closure")
     }
 
     sealed interface Algebraic {

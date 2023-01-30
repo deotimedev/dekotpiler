@@ -14,6 +14,6 @@ class InstanceOfExpressionTranslator : ExpressionTranslator<InstanceOfExpression
     override fun Translation.translation(value: InstanceOfExpression) =
         KtInstanceOfExpression(
             translateExpression(value.lhs),
-            value.typeInstance
+            translateType(value.typeInstance)
         )
 }

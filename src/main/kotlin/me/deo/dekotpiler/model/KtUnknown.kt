@@ -8,5 +8,6 @@ import me.deo.dekotpiler.util.CFRStatement
 internal data class KtUnknown(
     val value: String
 ) : KtStatement, KtExpression {
+    override val type = KtType.Nothing
     override fun writeCode() = codeOf(value)
 }

@@ -1,11 +1,8 @@
 package me.deo.dekotpiler.model.statements
 
 import me.deo.dekotpiler.model.KtStatement
-import me.deo.dekotpiler.model.KtVariable
-import me.deo.dekotpiler.translation.Code
+import me.deo.dekotpiler.model.KtLocal
 import me.deo.dekotpiler.translation.codeWriter
-import org.benf.cfr.reader.bytecode.analysis.types.JavaTypeInstance
-import org.benf.cfr.reader.bytecode.analysis.types.RawJavaType
 
 data class KtTryStatement(
     var statement: KtStatement,
@@ -29,7 +26,7 @@ data class KtTryStatement(
     }
 
     data class Catch(
-        var throwable: KtVariable,
+        var throwable: KtLocal,
         var statement: KtStatement
     ) : KtStatement {
         override fun writeCode() = codeWriter {

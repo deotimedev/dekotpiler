@@ -49,6 +49,10 @@ class Code(
         +right
     }
 
+    fun pop(amount: Int = 1) {
+        lines.dropLast(amount)
+    }
+
     private fun append(value: Any?) {
         lines.update(lines.lastIndex) { it + stringify(value) }
     }

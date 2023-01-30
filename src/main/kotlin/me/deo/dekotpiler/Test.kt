@@ -1,11 +1,12 @@
 package me.deo.dekotpiler
 
 import java.io.File
+import java.util.UUID
 import kotlin.random.Random
+import kotlin.reflect.typeOf
 
 class Test {
     fun test() {
-        val usefulthing = TestHelper.Parent.child as? TestHelper.Child
-        println(usefulthing)
+        println(typeOf<String>())
     }
 }
