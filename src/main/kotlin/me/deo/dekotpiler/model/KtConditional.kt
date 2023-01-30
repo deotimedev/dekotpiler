@@ -14,10 +14,9 @@ data class KtConditional(
         write(underlying)
 
         joined?.let { it ->
-            write("(")
             generateSequence(it) { it.conditional.joined }
                 .forEach {
-                    write(" ${it.operation.symbol} ", it.conditional, ")")
+                    write(" ${it.operation.symbol} ", it.conditional)
                 }
         }
     }

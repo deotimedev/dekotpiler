@@ -3,7 +3,7 @@ package me.deo.dekotpiler.translation
 import me.deo.dekotpiler.model.KtConditional
 import me.deo.dekotpiler.model.KtExpression
 import me.deo.dekotpiler.model.KtStatement
-import me.deo.dekotpiler.model.KtLocal
+import me.deo.dekotpiler.model.KtVariable
 import me.deo.dekotpiler.model.KtType
 import me.deo.dekotpiler.util.CFRExpression
 import me.deo.dekotpiler.util.CFRLocal
@@ -19,7 +19,7 @@ interface Translation {
     fun translateExpression(expression: CFRExpression): KtExpression
     fun translateStatement(statement: CFRStatement): KtStatement
     fun translateStatement(statement: Op04StructuredStatement): KtStatement
-    fun translateVariable(variable: CFRLocal): KtLocal
+    fun translateVariable(variable: CFRLocal): KtVariable
     fun translateType(type: JavaTypeInstance): KtType
     fun translateConditional(conditional: ConditionalExpression): KtConditional
 

@@ -40,3 +40,11 @@ object TestHelper {
 
     fun bool(value: Boolean) = value
 }
+
+fun String.stringExtension() {
+
+}
+
+var String.extensionValue
+    get() = "Hi"
+    set(value) = Unit

@@ -6,4 +6,3 @@ import org.benf.cfr.reader.bytecode.analysis.structured.StructuredStatement
 
 typealias CFRExpression = Expression
 typealias CFRStatement = StructuredStatement
-typealias CFRLocal = LValue

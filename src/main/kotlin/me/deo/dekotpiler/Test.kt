@@ -7,9 +7,12 @@ import kotlin.reflect.typeOf
 
 class Test {
     fun test() {
+        "Hellok".stringExtension()
+        "Okay".extensionValue
+        "why".extensionValue = "okay"
         if (TestHelper.bool(true) && TestHelper.bool(false)) {
             val test = 55
-            println(test)
+            println("HEllo $test")
         }
     }
 }
