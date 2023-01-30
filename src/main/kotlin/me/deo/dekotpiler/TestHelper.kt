@@ -31,4 +31,10 @@ object TestHelper {
         }
     }
     object Child : Parent
+
+    object Opable {
+        operator fun unaryPlus() {
+
+        }
+    }
 }

@@ -1,9 +1,8 @@
-package me.deo.dekotpiler.model.statements
+package me.deo.dekotpiler.model
 
-import me.deo.dekotpiler.model.KtStatement
 import me.deo.dekotpiler.translation.codeWriter
 
-data class KtBlockStatement(
+data class KtBlock(
     val statements: List<KtStatement>
 ) : KtStatement {
 

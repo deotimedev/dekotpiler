@@ -7,7 +7,7 @@ import org.benf.cfr.reader.bytecode.analysis.types.JavaTypeInstance
 data class KtLocal(
     var name: String,
     var final: Boolean,
-    var type: KtType
-) : CodeWritable {
+    override var type: KtType
+) : KtExpression, CodeWritable {
     override fun writeCode() = codeOf(name)
 }

@@ -2,6 +2,4 @@ package me.deo.dekotpiler.model
 
 import me.deo.dekotpiler.translation.CodeWritable
 
-interface KtExpression : CodeWritable {
-    val type: KtType
-}
+interface KtExpression : KtTyped, CodeWritable

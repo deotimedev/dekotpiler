@@ -7,6 +7,6 @@ import kotlin.reflect.typeOf
 
 class Test {
     fun test() {
-        println(typeOf<String>())
+        println(+TestHelper.Opable)
     }
 }

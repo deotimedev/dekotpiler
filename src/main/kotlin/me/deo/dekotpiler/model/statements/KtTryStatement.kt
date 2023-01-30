@@ -2,6 +2,8 @@ package me.deo.dekotpiler.model.statements
 
 import me.deo.dekotpiler.model.KtStatement
 import me.deo.dekotpiler.model.KtLocal
+import me.deo.dekotpiler.model.KtType
+import me.deo.dekotpiler.model.KtTyped
 import me.deo.dekotpiler.translation.codeWriter
 
 data class KtTryStatement(
@@ -9,6 +11,8 @@ data class KtTryStatement(
     val catches: MutableList<Catch>,
     var finally: KtStatement?
 ) : KtStatement {
+
+    override val type get() = statement.type
 
     override fun writeCode() = codeWriter {
         write("try")
@@ -36,4 +40,6 @@ data class KtTryStatement(
             endBlock()
         }
     }
+
+
 }

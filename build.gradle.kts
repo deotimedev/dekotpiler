@@ -58,8 +58,10 @@ dependencies {
 
     // code
     implementation("com.squareup:kotlinpoet:1.12.0")
-    implementation("me.deotime:kotlin-poet-dsl-dsl:2.0.0")
-    implementation("me.deotime:kotlin-poet-dsl-metadata:2.0.0")
+
+    val kotlinPoetDslVersion = "2.0.3"
+    implementation("me.deotime:kotlin-poet-dsl-dsl:$kotlinPoetDslVersion")
+    implementation("me.deotime:kotlin-poet-dsl-metadata:$kotlinPoetDslVersion")
 }
 
 tasks.test {
