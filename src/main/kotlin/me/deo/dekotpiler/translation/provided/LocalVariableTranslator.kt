@@ -16,7 +16,7 @@ class LocalVariableTranslator : Translator<LocalVariable, KtVariable> {
     // does this need a seperate statement?... maybe
     override fun Translation.translation(value: LocalVariable): KtVariable = KtVariable(
         value.name.stringName,
-        value.isFinal, // todo preprocessing for this
+        true, // todo postprocessing for this
         value.inferredJavaType.javaTypeInstance
     )
 }

@@ -22,4 +22,11 @@ object TestHelper {
             fun random() = if (Random.nextBoolean()) Right("Okay") else Wrong
         }
     }
+
+    interface Parent {
+        companion object {
+            val child: Parent = TestHelper.Child
+        }
+    }
+    object Child : Parent
 }
