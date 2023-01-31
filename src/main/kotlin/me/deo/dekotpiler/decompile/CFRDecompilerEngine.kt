@@ -17,8 +17,12 @@ class CFRDecompilerEngine : DecompilerEngine {
     override val name = "CFR"
 
     private val config = cfrConfig {
+        DECOMPILER_COMMENTS set false
         ANTI_OBF set false
+        ALLOW_CORRECTING set false
+        TIDY_VARIABLE_NAMES set false
     }
+
     override fun decompile(file: File) = CfrDriver.Builder()
         .withOptions(config)
         .build()
@@ -30,8 +34,8 @@ class CFRDecompilerEngine : DecompilerEngine {
     private class CFRConfig {
         val options = mutableMapOf<String, String>()
 
-        infix fun <T> PermittedOptionProvider.Argument<T>.set(value: T) {
-            options.put(name, value.toString())
+        infix fun <T> PermittedOptionProvider.ArgumentParam<T, *>.set(value: T) {
+            options[name] = value.toString()
         }
     }
 }
