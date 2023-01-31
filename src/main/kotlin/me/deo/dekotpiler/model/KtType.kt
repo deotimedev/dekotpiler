@@ -21,10 +21,21 @@ data class KtType(
     fun nullable() = copy(nullable = true)
 
     companion object {
+
         val Any = KtType<Any>()
         val Unit = KtType<Unit>()
-        val Boolean = KtType<Boolean>()
         val Nothing = KtType(JavaRefTypeInstance.createTypeConstant("kotlin.Nothing"), false)
+
+        val Int = KtType<Int>()
+        val Long = KtType<Long>()
+        val Short = KtType<Short>()
+        val Byte = KtType<Byte>()
+        val Float = KtType<Float>()
+        val Double = KtType<Double>()
+        val Boolean = KtType<Boolean>()
+        val Char = KtType<Char>()
+        val String = KtType<String>()
+
 
         fun java(clazz: Class<*>): JavaRefTypeInstance = JavaRefTypeInstance.createTypeConstant(
             clazz.kotlin.qualifiedName ?: error("Glitchy class"),

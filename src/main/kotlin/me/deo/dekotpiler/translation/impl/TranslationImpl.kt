@@ -1,5 +1,6 @@
 package me.deo.dekotpiler.translation.impl
 
+import me.deo.dekotpiler.mapping.TypeMappings
 import me.deo.dekotpiler.model.KtConditional
 import me.deo.dekotpiler.model.KtExpression
 import me.deo.dekotpiler.model.KtStatement
@@ -19,7 +20,8 @@ import kotlin.reflect.KClass
 
 @Component
 class TranslationImpl(
-    translators: List<Translator<*, *>>
+    translators: List<Translator<*, *>>,
+    private val typeMappings: TypeMappings
 ) : Translation {
     private val translatorsByType = translators.associateBy {
         it.type.java
@@ -35,6 +37,6 @@ class TranslationImpl(
     override fun translateStatement(statement: CFRStatement): KtStatement = translate(statement) ?: KtUnknown(statement.toString())
     override fun translateStatement(statement: Op04StructuredStatement): KtStatement = translate(statement) ?: KtUnknown(statement.toString())
     override fun translateVariable(variable: LValue): KtVariable = translate(variable) ?: error("what")
-    override fun translateType(type: JavaTypeInstance) = KtType(type, true) // TODO
+    override fun translateType(type: JavaTypeInstance) = typeMappings.mapping(type) ?: KtType(type, true)
     override fun translateConditional(conditional: ConditionalExpression) = KtConditional(translateExpression(conditional), null)
 }

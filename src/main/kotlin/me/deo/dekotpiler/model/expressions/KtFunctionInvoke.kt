@@ -18,6 +18,9 @@ data class KtFunctionInvoke(
 ) : KtExpression, KtStatement {
     override val type: KtType get() = KtType(method.returnType) // TODO REMOVE
 
+    init {
+        println("my type be like: ${type}")
+    }
     var getter = method.name.startsWith("get") // todo replace with regex lol
     var setter = method.name.startsWith("set") // todo replace with regex lol
 

@@ -30,7 +30,6 @@ class Main(
     private val translation: Translation
 ) : CommandLineRunner {
     // This will eventually be replaced by a CLI
-    @OptIn(ExperimentalKotlinPoetDSL::class)
     override fun run(vararg args: String): Unit = runBlocking(Dispatchers.Default) {
         // using cfr for testing
         val cfr = engines.filterIsInstance<CFRDecompilerEngine>().first()
