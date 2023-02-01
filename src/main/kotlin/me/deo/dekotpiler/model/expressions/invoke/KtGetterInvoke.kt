@@ -4,11 +4,10 @@ import me.deo.dekotpiler.model.KtExpression
 import me.deo.dekotpiler.model.KtType
 import org.benf.cfr.reader.bytecode.analysis.types.MethodPrototype
 
-class KtGetterInvoke(
-    override var method: MethodPrototype,
-    override var args: MutableList<KtExpression>,
-    override var reference: KtExpression,
-    override var extension: Boolean
-) : KtFieldFacadeInvoke {
+data class KtGetterInvoke(
+    override val actual: KtMemberInvoke
+) : KtFieldFacadeInvoke, KtMemberInvoke by actual {
     override val prefix = "get"
+    override val name: String
+        get() = super<KtFieldFacadeInvoke>.name
 }
