@@ -13,5 +13,5 @@ class AssignmentStatementTranslator : StatementTranslator<StructuredAssignment, 
         value.isCreator(value.lvalue),
         translateVariable(value.lvalue),
         translateExpression(value.rvalue)
-    )
+    ).also { println("variable ${it.variable.name} is expression ${value.rvalue::class.java.simpleName}") }
 }
