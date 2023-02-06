@@ -6,6 +6,8 @@ import kotlin.reflect.KMutableProperty0
 
 class Test {
     fun test() {
+        val clazz = Test::class
+        println(clazz.isData)
         val thing = "Hellok ${Random.nextInt()}!!! Great"
         "Okay".extensionValue
         "why".extensionValue = "okay"

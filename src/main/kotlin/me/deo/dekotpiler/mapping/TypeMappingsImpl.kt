@@ -26,5 +26,5 @@ class TypeMappingsImpl : TypeMappings {
             "java.lang.Void" -> KtType.Nothing
             else -> null
         }
-    }?.nullable().also { println("$java the value be like: $it") }
+    }?.nullable()
 }

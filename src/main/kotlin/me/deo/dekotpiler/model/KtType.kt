@@ -7,18 +7,21 @@ import org.benf.cfr.reader.bytecode.analysis.types.JavaTypeInstance
 import kotlin.reflect.typeOf
 
 data class KtType(
-    private val delegate: JavaTypeInstance, // TODO
+    internal val delegate: JavaTypeInstance, // TODO
     val nullable: Boolean = true
 ) : JavaTypeInstance by delegate,
     KtTyped,
     CodeWritable {
+
+    val simpleName = delegate.rawName.split(".").last()
+
     override val type = this
     override fun code() = buildCode {
         write(delegate)
         if (nullable) write("?")
     }
 
-    fun nullable() = copy(nullable = true)
+    fun nullable(nullable: Boolean = true) = copy(nullable = nullable)
 
     companion object {
 

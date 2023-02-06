@@ -2,6 +2,8 @@ package me.deo.dekotpiler.model.expressions.invoke
 
 import me.deo.dekotpiler.model.KtExpression
 import me.deo.dekotpiler.model.KtType
+import me.deo.dekotpiler.translation.Code
+import me.deo.dekotpiler.translation.buildCode
 import org.benf.cfr.reader.bytecode.analysis.types.MethodPrototype
 
 // Not to be confused with a companion object invoke
@@ -12,4 +14,8 @@ data class KtStaticInvoke(
     override var args: MutableList<KtExpression>,
 ) : KtInvoke {
     override val extension = false
+    override fun code() = buildCode {
+        write(enclosingType.nullable(false).simpleName, ".", method.name)
+        braced(args.joinToString { it.code().toString() })
+    }
 }

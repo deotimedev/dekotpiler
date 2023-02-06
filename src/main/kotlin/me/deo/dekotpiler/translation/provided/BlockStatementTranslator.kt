@@ -14,7 +14,6 @@ class BlockStatementTranslator : StatementTranslator<Block, KtBlock> {
     override fun Translation.translation(value: Block) =
         // todo fix comments being weird
         KtBlock(value.blockStatements.filter { it.statement !is StructuredComment }.map { stmt ->
-            println("type: ${stmt.statement::class.java.simpleName}")
             // todo remove this only for testing
             runCatching { translateStatement(stmt.statement) }.getOrElse {
                 println("failed: $it")

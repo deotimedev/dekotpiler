@@ -10,6 +10,11 @@ data class KtVariableAssignmentStatement(
     val variable: KtVariable,
     val expression: KtExpression
 ) : KtStatement {
+
+    init {
+        println("VARIABLE ${variable.name} ASSIGNED to $expression")
+    }
+
     override fun code() = buildCode {
         if (declaring) write(if (variable.final) "val" else "var", " ")
         write(variable.name, " = ", expression) // TODO delegation could instead happen here
