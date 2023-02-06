@@ -10,6 +10,12 @@ class KtStringExpression(
 ) : KtExpression {
     override val type = KtType.String
 
+    // TODO this should flatten templates that are
+    // also string expressions as it makes technically
+    // valid but illogical strings such as:
+    // "Hello ${"${name}!"}
+    // when it should be:
+    // "Hello ${name}!"
     override fun writeCode() = codeWriter {
         +"\""
         for (element in elements) {

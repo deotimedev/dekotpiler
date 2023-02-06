@@ -23,15 +23,15 @@ class TranslationImpl(
     translators: List<Translator<*, *>>,
     private val typeMappings: TypeMappings
 ) : Translation {
-    private val translatorsByType = translators.associateBy {
+    private val translatorsByType = translators.groupBy {
         it.type.java
     }
 
-    override fun <C : Any, K> translator(type: KClass<out C>) =
-        (translatorsByType[type.java] as? Translator<C, K>)
+    override fun <C : Any, K> translators(type: KClass<out C>) =
+        translatorsByType[type.java].orEmpty() as List<Translator<C, K>>
 
     private fun <K> translate(value: Any) =
-        translator<Any, K>(value::class)?.run { translation(value) }
+        translators<Any, K>(value::class).find { with(it) { value.proc() } }?.run { translation(value) }
 
     override fun translateExpression(expression: CFRExpression): KtExpression = translate(expression) ?: KtUnknown(expression.toString())
     override fun translateStatement(statement: CFRStatement): KtStatement = translate(statement) ?: KtUnknown(statement.toString())
