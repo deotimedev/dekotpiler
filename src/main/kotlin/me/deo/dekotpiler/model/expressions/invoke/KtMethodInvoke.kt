@@ -12,6 +12,6 @@ data class KtMethodInvoke(
 ) : KtMemberInvoke {
     override fun code() = buildCode {
         write(reference, ".", method.name)
-        braced(args.joinToString { it.code().toString() })
+        braced { +args.joinToString { it.code().toString() } }
     }
 }

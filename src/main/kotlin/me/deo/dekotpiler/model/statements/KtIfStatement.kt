@@ -14,10 +14,8 @@ data class KtIfStatement(
         get() = super.type // TODO HOW TO FIND COMMON SUPER TYPE!?
     override fun code() = buildCode {
         write("if ")
-        braced(condition)
-        startBlock()
-        write(then)
-        endBlock()
+        braced { +condition }
+        blocked { write(then) }
         orElse?.let {
             write(" else ", it)
         }

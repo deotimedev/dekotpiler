@@ -13,7 +13,7 @@ data class KtIfElseExpression(
     override val type get() = then.type
     override fun code() = buildCode {
         write("if ")
-        braced(condition)
+        braced { +condition }
         write(" ", then, " else ", orElse)
     }
 }

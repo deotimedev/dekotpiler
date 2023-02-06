@@ -27,6 +27,12 @@ class Code(
         +"} "
     }
 
+    inline fun blocked(closure: () -> Unit) {
+        startBlock()
+        closure()
+        endBlock()
+    }
+
     fun newline() = apply { lines += "\t".repeat(indent) }
     fun indent(apply: Boolean = false) = apply {
         indent++
@@ -43,9 +49,9 @@ class Code(
         }
     }
 
-    fun braced(vararg values: Any, left: Char = '(', right: Char = ')') = apply {
+    fun braced(left: Char = '(', right: Char = ')', closure: () -> Unit) = apply {
         +left
-        values.forEach { +it }
+        closure()
         +right
     }
 

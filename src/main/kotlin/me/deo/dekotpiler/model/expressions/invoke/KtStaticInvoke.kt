@@ -16,6 +16,6 @@ data class KtStaticInvoke(
     override val extension = false
     override fun code() = buildCode {
         write(enclosingType.nullable(false).simpleName, ".", method.name)
-        braced(args.joinToString { it.code().toString() })
+        braced { +args.joinToString { it.code().toString() } }
     }
 }

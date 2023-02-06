@@ -32,10 +32,9 @@ data class KtTryStatement(
         var statement: KtStatement
     ) : KtStatement {
         override fun code() = buildCode {
-            write("catch ").braced("${throwable.name}: ", throwable.type)
-            startBlock()
-            write(statement)
-            endBlock()
+            write("catch ")
+            braced { write("${throwable.name}: ", throwable.type) }
+            blocked { +statement }
         }
     }
 
