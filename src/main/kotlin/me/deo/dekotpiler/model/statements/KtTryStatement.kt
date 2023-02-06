@@ -2,7 +2,7 @@ package me.deo.dekotpiler.model.statements
 
 import me.deo.dekotpiler.model.KtStatement
 import me.deo.dekotpiler.model.KtVariable
-import me.deo.dekotpiler.translation.codeWriter
+import me.deo.dekotpiler.translation.buildCode
 
 data class KtTryStatement(
     var statement: KtStatement,
@@ -12,7 +12,7 @@ data class KtTryStatement(
 
     override val type get() = statement.type
 
-    override fun writeCode() = codeWriter {
+    override fun code() = buildCode {
         write("try")
         startBlock()
         write(statement)
@@ -31,7 +31,7 @@ data class KtTryStatement(
         var throwable: KtVariable,
         var statement: KtStatement
     ) : KtStatement {
-        override fun writeCode() = codeWriter {
+        override fun code() = buildCode {
             write("catch ").braced("${throwable.name}: ", throwable.type)
             startBlock()
             write(statement)

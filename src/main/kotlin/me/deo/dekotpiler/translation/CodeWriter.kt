@@ -2,11 +2,11 @@ package me.deo.dekotpiler.translation
 
 import me.deo.dekotpiler.util.update
 
-inline fun codeWriter(closure: Code.() -> Unit) =
+inline fun buildCode(closure: Code.() -> Unit) =
     Code().apply(closure)
 
 fun emptyCode() = Code()
-fun codeOf(vararg values: String) = codeWriter { values.forEach { +it } }
+fun codeOf(vararg values: String) = buildCode { values.forEach { +it } }
 class Code(
     private val lines: MutableList<String> = mutableListOf(""),
 ) {
@@ -62,7 +62,7 @@ class Code(
     // i will maybe fix sometime
     private fun append(value: Any?) {
         when (value) {
-            is CodeWritable -> append(value.writeCode())
+            is CodeWritable -> append(value.code())
             else ->  {
                 val str = value.toString()
                 str.split("\n").fold(false) { new, line ->

@@ -42,7 +42,7 @@ class Main(
             cfrMethod.analysis.statement.let { stmt ->
                 val translated = translation.translateStatement(stmt)
                 println("------------${cfrMethod.name}---------------")
-                println(translated.writeCode())
+                println(translated.code())
                 println("------------${cfrMethod.name}---------------")
                 println((translated as KtBlock).statements.lastOrNull()?.let { it::class })
             }

@@ -1,7 +1,6 @@
 package me.deo.dekotpiler.model
 
-import me.deo.dekotpiler.translation.Code
-import me.deo.dekotpiler.translation.codeWriter
+import me.deo.dekotpiler.translation.buildCode
 
 data class KtConditional(
     var underlying: KtExpression,
@@ -10,7 +9,7 @@ data class KtConditional(
 
     override val type = KtType.Boolean
 
-    override fun writeCode() = codeWriter {
+    override fun code() = buildCode {
         write(underlying)
 
         joined?.let { it ->

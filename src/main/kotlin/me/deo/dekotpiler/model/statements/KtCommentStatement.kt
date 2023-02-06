@@ -6,5 +6,5 @@ import me.deo.dekotpiler.translation.codeOf
 data class KtCommentStatement(
     val comment: String
 ) : KtStatement {
-    override fun writeCode() = codeOf("// $comment")
+    override fun code() = codeOf("// $comment")
 }

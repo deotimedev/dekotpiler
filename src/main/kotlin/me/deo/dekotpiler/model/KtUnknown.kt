@@ -9,5 +9,5 @@ internal data class KtUnknown(
     val value: String
 ) : KtStatement, KtExpression {
     override val type = KtType.Nothing
-    override fun writeCode() = codeOf(value)
+    override fun code() = codeOf(value)
 }

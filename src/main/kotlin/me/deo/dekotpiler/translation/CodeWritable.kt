@@ -4,5 +4,5 @@ import me.deo.dekotpiler.translation.Code
 import me.deo.dekotpiler.translation.emptyCode
 
 interface CodeWritable {
-    fun writeCode(): Code = emptyCode()
+    fun code(): Code = emptyCode()
 }

@@ -1,7 +1,7 @@
 package me.deo.dekotpiler.model
 
 import me.deo.dekotpiler.translation.CodeWritable
-import me.deo.dekotpiler.translation.codeWriter
+import me.deo.dekotpiler.translation.buildCode
 import org.benf.cfr.reader.bytecode.analysis.types.JavaRefTypeInstance
 import org.benf.cfr.reader.bytecode.analysis.types.JavaTypeInstance
 import kotlin.reflect.typeOf
@@ -13,7 +13,7 @@ data class KtType(
     KtTyped,
     CodeWritable {
     override val type = this
-    override fun writeCode() = codeWriter {
+    override fun code() = buildCode {
         write(delegate)
         if (nullable) write("?")
     }

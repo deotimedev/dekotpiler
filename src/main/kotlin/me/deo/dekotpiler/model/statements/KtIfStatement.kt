@@ -3,7 +3,7 @@ package me.deo.dekotpiler.model.statements
 import me.deo.dekotpiler.model.KtConditional
 import me.deo.dekotpiler.model.KtStatement
 import me.deo.dekotpiler.model.KtType
-import me.deo.dekotpiler.translation.codeWriter
+import me.deo.dekotpiler.translation.buildCode
 
 data class KtIfStatement(
     var condition: KtConditional,
@@ -12,7 +12,7 @@ data class KtIfStatement(
 ) : KtStatement {
     override val type: KtType
         get() = super.type // TODO HOW TO FIND COMMON SUPER TYPE!?
-    override fun writeCode() = codeWriter {
+    override fun code() = buildCode {
         write("if ")
         braced(condition)
         startBlock()

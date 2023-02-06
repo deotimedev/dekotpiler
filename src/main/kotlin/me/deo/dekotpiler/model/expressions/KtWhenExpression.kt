@@ -1,9 +1,7 @@
 package me.deo.dekotpiler.model.expressions
 
-import me.deo.dekotpiler.model.KtConditional
 import me.deo.dekotpiler.model.KtExpression
 import me.deo.dekotpiler.model.KtType
-import me.deo.dekotpiler.translation.codeWriter
 
 data class KtWhenExpression(
     var value: KtExpression,

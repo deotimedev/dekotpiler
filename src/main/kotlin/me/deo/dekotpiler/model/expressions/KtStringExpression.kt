@@ -2,8 +2,8 @@ package me.deo.dekotpiler.model.expressions
 
 import me.deo.dekotpiler.model.KtExpression
 import me.deo.dekotpiler.model.KtType
-import me.deo.dekotpiler.translation.Code
-import me.deo.dekotpiler.translation.codeWriter
+import me.deo.dekotpiler.translation.buildCode
+import me.deo.dekotpiler.util.singleOf
 
 class KtStringExpression(
     val elements: MutableList<Element>
@@ -16,9 +16,9 @@ class KtStringExpression(
     // "Hello ${"${name}!"}
     // when it should be:
     // "Hello ${name}!"
-    override fun writeCode() = codeWriter {
+    override fun code() = buildCode {
         +"\""
-        for (element in elements) {
+        for (element in compress()) {
             when (element) {
                 is Element.Literal -> +element.literal
                 is Element.Template -> write("$", "{", element.expression, "}")
@@ -26,6 +26,11 @@ class KtStringExpression(
         }
         +"\""
     }
+
+    fun compress(): List<Element> = elements.flatMap {
+        ((it as? Element.Template)?.expression as? KtStringExpression)?.elements ?: singleOf(it)
+    }
+
     sealed interface Element {
         @JvmInline
         value class Literal(val literal: String) : Element
