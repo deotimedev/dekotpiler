@@ -5,7 +5,7 @@ import me.deo.dekotpiler.model.KtType
 import me.deo.dekotpiler.translation.buildCode
 import me.deo.dekotpiler.util.singleOf
 
-class KtStringExpression(
+data class KtStringExpression(
     val elements: MutableList<Element>
 ) : KtExpression {
     override val type = KtType.String
