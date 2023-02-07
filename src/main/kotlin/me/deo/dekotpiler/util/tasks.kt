@@ -7,12 +7,19 @@ import kotlin.time.Duration
 import kotlin.time.ExperimentalTime
 import kotlin.time.measureTime
 
-private val taskResults: MutableList<Pair<String, Duration>> = mutableListOf()
+/**
+ * Tasks: A profiler from wish
+ */
+
+// TODO maybe find a suitable way to implement with w/ DI
+
+@PublishedApi
+internal val taskResults: MutableList<Pair<String, Duration>> = mutableListOf()
 
 @PublishedApi
 internal var debugTasks = false
 
-inline fun <R> CoroutineScope.asyncTask(name: String, crossinline closure: () -> R) =
+inline fun <R> CoroutineScope.taskAsync(name: String, crossinline closure: () -> R) =
     async { task(name, closure) }
 
 @OptIn(ExperimentalTime::class)
@@ -21,6 +28,7 @@ inline fun <R> task(name: String, closure: () -> R): R {
     val result: R
     val duration = measureTime { result = closure() }
     if (debugTasks) println("Task \"$name\" finished in $duration")
+    taskResults += name to duration
     return result
 }
 
@@ -29,7 +37,6 @@ internal fun exportTasks() {
     if (!tasksFolder.exists()) tasksFolder.mkdirs()
     listOf("tasks-${System.currentTimeMillis()}", "recent").forEach {
         val file = File(tasksFolder, "$it.txt")
-        println("aa: ${file.absolutePath}")
         file.writeText(taskResults.joinToString("\n") { (name, time) -> "Task \"$name\" took $time" })
     }
 }

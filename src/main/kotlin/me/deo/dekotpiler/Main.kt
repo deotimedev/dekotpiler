@@ -1,7 +1,6 @@
 package me.deo.dekotpiler
 
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
 import kotlinx.coroutines.runBlocking
 import me.deo.dekotpiler.decompile.CFRDecompilerEngine
 import me.deo.dekotpiler.decompile.DecompilerEngine
@@ -9,8 +8,7 @@ import me.deo.dekotpiler.metadata.MetadataReader
 import me.deo.dekotpiler.metadata.MetadataResolver
 import me.deo.dekotpiler.model.KtBlock
 import me.deo.dekotpiler.translation.Translation
-import me.deo.dekotpiler.util.asyncTask
-import me.deo.dekotpiler.util.debugTasks
+import me.deo.dekotpiler.util.taskAsync
 import me.deo.dekotpiler.util.exportTasks
 import me.deo.dekotpiler.util.getValue
 import me.deo.dekotpiler.util.helper.FileSelector
@@ -22,8 +20,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.builder.SpringApplicationBuilder
 import org.springframework.stereotype.Component
 import java.io.File
-import kotlin.time.ExperimentalTime
-import kotlin.time.measureTime
 
 @Component
 class Main(
@@ -41,8 +37,8 @@ class Main(
         // testing
         val file = File(File("").absolutePath, "/build/classes/kotlin/main/me/deo/dekotpiler/Test.class")
 
-        val metadata by asyncTask("Metadata") { reader.read(metadataResolver.resolve(file)) }
-        val clazz by asyncTask("CFR") { cfr.decompile(file) ?: error("Couldn't read class.") }
+        val metadata by taskAsync("Metadata") { reader.read(metadataResolver.resolve(file)) }
+        val clazz by taskAsync("CFR") { cfr.decompile(file) ?: error("Couldn't read class.") }
 
         task("Kotlin Decompilation") {
             clazz.methods.forEach { cfrMethod ->
@@ -75,7 +71,6 @@ class Main(
 
         @JvmStatic
         fun main(args: Array<String>) {
-            debugTasks = true
             val app = task("Spring Initialization") {
                 SpringApplicationBuilder(App::class.java)
                     .web(WebApplicationType.NONE)
