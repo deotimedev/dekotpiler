@@ -13,7 +13,6 @@ data class KtMethodInvoke(
     override fun code() = buildCode {
         println()
         operator?.let { op ->
-            println()
             +op.format
                 .replace("@", reference.code().toString())
                 .replace("!MID!", args.dropLast(1).joinToString { it.code().toString() })

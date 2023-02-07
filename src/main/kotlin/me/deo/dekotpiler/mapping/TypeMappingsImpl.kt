@@ -1,7 +1,6 @@
 package me.deo.dekotpiler.mapping
 
 import me.deo.dekotpiler.model.KtType
-import org.benf.cfr.reader.bytecode.analysis.types.JavaRefTypeInstance
 import org.benf.cfr.reader.bytecode.analysis.types.JavaTypeInstance
 import org.benf.cfr.reader.bytecode.analysis.types.RawJavaType
 import org.benf.cfr.reader.bytecode.analysis.types.TypeConstants
