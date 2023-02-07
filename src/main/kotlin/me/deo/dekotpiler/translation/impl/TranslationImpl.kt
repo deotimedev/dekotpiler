@@ -54,13 +54,13 @@ internal class TranslationImpl(
             }
 
     override fun translateExpression(expression: CFRExpression): KtExpression =
-        translate(expression) ?: KtUnknown(expression.toString())
+        translate(expression) ?: KtUnknown(expression)
 
     override fun translateStatement(statement: CFRStatement): KtStatement =
-        translate(statement) ?: KtUnknown(statement.toString())
+        translate(statement) ?: KtUnknown(statement)
 
     override fun translateStatement(statement: Op04StructuredStatement): KtStatement =
-        translate(statement) ?: KtUnknown(statement.toString())
+        translate(statement) ?: KtUnknown(statement)
 
     override fun translateVariable(variable: LValue): KtVariable = translate(variable) ?: error("what")
     override fun translateType(type: JavaTypeInstance) = typeMappings.mapping(type) ?: KtType(type, true)

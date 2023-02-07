@@ -15,7 +15,7 @@ class KClassProcessor :
     ) {
 
     override fun replace(value: KtStaticInvoke) =
-        (value.args.first() as KtJClassExpression).clazz
+        (value.args[0] as KtJClassExpression).clazz
 
     companion object {
         const val GetOrCreateKClassName = "getOrCreateKotlinClass"

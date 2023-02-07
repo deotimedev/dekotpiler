@@ -6,7 +6,7 @@ import me.deo.dekotpiler.util.CFRStatement
 
 // This is only used for testing and will be removed before release
 internal data class KtUnknown(
-    val value: String
+    val value: Any?
 ) : KtStatement, KtExpression {
     override val type = KtType.Nothing
     override fun code() = codeOf(value)

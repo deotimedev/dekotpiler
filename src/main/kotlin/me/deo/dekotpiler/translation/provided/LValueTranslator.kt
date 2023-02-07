@@ -11,10 +11,9 @@ import org.springframework.stereotype.Component
 @Component
 class LValueTranslator : Translator<LValueExpression, KtVariable> {
     override val type = LValueExpression::class
-    override fun LValueExpression.match() = lValue is AbstractFieldVariable
     override fun Translation.translation(value: LValueExpression): KtVariable = KtVariable(
         value.lValue,
-        (value.lValue as? AbstractFieldVariable)?.fieldName ?: "unknown",
+         value.lValue.toString(),
         true, // todo postprocessing for this
         translateType(value.inferredJavaType.javaTypeInstance)
     )
