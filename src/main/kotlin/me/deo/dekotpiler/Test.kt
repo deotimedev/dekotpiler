@@ -1,5 +1,8 @@
 package me.deo.dekotpiler
 
+import me.deo.dekotpiler.matching.Matcher
+import me.deo.dekotpiler.matching.Matcher.Companion.match
+import me.deo.dekotpiler.matching.Matcher.Companion.plus
 import me.deo.dekotpiler.util.singleOf
 import kotlin.random.Random
 import kotlin.reflect.KMutableProperty0
@@ -20,6 +23,12 @@ class Test {
     }
 }
 
+fun main() {
+    val a = Matcher<Int> { println("okay").let { true } }
+    val b = Matcher<Int> { println("neat").let { true } }
+    val ab = a + b
+    println(ab.match(55))
+}
 //// testing stuff
 //
 //interface Lens<T> {

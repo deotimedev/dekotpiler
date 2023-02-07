@@ -2,8 +2,8 @@ package me.deo.dekotpiler.translation.provided
 
 import me.deo.dekotpiler.model.expressions.KtLiteral
 import me.deo.dekotpiler.model.expressions.KtStringExpression
-import me.deo.dekotpiler.translation.ExpressionTranslator
 import me.deo.dekotpiler.translation.Translation
+import me.deo.dekotpiler.translation.Translator
 import org.benf.cfr.reader.bytecode.analysis.parse.Expression
 import org.benf.cfr.reader.bytecode.analysis.parse.expression.ArithOp
 import org.benf.cfr.reader.bytecode.analysis.parse.expression.ArithmeticOperation
@@ -14,7 +14,7 @@ import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.contract
 
 @Component
-class StringConcatTranslator : ExpressionTranslator<ArithmeticOperation, KtStringExpression> {
+class StringConcatTranslator : Translator<ArithmeticOperation, KtStringExpression> {
     override val type = ArithmeticOperation::class
     override fun ArithmeticOperation.match() =
         op == ArithOp.PLUS && (isStringLiteral(lhs) || isStringLiteral(rhs))

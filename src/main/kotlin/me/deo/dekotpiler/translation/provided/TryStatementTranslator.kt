@@ -1,16 +1,14 @@
 package me.deo.dekotpiler.translation.provided
 
 import me.deo.dekotpiler.model.statements.KtTryStatement
-import me.deo.dekotpiler.model.statements.KtVariableAssignmentStatement
-import me.deo.dekotpiler.translation.StatementTranslator
 import me.deo.dekotpiler.translation.Translation
-import org.benf.cfr.reader.bytecode.analysis.structured.statement.StructuredAssignment
+import me.deo.dekotpiler.translation.Translator
 import org.benf.cfr.reader.bytecode.analysis.structured.statement.StructuredCatch
 import org.benf.cfr.reader.bytecode.analysis.structured.statement.StructuredTry
 import org.springframework.stereotype.Component
 
 @Component
-class TryStatementTranslator : StatementTranslator<StructuredTry, KtTryStatement> {
+class TryStatementTranslator : Translator<StructuredTry, KtTryStatement> {
     override val type = StructuredTry::class
     override fun Translation.translation(value: StructuredTry) = KtTryStatement(
         translateStatement(value.tryBlock),
