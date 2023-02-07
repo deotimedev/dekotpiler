@@ -22,7 +22,7 @@ import kotlin.reflect.KClass
 
 @Component
 @Suppress("UNCHECKED_CAST")
-class TranslationImpl(
+internal class TranslationImpl(
     translators: List<Translator<*, *>>,
     private val processing: Processing,
     private val typeMappings: TypeMappings
@@ -36,7 +36,6 @@ class TranslationImpl(
         translators<Any, K>(value::class)
             .find { with(it) { value.match() } }
             ?.run { translation(value) }
-
             ?.let { translated ->
                 fun processors(obj: Any) =
                     processing.processors(Processor.Mode.Pre, obj::class) as? List<Processor<Any>>

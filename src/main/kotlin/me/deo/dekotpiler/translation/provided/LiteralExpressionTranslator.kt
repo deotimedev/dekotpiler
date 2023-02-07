@@ -11,7 +11,7 @@ import org.benf.cfr.reader.bytecode.analysis.types.RawJavaType
 import org.springframework.stereotype.Component
 
 @Component
-class LiteralTranslator : Translator<Literal, KtExpression> {
+class LiteralExpressionTranslator : Translator<Literal, KtExpression> {
     override val type = Literal::class
     override fun Translation.translation(value: Literal): KtExpression {
         val literal = value.value
