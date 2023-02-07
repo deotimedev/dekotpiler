@@ -15,6 +15,7 @@ class LiteralExpressionTranslator : Translator<Literal, KtExpression> {
     override val type = Literal::class
     override fun Translation.translation(value: Literal): KtExpression {
         val literal = value.value
+        if (literal.inferredJavaType.rawType == RawJavaType.BOOLEAN) return KtLiteral.Boolean(literal.boolValue)
         return when (literal.type) {
             TypedLiteral.LiteralType.Integer -> KtLiteral.Int(literal.intValue)
             TypedLiteral.LiteralType.Long -> KtLiteral.Long(literal.longValue)
@@ -23,9 +24,7 @@ class LiteralExpressionTranslator : Translator<Literal, KtExpression> {
             TypedLiteral.LiteralType.String -> KtLiteral.String(literal.toString().drop(1).dropLast(1))
             TypedLiteral.LiteralType.Class -> KtJClassExpression(KtLiteral.Class(translateType(literal.classValue)))
             TypedLiteral.LiteralType.NullObject -> KtLiteral.Null
-            else ->
-                if (literal.inferredJavaType.rawType == RawJavaType.BOOLEAN) KtLiteral.Boolean(literal.boolValue)
-                else throw UnsupportedOperationException("${literal.type} is not supported as a literal.")
+            else -> throw UnsupportedOperationException("${literal.type} is not supported as a literal.")
         }
     }
 }

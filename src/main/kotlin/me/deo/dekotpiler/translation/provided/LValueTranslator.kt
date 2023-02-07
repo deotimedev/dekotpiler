@@ -13,7 +13,7 @@ class LValueTranslator : Translator<LValueExpression, KtVariable> {
     override val type = LValueExpression::class
     override fun Translation.translation(value: LValueExpression): KtVariable = KtVariable(
         value.lValue,
-         value.lValue.toString(),
+         value.lValue.toString().split(".").last(), // todo fix
         true, // todo postprocessing for this
         translateType(value.inferredJavaType.javaTypeInstance)
     )

@@ -10,6 +10,8 @@ class Test {
         println(clazz.isData)
         val method = Test::test as Runnable
         println(method.run())
+        val helper = TestHelper.Opp()
+        helper[55, "yes"] = true
         val thing = "Hellok ${Random.nextInt()}!!! Great"
         "Okay".extensionValue
         "why".extensionValue = "okay"

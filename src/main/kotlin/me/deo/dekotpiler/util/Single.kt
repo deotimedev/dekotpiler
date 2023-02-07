@@ -10,7 +10,6 @@ class Single<T>(val value: T) : Iterable<T> {
                 setNext(value)
                 used = true
             }
-
         }
     }
 }

@@ -16,6 +16,14 @@ object TestHelper {
         println("end of inline closure")
     }
 
+    class Opp {
+        operator fun unaryPlus() = "Hoka"
+        operator fun plus(num: Int) = "Sss"
+        operator fun set(amount: Int, name: String, alive: Boolean) {
+            println("idk")
+        }
+    }
+
     sealed interface Algebraic {
         data class Right(val value: String) : Algebraic
         object Wrong : Algebraic

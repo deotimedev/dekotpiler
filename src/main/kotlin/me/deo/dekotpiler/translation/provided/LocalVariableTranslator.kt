@@ -9,6 +9,8 @@ import org.springframework.stereotype.Component
 @Component
 class LocalVariableTranslator : Translator<LocalVariable, KtVariable> {
     override val type = LocalVariable::class
+
+    // needs to be linked somehow...
     override fun Translation.translation(value: LocalVariable): KtVariable = KtVariable(
         value,
         value.name.stringName,
