@@ -12,7 +12,7 @@ class MemberFunctionInvokeTranslator : Translator<MemberFunctionInvokation, KtMe
     override fun Translation.translation(value: MemberFunctionInvokation) = KtMethodInvoke(
         value.methodPrototype,
         value.args.map { translateExpression(it) }.toMutableList(),
-        translateExpression(value.`object`.also { println("ref: ${it::class.java}") }),
+        translateExpression(value.`object`),
         false
     )
 }

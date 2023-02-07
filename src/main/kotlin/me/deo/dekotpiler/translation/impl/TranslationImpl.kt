@@ -36,17 +36,19 @@ class TranslationImpl(
             .find { with(it) { value.match() } }
             ?.run { translation(value) }
 
-            // TODO change this lol this is cursed
             ?.let { translated ->
-
-                val processors = (postProcessorsByType[translated::class.java].orEmpty() as List<PostProcessor<K>>)
-                    .filter { with(it) { translated.match() } }
+                fun processors(obj: Any) = postProcessorsByType[obj::class.java] as? List<PostProcessor<Any>>
                 var result: Any = translated
-                for (processor in processors) {
-                    result = processor.replace(result as K)
-                }
+                // TODO make less weird
+                generateSequence(processors(translated)) { list ->
+                    list.find {
+                        if (!with(it) { result.match() }) return@find false
+                        val old = result::class.java
+                        result = it.replace(result)
+                        old != result::class.java
+                    }?.let { processors(result) }
+                }.forEach {  }
                 result as K
-
             }
 
     override fun translateExpression(expression: CFRExpression): KtExpression = translate(expression) ?: KtUnknown(expression.toString())
