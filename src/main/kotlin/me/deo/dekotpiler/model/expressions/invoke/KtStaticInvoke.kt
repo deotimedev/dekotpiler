@@ -5,6 +5,7 @@ import me.deo.dekotpiler.model.KtType
 import me.deo.dekotpiler.translation.Code
 import me.deo.dekotpiler.translation.buildCode
 import org.benf.cfr.reader.bytecode.analysis.types.MethodPrototype
+import org.benf.cfr.reader.entities.constantpool.ConstantPoolEntryMethodRef
 
 // Not to be confused with a companion object invoke
 // Can this also be used as a constructor?

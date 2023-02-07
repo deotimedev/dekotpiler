@@ -55,6 +55,12 @@ class Code(
         +right
     }
 
+    fun quoted(quote: Char = '\"', closure: () -> Unit) = apply {
+        +quote
+        closure()
+        +quote
+    }
+
     fun pop(amount: Int = 1) {
         lines.dropLast(amount)
     }

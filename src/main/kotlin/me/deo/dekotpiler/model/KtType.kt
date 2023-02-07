@@ -4,6 +4,7 @@ import me.deo.dekotpiler.translation.CodeWritable
 import me.deo.dekotpiler.translation.buildCode
 import org.benf.cfr.reader.bytecode.analysis.types.JavaRefTypeInstance
 import org.benf.cfr.reader.bytecode.analysis.types.JavaTypeInstance
+import kotlin.reflect.KClass
 import kotlin.reflect.typeOf
 
 data class KtType(
@@ -38,6 +39,8 @@ data class KtType(
         val Boolean = KtType<Boolean>()
         val Char = KtType<Char>()
         val String = KtType<String>()
+        val KClass = KtType<KClass<*>>()
+        val JClass = KtType<Class<*>>()
 
 
         fun java(clazz: Class<*>): JavaRefTypeInstance = JavaRefTypeInstance.createTypeConstant(

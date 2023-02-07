@@ -15,7 +15,7 @@ import kotlin.contracts.contract
 @Component
 class StringConcatTranslator : ExpressionTranslator<ArithmeticOperation, KtStringExpression> {
     override val type = ArithmeticOperation::class
-    override fun ArithmeticOperation.proc() =
+    override fun ArithmeticOperation.match() =
         op == ArithOp.PLUS && (isStringLiteral(lhs) || isStringLiteral(rhs))
 
     override fun Translation.translation(value: ArithmeticOperation) =

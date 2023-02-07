@@ -14,4 +14,5 @@ interface KtInvoke : KtExpression, KtStatement {
     // This is incorrect and needs to be replaced once function wrapper is made
     override val type: KtType
         get() = KtType(method.returnType)
+
 }
