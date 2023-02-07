@@ -1,5 +1,7 @@
 package me.deo.dekotpiler.model
 
+import me.deo.dekotpiler.matching.TypeMatcher
+import me.deo.dekotpiler.matching._Matcher
 import me.deo.dekotpiler.translation.CodeWritable
 import me.deo.dekotpiler.translation.buildCode
 import org.benf.cfr.reader.bytecode.analysis.types.JavaRefTypeInstance
@@ -50,5 +52,12 @@ data class KtType(
 
         inline operator fun <reified T> invoke() =
             KtType(java(T::class.java), typeOf<T>().isMarkedNullable)
+    }
+
+    class Matcher<T>(
+        val reference: (T) -> KtType,
+        val type: KtType
+    ) : _Matcher<T> {
+        override fun T.match() = reference(this) == type
     }
 }

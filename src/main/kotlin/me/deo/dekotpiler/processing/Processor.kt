@@ -1,8 +1,6 @@
 package me.deo.dekotpiler.processing
 
-import me.deo.dekotpiler.matching.Matcher
-import me.deo.dekotpiler.matching.provided.TypeMatcher
-import kotlin.reflect.KClass
+import me.deo.dekotpiler.matching.TypeMatcher
 
 interface Processor<T> : TypeMatcher<T> {
     val mode: Mode

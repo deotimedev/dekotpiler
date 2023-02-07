@@ -11,3 +11,5 @@ fun interface Matcher<T> {
         fun <T> Matcher<T>.match(value: T) = value.match()
     }
 }
+
+typealias _Matcher<T> = Matcher<T>

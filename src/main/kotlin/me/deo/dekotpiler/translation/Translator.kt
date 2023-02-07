@@ -1,7 +1,6 @@
 package me.deo.dekotpiler.translation
 
-import me.deo.dekotpiler.matching.Matcher
-import me.deo.dekotpiler.matching.provided.TypeMatcher
+import me.deo.dekotpiler.matching.TypeMatcher
 import kotlin.reflect.KClass
 
 interface Translator<J : Any, K> : TypeMatcher<J> {

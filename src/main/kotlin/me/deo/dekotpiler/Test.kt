@@ -2,14 +2,14 @@ package me.deo.dekotpiler
 
 import me.deo.dekotpiler.matching.Matcher
 import me.deo.dekotpiler.matching.Matcher.Companion.match
-import me.deo.dekotpiler.util.singleOf
 import kotlin.random.Random
-import kotlin.reflect.KMutableProperty0
 
 class Test {
     fun test() {
         val clazz = Test::class
         println(clazz.isData)
+        val method = Test::test as Runnable
+        println(method.run())
         val thing = "Hellok ${Random.nextInt()}!!! Great"
         "Okay".extensionValue
         "why".extensionValue = "okay"

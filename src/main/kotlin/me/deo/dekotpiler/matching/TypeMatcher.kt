@@ -1,6 +1,4 @@
-package me.deo.dekotpiler.matching.provided
-
-import me.deo.dekotpiler.matching.Matcher
+package me.deo.dekotpiler.matching
 
 interface TypeMatcher<T> : Matcher<T> {
 
@@ -18,6 +16,6 @@ interface TypeMatcher<T> : Matcher<T> {
     }
 
     companion object {
-        inline operator fun <reified T : Any> invoke() = TypeMatcher.Simple(T::class.java)
+        inline operator fun <reified T : Any> invoke() = Simple(T::class.java)
     }
 }

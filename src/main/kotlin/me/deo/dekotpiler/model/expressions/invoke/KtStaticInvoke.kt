@@ -1,5 +1,7 @@
 package me.deo.dekotpiler.model.expressions.invoke
 
+import me.deo.dekotpiler.matching.Matcher
+import me.deo.dekotpiler.matching._Matcher
 import me.deo.dekotpiler.model.KtExpression
 import me.deo.dekotpiler.model.KtType
 import me.deo.dekotpiler.translation.Code
@@ -18,5 +20,19 @@ data class KtStaticInvoke(
     override fun code() = buildCode {
         write(enclosingType.nullable(false).simpleName, ".", method.name)
         braced { +args.joinToString { it.code().toString() } }
+    }
+
+    class Matcher(
+        val className: String,
+        val functionName: String
+    ) : _Matcher<KtStaticInvoke> {
+
+        override fun KtStaticInvoke.match() =
+            enclosingType.rawName == className && name == functionName
+
+        companion object {
+            inline operator fun <reified T> invoke(functionName: String) =
+                Matcher(T::class.qualifiedName!!, functionName)
+        }
     }
 }
