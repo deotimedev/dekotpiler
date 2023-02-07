@@ -14,6 +14,7 @@ import org.benf.cfr.reader.bytecode.analysis.types.JavaTypeInstance
 import kotlin.reflect.KClass
 
 interface Translation {
+
     fun <C : Any, K> translators(type: KClass<out C>): List<Translator<C, K>>
 
     fun translateExpression(expression: CFRExpression): KtExpression

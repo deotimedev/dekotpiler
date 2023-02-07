@@ -3,7 +3,7 @@ package me.deo.dekotpiler.matching
 fun interface Matcher<T> {
     fun T.match(): Boolean
 
-    operator fun <R : T> plus(other: Matcher<R>) = Matcher<R> {
+    operator fun plus(other: Matcher<T>) = Matcher<T> {
         match() && with(other) { match() }
     }
 

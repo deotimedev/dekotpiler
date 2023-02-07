@@ -50,4 +50,4 @@ out/
 ### Jetbrains Fleet ###
 .fleet/
 
-.syncd
+/tasks/

@@ -9,8 +9,12 @@ import me.deo.dekotpiler.metadata.MetadataReader
 import me.deo.dekotpiler.metadata.MetadataResolver
 import me.deo.dekotpiler.model.KtBlock
 import me.deo.dekotpiler.translation.Translation
+import me.deo.dekotpiler.util.asyncTask
+import me.deo.dekotpiler.util.debugTasks
+import me.deo.dekotpiler.util.exportTasks
 import me.deo.dekotpiler.util.getValue
 import me.deo.dekotpiler.util.helper.FileSelector
+import me.deo.dekotpiler.util.task
 import org.springframework.boot.Banner
 import org.springframework.boot.CommandLineRunner
 import org.springframework.boot.WebApplicationType
@@ -18,6 +22,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.builder.SpringApplicationBuilder
 import org.springframework.stereotype.Component
 import java.io.File
+import kotlin.time.ExperimentalTime
+import kotlin.time.measureTime
 
 @Component
 class Main(
@@ -35,16 +41,18 @@ class Main(
         // testing
         val file = File(File("").absolutePath, "/build/classes/kotlin/main/me/deo/dekotpiler/Test.class")
 
-        val metadata by async { reader.read(metadataResolver.resolve(file)) }
-        val clazz by async { cfr.decompile(file) ?: error("Couldn't read class.") }
+        val metadata by asyncTask("Metadata") { reader.read(metadataResolver.resolve(file)) }
+        val clazz by asyncTask("CFR") { cfr.decompile(file) ?: error("Couldn't read class.") }
 
-        clazz.methods.forEach { cfrMethod ->
-            cfrMethod.analysis.statement.let { stmt ->
-                val translated = translation.translateStatement(stmt)
-                println("------------${cfrMethod.name}---------------")
-                println(translated.code())
-                println("------------${cfrMethod.name}---------------")
-                println((translated as KtBlock).statements.lastOrNull()?.let { it::class })
+        task("Kotlin Decompilation") {
+            clazz.methods.forEach { cfrMethod ->
+                cfrMethod.analysis.statement.let { stmt ->
+                    val translated = translation.translateStatement(stmt)
+                    println("------------${cfrMethod.name}---------------")
+                    println(translated.code())
+                    println("------------${cfrMethod.name}---------------")
+                    println((translated as KtBlock).statements.lastOrNull()?.let { it::class })
+                }
             }
         }
         // testing only
@@ -67,12 +75,17 @@ class Main(
 
         @JvmStatic
         fun main(args: Array<String>) {
-            SpringApplicationBuilder(App::class.java)
-                .web(WebApplicationType.NONE)
-                .bannerMode(Banner.Mode.OFF)
-                .logStartupInfo(false)
-                .headless(false)
-                .run()
+            debugTasks = true
+            val app = task("Spring Initialization") {
+                SpringApplicationBuilder(App::class.java)
+                    .web(WebApplicationType.NONE)
+                    .bannerMode(Banner.Mode.OFF)
+                    .logStartupInfo(false)
+                    .headless(false)
+                    .application()
+            }
+            app.run()
+            exportTasks()
         }
 
         @SpringBootApplication

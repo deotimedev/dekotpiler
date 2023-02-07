@@ -2,7 +2,6 @@ package me.deo.dekotpiler
 
 import me.deo.dekotpiler.matching.Matcher
 import me.deo.dekotpiler.matching.Matcher.Companion.match
-import me.deo.dekotpiler.matching.Matcher.Companion.plus
 import me.deo.dekotpiler.util.singleOf
 import kotlin.random.Random
 import kotlin.reflect.KMutableProperty0
