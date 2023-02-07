@@ -1,5 +1,6 @@
 package me.deo.dekotpiler.translation.provided
 
+import me.deo.dekotpiler.model.expressions.KtLiteral
 import me.deo.dekotpiler.model.expressions.KtStringExpression
 import me.deo.dekotpiler.translation.ExpressionTranslator
 import me.deo.dekotpiler.translation.Translation
@@ -21,13 +22,13 @@ class StringConcatTranslator : ExpressionTranslator<ArithmeticOperation, KtStrin
     override fun Translation.translation(value: ArithmeticOperation) =
         KtStringExpression(listOf(value.lhs, value.rhs).map {
             if (isStringLiteral(it))
-                KtStringExpression.Element.Literal(
+                KtLiteral.String(
                     it.value.value.toString()
                         // drop quotes (could probably do this better)
                         .drop(1)
                         .dropLast(1)
                 )
-            else KtStringExpression.Element.Template(translateExpression(it))
+            else translateExpression(it)
         }.toMutableList())
 
     @OptIn(ExperimentalContracts::class)

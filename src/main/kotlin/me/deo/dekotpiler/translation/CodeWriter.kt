@@ -6,7 +6,7 @@ inline fun buildCode(closure: Code.() -> Unit) =
     Code().apply(closure)
 
 fun emptyCode() = Code()
-fun codeOf(vararg values: String) = buildCode { values.forEach { +it } }
+fun codeOf(vararg values: Any?) = buildCode { values.forEach { +it } }
 class Code(
     private val lines: MutableList<String> = mutableListOf(""),
 ) {

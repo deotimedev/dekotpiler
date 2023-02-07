@@ -7,6 +7,7 @@ import me.deo.dekotpiler.translation.Translation
 import me.deo.dekotpiler.translation.Translator
 import org.benf.cfr.reader.bytecode.analysis.parse.expression.Literal
 import org.benf.cfr.reader.bytecode.analysis.parse.literal.TypedLiteral
+import org.benf.cfr.reader.bytecode.analysis.types.RawJavaType
 import org.springframework.stereotype.Component
 
 @Component
@@ -16,9 +17,15 @@ class LiteralTranslator : Translator<Literal, KtExpression> {
         val literal = value.value
         return when (literal.type) {
             TypedLiteral.LiteralType.Integer -> KtLiteral.Int(literal.intValue)
+            TypedLiteral.LiteralType.Long -> KtLiteral.Long(literal.longValue)
+            TypedLiteral.LiteralType.Float -> KtLiteral.Float(literal.floatValue)
+            TypedLiteral.LiteralType.Double -> KtLiteral.Double(literal.doubleValue)
             TypedLiteral.LiteralType.String -> KtLiteral.String(literal.toString())
             TypedLiteral.LiteralType.Class -> KtJClassExpression(KtLiteral.Class(translateType(literal.classValue)))
-            else -> KtLiteral.Something(literal.value)
+            TypedLiteral.LiteralType.NullObject -> KtLiteral.Null
+            else ->
+                if (literal.inferredJavaType.rawType == RawJavaType.BOOLEAN) KtLiteral.Boolean(literal.boolValue)
+                else throw UnsupportedOperationException("${literal.type} is not supported as a literal.")
         }
     }
 }
