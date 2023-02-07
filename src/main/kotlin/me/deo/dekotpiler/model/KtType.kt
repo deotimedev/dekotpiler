@@ -16,12 +16,16 @@ data class KtType(
     KtTyped,
     CodeWritable {
 
-    val simpleName = delegate.rawName.split(".").last()
+    val simpleName get() =
+        buildString {
+            append(delegate.rawName.split(".").last())
+            if (nullable) append("?")
+        }
 
     override val type = this
     override fun code() = buildCode {
         write(delegate)
-        if (nullable) write("?")
+        if (nullable) +"?"
     }
 
     fun nullable(nullable: Boolean = true) = copy(nullable = nullable)
