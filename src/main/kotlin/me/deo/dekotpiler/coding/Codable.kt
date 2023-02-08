@@ -1,7 +1,7 @@
 package me.deo.dekotpiler.coding
 
-import me.deo.dekotpiler.translation.Code
-import me.deo.dekotpiler.translation.emptyCode
+import me.deo.dekotpiler.coding.Code
+import me.deo.dekotpiler.coding.emptyCode
 
 interface Codable {
     fun code(): Code = emptyCode()

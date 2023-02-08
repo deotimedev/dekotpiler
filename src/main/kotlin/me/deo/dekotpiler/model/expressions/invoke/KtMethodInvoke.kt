@@ -1,7 +1,7 @@
 package me.deo.dekotpiler.model.expressions.invoke
 
 import me.deo.dekotpiler.model.KtExpression
-import me.deo.dekotpiler.translation.buildCode
+import me.deo.dekotpiler.coding.buildCode
 import org.benf.cfr.reader.bytecode.analysis.types.MethodPrototype
 
 data class KtMethodInvoke(

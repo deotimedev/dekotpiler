@@ -1,17 +1,14 @@
 package me.deo.dekotpiler.model.expressions
 
+import me.deo.dekotpiler.coding.buildCode
+import me.deo.dekotpiler.coding.codeOf
 import me.deo.dekotpiler.model.KtExpression
 import me.deo.dekotpiler.model.KtType
-import me.deo.dekotpiler.translation.buildCode
-import me.deo.dekotpiler.translation.codeOf
-import kotlin.Boolean
-import kotlin.Long
-
+import kotlin.Boolean as KtBoolean
+import kotlin.Double as KtDouble
+import kotlin.Float as KtFloat
 import kotlin.Int as KtInt
 import kotlin.Long as KtLong
-import kotlin.Float as KtFloat
-import kotlin.Double as KtDouble
-import kotlin.Boolean as KtBoolean
 import kotlin.String as KtString
 
 sealed class KtLiteral<T>(override val type: KtType, val letter: Char? = null) : KtExpression {

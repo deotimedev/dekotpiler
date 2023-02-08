@@ -1,8 +1,8 @@
 package me.deo.dekotpiler.model.statements
 
 import me.deo.dekotpiler.model.KtStatement
-import me.deo.dekotpiler.model.KtVariable
-import me.deo.dekotpiler.translation.buildCode
+import me.deo.dekotpiler.coding.buildCode
+import me.deo.dekotpiler.model.variable.KtLocalVariable
 
 data class KtTryStatement(
     var statement: KtStatement,
@@ -28,7 +28,7 @@ data class KtTryStatement(
     }
 
     data class Catch(
-        var throwable: KtVariable,
+        var throwable: KtLocalVariable,
         var statement: KtStatement
     ) : KtStatement {
         override fun code() = buildCode {

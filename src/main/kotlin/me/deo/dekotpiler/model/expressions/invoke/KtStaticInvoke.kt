@@ -3,7 +3,7 @@ package me.deo.dekotpiler.model.expressions.invoke
 import me.deo.dekotpiler.matching._Matcher
 import me.deo.dekotpiler.model.KtExpression
 import me.deo.dekotpiler.model.KtType
-import me.deo.dekotpiler.translation.buildCode
+import me.deo.dekotpiler.coding.buildCode
 import org.benf.cfr.reader.bytecode.analysis.types.MethodPrototype
 
 // Not to be confused with a companion object invoke

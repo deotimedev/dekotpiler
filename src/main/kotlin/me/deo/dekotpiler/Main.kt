@@ -8,11 +8,11 @@ import me.deo.dekotpiler.metadata.MetadataReader
 import me.deo.dekotpiler.metadata.MetadataResolver
 import me.deo.dekotpiler.model.KtBlock
 import me.deo.dekotpiler.translation.Translation
-import me.deo.dekotpiler.util.taskAsync
 import me.deo.dekotpiler.util.exportTasks
 import me.deo.dekotpiler.util.getValue
 import me.deo.dekotpiler.util.helper.FileSelector
 import me.deo.dekotpiler.util.task
+import me.deo.dekotpiler.util.taskAsync
 import org.springframework.boot.Banner
 import org.springframework.boot.CommandLineRunner
 import org.springframework.boot.WebApplicationType
@@ -71,15 +71,14 @@ class Main(
 
         @JvmStatic
         fun main(args: Array<String>) {
-            val app = task("Spring Initialization") {
+            task("Spring Initialization") {
                 SpringApplicationBuilder(App::class.java)
                     .web(WebApplicationType.NONE)
                     .bannerMode(Banner.Mode.OFF)
                     .logStartupInfo(false)
                     .headless(false)
                     .application()
-            }
-            app.run()
+            }.run()
             exportTasks()
         }
 

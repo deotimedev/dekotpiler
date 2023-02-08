@@ -2,7 +2,7 @@ package me.deo.dekotpiler.model
 
 import me.deo.dekotpiler.matching._Matcher
 import me.deo.dekotpiler.coding.Codable
-import me.deo.dekotpiler.translation.buildCode
+import me.deo.dekotpiler.coding.buildCode
 import org.benf.cfr.reader.bytecode.analysis.types.JavaRefTypeInstance
 import org.benf.cfr.reader.bytecode.analysis.types.JavaTypeInstance
 import kotlin.reflect.KClass

@@ -2,7 +2,7 @@ package me.deo.dekotpiler.model.expressions
 
 import me.deo.dekotpiler.model.KtExpression
 import me.deo.dekotpiler.model.KtType
-import me.deo.dekotpiler.translation.buildCode
+import me.deo.dekotpiler.coding.buildCode
 
 data class KtInstanceOfExpression(
     var expression: KtExpression,

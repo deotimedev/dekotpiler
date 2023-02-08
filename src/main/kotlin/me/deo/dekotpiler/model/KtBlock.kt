@@ -1,6 +1,6 @@
 package me.deo.dekotpiler.model
 
-import me.deo.dekotpiler.translation.buildCode
+import me.deo.dekotpiler.coding.buildCode
 
 data class KtBlock(
     val statements: List<KtStatement>

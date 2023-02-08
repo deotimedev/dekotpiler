@@ -1,7 +1,7 @@
 package me.deo.dekotpiler.model.statements
 
 import me.deo.dekotpiler.model.KtStatement
-import me.deo.dekotpiler.translation.codeOf
+import me.deo.dekotpiler.coding.codeOf
 
 data class KtCommentStatement(
     val comment: String

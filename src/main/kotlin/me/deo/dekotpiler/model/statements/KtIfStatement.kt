@@ -3,7 +3,7 @@ package me.deo.dekotpiler.model.statements
 import me.deo.dekotpiler.model.KtConditional
 import me.deo.dekotpiler.model.KtStatement
 import me.deo.dekotpiler.model.KtType
-import me.deo.dekotpiler.translation.buildCode
+import me.deo.dekotpiler.coding.buildCode
 
 data class KtIfStatement(
     var condition: KtConditional,

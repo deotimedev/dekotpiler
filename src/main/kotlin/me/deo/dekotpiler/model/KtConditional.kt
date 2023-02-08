@@ -1,6 +1,7 @@
 package me.deo.dekotpiler.model
 
-import me.deo.dekotpiler.translation.buildCode
+import me.deo.dekotpiler.coding.buildCode
+import me.deo.dekotpiler.util.gather
 
 data class KtConditional(
     var underlying: KtExpression,
@@ -12,12 +13,10 @@ data class KtConditional(
     override fun code() = buildCode {
         write(underlying)
 
-        joined?.let { it ->
-            generateSequence(it) { it.conditional.joined }
-                .forEach {
-                    write(" ${it.operation.symbol} ", it.conditional)
-                }
-        }
+        joined.gather { it.conditional.joined }
+            .forEach {
+                write(" ${it.operation.symbol} ", it.conditional)
+            }
     }
 
     inner class Joined(
