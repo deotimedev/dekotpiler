@@ -64,6 +64,6 @@ internal class TranslationImpl(
 
     override fun <V : KtVariable> translateVariable(variable: LValue): V = (translate(variable) as? V) ?: error("what")
     override fun translateType(type: JavaTypeInstance) = typeMappings.mapping(type) ?: KtType(type, true)
-    override fun translateConditional(conditional: ConditionalExpression) =
-        KtConditional(translateExpression(conditional), null)
+    override fun translateConditional(conditional: ConditionalExpression): KtConditional =
+        translate(conditional) ?: KtConditional(KtUnknown(conditional))
 }

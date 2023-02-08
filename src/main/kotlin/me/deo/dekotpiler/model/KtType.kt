@@ -16,10 +16,9 @@ data class KtType(
     Codable {
 
     val simpleName get() =
-        buildString {
-            append(delegate.rawName.split(".").last())
-            if (nullable) append("?")
-        }
+        "$rawSimpleName${if (nullable) "?" else ""}"
+
+    val rawSimpleName get() = delegate.rawName.split(".").last()
 
     override val type = this
     override fun code() = buildCode {

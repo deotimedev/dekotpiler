@@ -9,7 +9,7 @@ data class KtLocalVariable(
     override val delegate: LocalVariable,
     override var name: String,
     override var final: Boolean,
-    override val type: KtType
+    override var type: KtType
 ) : KtVariable {
     override fun code() = codeOf(name)
 }
