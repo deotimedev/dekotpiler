@@ -5,13 +5,15 @@ import me.deo.dekotpiler.util.gather
 
 data class KtConditional(
     var underlying: KtExpression,
-    var joined: Joined? = null
+    var joined: Joined? = null,
+    var inverse: Boolean = false
 ) : KtExpression {
 
     override val type = KtType.Boolean
 
     override fun code() = buildCode {
-        write(underlying)
+        if (inverse) +"!"
+        +underlying
 
         joined.gather { it.conditional.joined }
             .forEach {

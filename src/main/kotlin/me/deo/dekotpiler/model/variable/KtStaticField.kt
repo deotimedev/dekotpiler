@@ -9,7 +9,7 @@ data class KtStaticField(
     var declaring: KtType,
     override var name: String,
     override var final: Boolean,
-    override val type: KtType,
+    override var type: KtType,
     var objectReference: Boolean = false
 ) : KtField {
     override fun code() = buildCode {

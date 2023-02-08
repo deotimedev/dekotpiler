@@ -13,6 +13,7 @@ class ObjectInstanceProcessor :
 
     override fun modify(value: KtStaticField) {
         value.objectReference = true
+        value.type = value.type.nullable(false)
     }
 
     companion object {

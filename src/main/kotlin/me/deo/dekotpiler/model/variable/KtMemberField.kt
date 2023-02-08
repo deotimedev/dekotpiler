@@ -15,6 +15,6 @@ data class KtMemberField(
     override val type: KtType
 ) : KtField {
     override fun code() = buildCode {
-        write(member, ".", name)
+        write(member, member.nullCheckedChain(), name)
     }
 }

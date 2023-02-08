@@ -25,12 +25,14 @@ data class KtMethodInvoke(
                     result
                 }
         } ?: run {
-            write(reference, ".", method.name)
+            write(reference, reference.nullCheckedChain(), method.name)
             braced { +args.joinToString { it.code().toString() } }
         }
     }
 
-    val operator get() = Operator.All.find { it.functionName == name }
+    val operator
+        get() =
+            takeUnless { reference.type.nullable }?.let { Operator.All.find { it.functionName == name } }
 
     companion object {
         // kotlin enums initialize very strange
