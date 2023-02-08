@@ -49,20 +49,16 @@ class Code(
         }
     }
 
-    fun braced(left: Char = '(', right: Char = ')', closure: () -> Unit) = apply {
+    inline fun braced(left: Char = '(', right: Char = ')', closure: () -> Unit) = apply {
         +left
         closure()
         +right
     }
 
-    fun quoted(quote: Char = '\"', closure: () -> Unit) = apply {
+    inline fun quoted(quote: Char = '\"', closure: () -> Unit) = apply {
         +quote
         closure()
         +quote
-    }
-
-    fun pop(amount: Int = 1) {
-        lines.dropLast(amount)
     }
 
     fun line(value: Any?) {
@@ -74,7 +70,7 @@ class Code(
     // i will maybe fix sometime
     private fun append(value: Any?) {
         when (value) {
-            is CodeWritable -> append(value.code())
+            is Codable -> append(value.code())
             else ->  {
                 val str = value.toString()
                 str.split("\n").fold(false) { new, line ->

@@ -1,5 +1,5 @@
 package me.deo.dekotpiler.model
 
-import me.deo.dekotpiler.translation.CodeWritable
+import me.deo.dekotpiler.translation.Codable
 
-interface KtExpression : KtTyped, CodeWritable
+interface KtExpression : KtTyped, Codable

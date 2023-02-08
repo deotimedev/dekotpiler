@@ -1,8 +1,7 @@
 package me.deo.dekotpiler.model
 
-import me.deo.dekotpiler.matching.TypeMatcher
 import me.deo.dekotpiler.matching._Matcher
-import me.deo.dekotpiler.translation.CodeWritable
+import me.deo.dekotpiler.translation.Codable
 import me.deo.dekotpiler.translation.buildCode
 import org.benf.cfr.reader.bytecode.analysis.types.JavaRefTypeInstance
 import org.benf.cfr.reader.bytecode.analysis.types.JavaTypeInstance
@@ -14,7 +13,7 @@ data class KtType(
     val nullable: Boolean = true
 ) : JavaTypeInstance by delegate,
     KtTyped,
-    CodeWritable {
+    Codable {
 
     val simpleName get() =
         buildString {
