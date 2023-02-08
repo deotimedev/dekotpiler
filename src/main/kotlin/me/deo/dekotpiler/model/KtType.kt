@@ -57,16 +57,4 @@ data class KtType(
             KtType(java(T::class.java), typeOf<T>().isMarkedNullable)
     }
 
-    class Matcher<T : Any>(
-        override val clazz: KClass<T>,
-        val reference: (T) -> KtType,
-        val type: KtType
-    ) : ClassMatcher<T> {
-        override fun T.match() = reference(this) == type
-
-        companion object {
-            inline operator fun <reified T : Any> invoke(noinline reference: (T) -> KtType, type: KtType) =
-                Matcher(T::class, reference, type)
-        }
-    }
 }

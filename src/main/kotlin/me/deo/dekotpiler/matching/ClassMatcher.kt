@@ -3,8 +3,6 @@ package me.deo.dekotpiler.matching
 import kotlin.reflect.KClass
 
 
-// TODO MAJOR FIXME
-@Deprecated("will be deleted")
 interface ClassMatcher<T : Any> : Matcher<T> {
 
     val clazz: KClass<T>

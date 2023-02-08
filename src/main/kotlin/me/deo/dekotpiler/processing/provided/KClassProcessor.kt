@@ -10,12 +10,13 @@ import kotlin.jvm.internal.Reflection
 @Component
 class KClassProcessor :
     PreProcessor<KtStaticInvoke>,
-    ClassMatcher<KtStaticInvoke> by KtStaticInvoke.Matcher<Reflection>(GetOrCreateKClassName) {
+    ClassMatcher<KtStaticInvoke> by KClassMatcher {
 
     override fun replace(value: KtStaticInvoke) =
         (value.args[0] as KtJClassExpression).clazz
 
     companion object {
         const val GetOrCreateKClassName = "getOrCreateKotlinClass"
+        val KClassMatcher = KtStaticInvoke.Matcher<Reflection>(GetOrCreateKClassName)
     }
 }
