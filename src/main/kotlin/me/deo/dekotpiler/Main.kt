@@ -6,7 +6,7 @@ import me.deo.dekotpiler.decompile.CFRDecompilerEngine
 import me.deo.dekotpiler.decompile.DecompilerEngine
 import me.deo.dekotpiler.metadata.MetadataReader
 import me.deo.dekotpiler.metadata.MetadataResolver
-import me.deo.dekotpiler.model.KtBlock
+import me.deo.dekotpiler.model.statements.KtBlockStatement
 import me.deo.dekotpiler.translation.Translation
 import me.deo.dekotpiler.util.exportTasks
 import me.deo.dekotpiler.util.getValue
@@ -47,7 +47,7 @@ class Main(
                     println("------------${cfrMethod.name}---------------")
                     println(translated.code())
                     println("------------${cfrMethod.name}---------------")
-                    println((translated as KtBlock).statements.lastOrNull()?.let { it::class })
+                    println((translated as KtBlockStatement).statements.lastOrNull()?.let { it::class })
                 }
             }
         }

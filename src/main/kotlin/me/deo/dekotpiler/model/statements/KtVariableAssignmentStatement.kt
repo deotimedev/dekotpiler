@@ -17,7 +17,7 @@ data class KtVariableAssignmentStatement(
     override fun code() = buildCode {
         if (declaring) write(if (variable.final) "val" else "var", " ")
         +variable.name
-        if (ExplicitType) write(": ", variable.type.simpleName)
+        if (declaring && ExplicitType) write(": ", variable.type.simpleName)
         write(" = ", expression) // TODO delegation could instead happen here
     }
 }

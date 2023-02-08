@@ -6,22 +6,24 @@ import kotlin.random.Random
 
 class Test {
     fun test() {
-        val clazz = Test::class
-        println(clazz.isData)
-        val method = Test::test as Runnable
-        println(method.run())
-        val helper = TestHelper.Opp()
-        helper[55, "yes"] = true
-        val thing = "Hellok ${Random.nextInt()}!!! Great"
-        "Okay".extensionValue
-        "why".extensionValue = "okay"
-        println(TestHelper.maybe())
-        while (Random.nextBoolean()) {
-            if (TestHelper.bool(true) && TestHelper.bool(false)) {
-                val test = 55
-                println("HEllo $test")
-            }
-        }
+        val thing = TestHelper.maybe() ?: "Fallback"
+        println(thing)
+//        val clazz = Test::class
+//        println(clazz.isData)
+//        val method = Test::test as Runnable
+//        println(method.run())
+//        val helper = TestHelper.Opp()
+//        helper[55, "yes"] = true
+//        val thing = "Hellok ${Random.nextInt()}!!! Great"
+//        "Okay".extensionValue
+//        "why".extensionValue = "okay"
+//        println(TestHelper.maybe())
+//        while (Random.nextBoolean()) {
+//            if (TestHelper.bool(true) && TestHelper.bool(false)) {
+//                val test = 55
+//                println("HEllo $test")
+//            }
+//        }
     }
 }
 

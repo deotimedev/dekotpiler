@@ -4,12 +4,15 @@ import me.deo.dekotpiler.model.KtConditional
 import me.deo.dekotpiler.model.KtStatement
 import me.deo.dekotpiler.model.KtType
 import me.deo.dekotpiler.coding.buildCode
+import me.deo.dekotpiler.model.statements.KtBlockStatement.Companion.asBlock
 
 data class KtIfStatement(
     var condition: KtConditional,
     var then: KtStatement,
     var orElse: KtStatement?
-) : KtStatement {
+) : KtBodyStatement {
+    override val bodies: List<KtBlockStatement>
+        get() = listOfNotNull(then.asBlock())
     override val type: KtType
         get() = super.type // TODO HOW TO FIND COMMON SUPER TYPE!?
     override fun code() = buildCode {

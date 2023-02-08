@@ -1,7 +1,13 @@
 package me.deo.dekotpiler.util
 
 // change to value class when generics work
-class Single<T>(val value: T) : Iterable<T> {
+class Single<T>(val value: T) : AbstractList<T>() {
+
+    override val size = 1
+
+    override fun get(index: Int) =
+        if (index == 0) value else throw IndexOutOfBoundsException(index)
+
     override fun iterator() = object : AbstractIterator<T>() {
         private var used = false
         override fun computeNext() {
@@ -12,6 +18,8 @@ class Single<T>(val value: T) : Iterable<T> {
             }
         }
     }
+
+
 }
 
 fun <T> singleOf(value: T) = Single(value)
