@@ -8,6 +8,9 @@ import me.deo.dekotpiler.util.CFRStatement
 internal data class KtUnknown(
     val value: Any?
 ) : KtStatement, KtExpression {
+    init {
+        println("Unknown instance made of ${value?.javaClass?.simpleName}")
+    }
     override val type = KtType.Nothing
     override fun code() = codeOf(value)
 }

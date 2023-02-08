@@ -1,7 +1,7 @@
 package me.deo.dekotpiler.model.expressions.invoke
 
-import me.deo.dekotpiler.model.KtExpression
 import me.deo.dekotpiler.coding.buildCode
+import me.deo.dekotpiler.model.KtExpression
 import org.benf.cfr.reader.bytecode.analysis.types.MethodPrototype
 
 data class KtMethodInvoke(
@@ -11,7 +11,6 @@ data class KtMethodInvoke(
     override var extension: Boolean
 ) : KtMemberInvoke {
     override fun code() = buildCode {
-        println()
         operator?.let { op ->
             +op.format
                 .replace("@", reference.code().toString())
