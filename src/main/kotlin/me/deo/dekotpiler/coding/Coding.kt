@@ -1,5 +1,6 @@
-package me.deo.dekotpiler.translation
+package me.deo.dekotpiler.coding
 
+import me.deo.dekotpiler.coding.Codable
 import me.deo.dekotpiler.util.update
 
 inline fun buildCode(closure: Code.() -> Unit) =
