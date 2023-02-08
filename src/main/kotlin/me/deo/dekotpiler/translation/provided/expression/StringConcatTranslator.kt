@@ -1,4 +1,4 @@
-package me.deo.dekotpiler.translation.provided
+package me.deo.dekotpiler.translation.provided.expression
 
 import me.deo.dekotpiler.model.expressions.KtLiteral
 import me.deo.dekotpiler.model.expressions.KtStringExpression

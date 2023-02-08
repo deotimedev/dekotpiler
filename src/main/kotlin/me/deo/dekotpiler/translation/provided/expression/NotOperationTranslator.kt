@@ -1,9 +1,8 @@
-package me.deo.dekotpiler.translation.provided
+package me.deo.dekotpiler.translation.provided.expression
 
 import me.deo.dekotpiler.model.KtConditional
 import me.deo.dekotpiler.translation.Translation
 import me.deo.dekotpiler.translation.Translator
-import org.benf.cfr.reader.bytecode.analysis.parse.expression.BooleanExpression
 import org.benf.cfr.reader.bytecode.analysis.parse.expression.NotOperation
 import org.springframework.stereotype.Component
 

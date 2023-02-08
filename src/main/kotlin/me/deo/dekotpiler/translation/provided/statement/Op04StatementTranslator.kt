@@ -1,4 +1,4 @@
-package me.deo.dekotpiler.translation.provided
+package me.deo.dekotpiler.translation.provided.statement
 
 import me.deo.dekotpiler.model.KtStatement
 import me.deo.dekotpiler.translation.Translation
