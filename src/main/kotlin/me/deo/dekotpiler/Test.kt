@@ -15,6 +15,7 @@ class Test {
         val thing = "Hellok ${Random.nextInt()}!!! Great"
         "Okay".extensionValue
         "why".extensionValue = "okay"
+        println(TestHelper.maybe())
         while (Random.nextBoolean()) {
             if (TestHelper.bool(true) && TestHelper.bool(false)) {
                 val test = 55

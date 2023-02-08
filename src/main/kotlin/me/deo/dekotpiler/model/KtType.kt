@@ -1,8 +1,8 @@
 package me.deo.dekotpiler.model
 
-import me.deo.dekotpiler.matching._Matcher
 import me.deo.dekotpiler.coding.Codable
 import me.deo.dekotpiler.coding.buildCode
+import me.deo.dekotpiler.matching.ClassMatcher
 import org.benf.cfr.reader.bytecode.analysis.types.JavaRefTypeInstance
 import org.benf.cfr.reader.bytecode.analysis.types.JavaTypeInstance
 import kotlin.reflect.KClass
@@ -57,10 +57,16 @@ data class KtType(
             KtType(java(T::class.java), typeOf<T>().isMarkedNullable)
     }
 
-    class Matcher<T>(
+    class Matcher<T : Any>(
+        override val clazz: KClass<T>,
         val reference: (T) -> KtType,
         val type: KtType
-    ) : _Matcher<T> {
+    ) : ClassMatcher<T> {
         override fun T.match() = reference(this) == type
+
+        companion object {
+            inline operator fun <reified T : Any> invoke(noinline reference: (T) -> KtType, type: KtType) =
+                Matcher(T::class, reference, type)
+        }
     }
 }

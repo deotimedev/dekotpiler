@@ -1,5 +1,5 @@
 package me.deo.dekotpiler.processing
 
-interface PreProcessor<T> : Processor<T> {
+interface PreProcessor<T : Any> : Processor<T> {
     override val mode get() = Processor.Mode.Pre
 }

@@ -1,9 +1,9 @@
 package me.deo.dekotpiler.model.expressions.invoke
 
-import me.deo.dekotpiler.matching._Matcher
 import me.deo.dekotpiler.model.KtExpression
 import me.deo.dekotpiler.model.KtType
 import me.deo.dekotpiler.coding.buildCode
+import me.deo.dekotpiler.matching.ClassMatcher
 import org.benf.cfr.reader.bytecode.analysis.types.MethodPrototype
 
 // Not to be confused with a companion object invoke
@@ -22,8 +22,9 @@ data class KtStaticInvoke(
     class Matcher(
         val className: String,
         val functionName: String
-    ) : _Matcher<KtStaticInvoke> {
+    ) : ClassMatcher<KtStaticInvoke> {
 
+        override val clazz = KtStaticInvoke::class
         override fun KtStaticInvoke.match() =
             enclosingType.rawName == className && name == functionName
 

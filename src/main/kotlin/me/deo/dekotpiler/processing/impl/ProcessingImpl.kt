@@ -13,5 +13,5 @@ internal class ProcessingImpl(
 
     @Suppress("UNCHECKED_CAST")
     override fun <T : Any> processors(mode: Processor.Mode, type: KClass<T>) =
-        groupedProcessors[mode].orEmpty().filter { type.java.isAssignableFrom(it.clazz) } as List<Processor<T>>
+        groupedProcessors[mode].orEmpty().filter { type.java.isAssignableFrom(it.clazz.java) } as List<Processor<T>>
 }
