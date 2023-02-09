@@ -11,6 +11,7 @@ internal class CrawlerCursorImpl(
     private var dirty = false
     private var index = 0
     private var offset = 0
+    private var lastBlock = block
 
     private var cacheMapped = indexMap(block)
     private val mapped
@@ -21,6 +22,13 @@ internal class CrawlerCursorImpl(
 
     override fun next() {
         index++
+        val new = mapped[index]!!
+        println("i:$index:$offset new: $new")
+        if (lastBlock !== new) {
+            println("wow")
+            offset = 0
+            lastBlock = new
+        } else offset++
     }
 
     override fun pop() {

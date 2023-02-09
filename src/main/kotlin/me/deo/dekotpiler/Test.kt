@@ -6,9 +6,13 @@ import kotlin.random.Random
 
 class Test {
     fun test() {
-        val thing = TestHelper.maybe() ?: "Fallback"
-        println(thing)
+        val variable = "Hello"
+        if (Random.nextBoolean()) {
+            println("Wow!")
+        }
+        println(variable)
 //        val clazz = Test::class
+
 //        println(clazz.isData)
 //        val method = Test::test as Runnable
 //        println(method.run())
