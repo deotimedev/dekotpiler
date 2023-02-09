@@ -10,11 +10,9 @@ data class KtIfStatement(
     var condition: KtConditional,
     var then: KtStatement,
     var orElse: KtStatement?
-) : KtBodyStatement {
+) : KtMultiBodyStatement {
     override val bodies: List<KtBlockStatement>
-        get() = listOfNotNull(then.asBlock())
-    override val type: KtType
-        get() = super.type // TODO HOW TO FIND COMMON SUPER TYPE!?
+        get() = listOfNotNull(then.asBlock(), orElse?.asBlock())
     override fun code() = buildCode {
         write("if ")
         braced { +condition }

@@ -5,11 +5,13 @@ import me.deo.dekotpiler.model.KtStatement
 import me.deo.dekotpiler.model.KtType
 
 data class KtBlockStatement(
-    val statements: List<KtStatement>
-) : KtStatement {
+    val statements: MutableList<KtStatement>
+) : KtSingleBodyStatement {
+
+    override val body = this
 
     override val type: KtType
-        get() = statements.lastOrNull()?.type ?: super.type
+        get() = statements.lastOrNull()?.type ?: KtType.Unit
 
     override fun code() = buildCode {
         // weird
@@ -22,7 +24,7 @@ data class KtBlockStatement(
 
     companion object {
         fun KtStatement.asBlock() =
-            if (this is KtBlockStatement) this else KtBlockStatement(listOf(this))
+            if (this is KtBlockStatement) this else KtBlockStatement(mutableListOf(this))
     }
 
 }
