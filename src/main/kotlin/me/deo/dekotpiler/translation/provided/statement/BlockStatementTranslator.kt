@@ -23,5 +23,5 @@ class BlockStatementTranslator : Translator<Block, KtBlockStatement> {
                     KtUnknown(stmt.statement)
                 }
             }
-        })
+        }.toMutableList())
 }

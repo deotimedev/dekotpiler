@@ -10,6 +10,7 @@ internal class CrawlerControllerImpl(
     override val crawlers: List<Crawler>
 ) : CrawlerController {
     override fun deploy(crawler: Crawler, block: KtBlockStatement) {
-
+        val cursor = CrawlerCursorImpl(block)
+        with(crawler) { cursor.crawl() }
     }
 }
