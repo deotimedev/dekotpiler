@@ -6,6 +6,8 @@ import me.deo.dekotpiler.model.KtExpression
 import me.deo.dekotpiler.model.KtStatement
 import me.deo.dekotpiler.model.KtType
 import me.deo.dekotpiler.model.KtUnknown
+import me.deo.dekotpiler.model.statements.KtBlockStatement
+import me.deo.dekotpiler.model.statements.KtBlockStatement.Companion.asBlock
 import me.deo.dekotpiler.model.variable.KtVariable
 import me.deo.dekotpiler.processing.Processing
 import me.deo.dekotpiler.processing.Processor
@@ -61,6 +63,12 @@ internal class TranslationImpl(
 
     override fun translateStatement(statement: Op04StructuredStatement): KtStatement =
         translate(statement) ?: KtUnknown(statement)
+
+    override fun translateBlock(statement: CFRStatement) =
+        translateStatement(statement).asBlock()
+
+    override fun translateBlock(statement: Op04StructuredStatement) =
+        translateStatement(statement).asBlock()
 
     override fun <V : KtVariable> translateVariable(variable: LValue): V = (translate(variable) as? V) ?: error("what")
     override fun translateType(type: JavaTypeInstance) = typeMappings.mapping(type) ?: KtType(type, true)

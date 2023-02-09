@@ -7,7 +7,7 @@ interface Crawler {
     fun Cursor.crawl()
 
     interface Cursor {
-        val current: KtStatement
+        val current: KtStatement?
         fun next()
         fun pop()
         fun reset()

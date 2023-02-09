@@ -8,8 +8,8 @@ import me.deo.dekotpiler.model.statements.KtBlockStatement.Companion.asBlock
 
 data class KtIfStatement(
     var condition: KtConditional,
-    var then: KtStatement,
-    var orElse: KtStatement?
+    var then: KtBlockStatement,
+    var orElse: KtBlockStatement?
 ) : KtMultiBodyStatement {
     override val bodies: List<KtBlockStatement>
         get() = listOfNotNull(then.asBlock(), orElse?.asBlock())

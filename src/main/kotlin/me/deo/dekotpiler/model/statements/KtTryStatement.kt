@@ -1,15 +1,14 @@
 package me.deo.dekotpiler.model.statements
 
-import me.deo.dekotpiler.model.KtStatement
 import me.deo.dekotpiler.coding.buildCode
-import me.deo.dekotpiler.model.statements.KtBlockStatement.Companion.asBlock
+import me.deo.dekotpiler.model.KtStatement
 import me.deo.dekotpiler.model.variable.KtLocalVariable
 import me.deo.dekotpiler.util.singleOf
 
 data class KtTryStatement(
-    var statement: KtStatement,
+    var statement: KtBlockStatement,
     val catches: MutableList<Catch>,
-    var finally: KtStatement?
+    var finally: KtBlockStatement?
 ) : KtMultiBodyStatement {
 
     override val type get() = statement.type
@@ -17,7 +16,7 @@ data class KtTryStatement(
     override val bodies: List<KtBlockStatement>
         get() = (singleOf(statement) + catches.map { it.statement }).let { list ->
             finally?.let { list + it } ?: list
-        }.map { it.asBlock() }
+        }
 
     override fun code() = buildCode {
         write("try")
@@ -36,7 +35,7 @@ data class KtTryStatement(
 
     data class Catch(
         var throwable: KtLocalVariable,
-        var statement: KtStatement
+        var statement: KtBlockStatement
     ) : KtStatement {
         override fun code() = buildCode {
             write("catch ")

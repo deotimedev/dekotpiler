@@ -11,7 +11,7 @@ class IfStatementTranslator : Translator<StructuredIf, KtIfStatement> {
     override val type = StructuredIf::class
     override fun Translation.translation(value: StructuredIf) = KtIfStatement(
         translateConditional(value.conditionalExpression),
-        translateStatement(value.ifTaken),
-        value.elseBlock?.let { translateStatement(it) }
+        translateBlock(value.ifTaken),
+        value.elseBlock?.let { translateBlock(it) }
     )
 }
