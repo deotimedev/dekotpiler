@@ -1,6 +1,7 @@
-package me.deo.dekotpiler.metadata
+package me.deo.dekotpiler.metadata.impl
 
 import kotlinx.metadata.jvm.Metadata
+import me.deo.dekotpiler.metadata.MetadataResolver
 import org.objectweb.asm.AnnotationVisitor
 import org.objectweb.asm.ClassReader
 import org.objectweb.asm.ClassVisitor

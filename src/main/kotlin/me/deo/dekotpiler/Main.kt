@@ -2,15 +2,15 @@ package me.deo.dekotpiler
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
+import kotlinx.metadata.jvm.KotlinClassMetadata
 import me.deo.dekotpiler.decompile.CFRDecompilerEngine
 import me.deo.dekotpiler.decompile.DecompilerEngine
-import me.deo.dekotpiler.metadata.MetadataReader
 import me.deo.dekotpiler.metadata.MetadataResolver
 import me.deo.dekotpiler.model.statements.KtBlockStatement
 import me.deo.dekotpiler.translation.Translation
 import me.deo.dekotpiler.util.exportTasks
 import me.deo.dekotpiler.util.getValue
-import me.deo.dekotpiler.util.helper.FileSelector
+import me.deo.dekotpiler.ui.FileSelector
 import me.deo.dekotpiler.util.task
 import me.deo.dekotpiler.util.taskAsync
 import org.springframework.boot.Banner
@@ -25,7 +25,6 @@ import java.io.File
 class Main(
     private val metadataResolver: MetadataResolver,
     private val fileSelector: FileSelector,
-    private val reader: MetadataReader,
     private val engines: List<DecompilerEngine>,
     private val translation: Translation
 ) : CommandLineRunner {
@@ -37,7 +36,7 @@ class Main(
         // testing
         val file = File(File("").absolutePath, "/build/classes/kotlin/main/me/deo/dekotpiler/Test.class")
 
-        val metadata by taskAsync("Metadata") { reader.read(metadataResolver.resolve(file)) }
+        val metadata by taskAsync("Metadata") { KotlinClassMetadata.read(metadataResolver.resolve(file)) }
         val clazz by taskAsync("CFR") { cfr.decompile(file) ?: error("Couldn't read class.") }
 
         task("Kotlin Decompilation") {
