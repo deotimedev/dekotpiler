@@ -4,7 +4,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
 import kotlinx.metadata.jvm.KotlinClassMetadata
 import me.deo.dekotpiler.crawler.CrawlerController
-import me.deo.dekotpiler.crawler.TestCrawler
+import me.deo.dekotpiler.crawler.provided.LocalVariableDeclarationCrawler
 import me.deo.dekotpiler.decompile.CFRDecompilerEngine
 import me.deo.dekotpiler.decompile.DecompilerEngine
 import me.deo.dekotpiler.metadata.MetadataResolver
@@ -30,7 +30,7 @@ class Main(
     private val engines: List<DecompilerEngine>,
     private val translation: Translation,
     private val crawlerController: CrawlerController,
-    private val testCrawler: TestCrawler
+    private val testCrawler: LocalVariableDeclarationCrawler
 ) : CommandLineRunner {
     // This will eventually be replaced by a CLI
     override fun run(vararg args: String): Unit = runBlocking(Dispatchers.Default) {
@@ -48,9 +48,7 @@ class Main(
                 val block = cfrMethod.analysis.statement.let { stmt ->
                     val translated = translation.translateStatement(stmt)
                     if ((translated as KtBlockStatement).statements.isEmpty()) return@forEach
-                    println("------------${cfrMethod.name}---------------")
-                    println(translated.code())
-                    println("------------${cfrMethod.name}---------------")
+
                     println((translated as KtBlockStatement).statements.lastOrNull()?.let { it::class })
                     translated
                 }
@@ -60,6 +58,10 @@ class Main(
                 } catch (ex: Exception) {
                     ex.printStackTrace()
                 }
+
+                println("------------${cfrMethod.name}---------------")
+                println(block.code())
+                println("------------${cfrMethod.name}---------------")
 
             }
         }

@@ -15,6 +15,7 @@ internal class CrawlerControllerImpl(
         val paths = paths(block)
         paths.forEach {
             println("PATH: $it with ${it.size}")
+            crawler.crawl(it)
         }
     }
 

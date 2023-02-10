@@ -14,7 +14,7 @@ class LocalVariableTranslator : Translator<LocalVariable, KtLocalVariable> {
     override fun Translation.translation(value: LocalVariable): KtLocalVariable = KtLocalVariable(
         value,
         value.name.stringName,
-        true, // todo postprocessing for this
-        translateType(value.inferredJavaType.javaTypeInstance)
+        true,
+        translateType(value.inferredJavaType.javaTypeInstance).nullable(false)
     )
 }

@@ -6,8 +6,9 @@ import kotlin.random.Random
 
 class Test {
     fun test() {
-        val variable = "Hello"
+        var variable: String? = "Hello"
         if (Random.nextBoolean()) {
+            variable = null
             println("Wow!")
         }
         println(variable)
