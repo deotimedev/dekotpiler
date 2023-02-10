@@ -2,7 +2,7 @@ package me.deo.dekotpiler.matching
 
 import kotlin.reflect.KClass
 
-
+// FIXME
 interface ClassMatcher<T : Any> : Matcher<T> {
 
     val clazz: KClass<T>

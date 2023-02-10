@@ -4,6 +4,7 @@ import kotlin.random.Random
 
 object TestHelper {
 
+    fun obj() = Opp()
     fun maybe(): String? = if (Random.nextBoolean()) "Hello" else null
 
     fun notInlinedClosure(closure: () -> Unit) {
@@ -17,6 +18,7 @@ object TestHelper {
     }
 
     class Opp {
+        val tset = true
         operator fun unaryPlus() = "Hoka"
         operator fun plus(num: Int) = "Sss"
         operator fun set(amount: Int, name: String, alive: Boolean) {

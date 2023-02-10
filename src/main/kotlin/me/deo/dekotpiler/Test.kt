@@ -2,13 +2,15 @@ package me.deo.dekotpiler
 
 import me.deo.dekotpiler.matching.Matcher
 import me.deo.dekotpiler.matching.Matcher.Companion.match
+import java.util.Base64
 import kotlin.random.Random
 
 class Test {
     fun test() {
-        var variable: String? = "Hello"
-        if (Random.nextBoolean()) {
-            variable = null
+        val check = Base64.getEncoder()
+        var variable: String? = null
+        if (check.toString() == "Yes") {
+            variable = "stack"
             println("Wow!")
         }
         println(variable)

@@ -1,0 +1,29 @@
+package me.deo.dekotpiler.processing.provided
+
+import me.deo.dekotpiler.matching.ClassMatcher
+import me.deo.dekotpiler.matching.ValueMatcher
+import me.deo.dekotpiler.model.KtType
+import me.deo.dekotpiler.model.expressions.KtCastExpression
+import me.deo.dekotpiler.model.expressions.invoke.KtEqualityCheck
+import me.deo.dekotpiler.model.expressions.invoke.KtMethodInvoke
+import me.deo.dekotpiler.model.expressions.invoke.KtStaticInvoke
+import me.deo.dekotpiler.processing.PreProcessor
+import org.springframework.stereotype.Component
+import kotlin.jvm.internal.Intrinsics
+
+@Component
+class IntrinsicEqualityCheckProcessor :
+    PreProcessor<KtStaticInvoke>,
+    ClassMatcher<KtStaticInvoke> by IntrinsicEqualityCheckMatcher {
+
+    override fun replace(value: KtStaticInvoke) =
+        KtEqualityCheck(
+            value.method,
+            value.args[0],
+            value.args[1],
+        )
+
+    companion object {
+        val IntrinsicEqualityCheckMatcher = KtStaticInvoke.Matcher<Intrinsics>("areEqual")
+    }
+}

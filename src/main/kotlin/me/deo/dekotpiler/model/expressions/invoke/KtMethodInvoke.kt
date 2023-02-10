@@ -8,7 +8,8 @@ data class KtMethodInvoke(
     override var method: MethodPrototype,
     override var args: MutableList<KtExpression>,
     override var reference: KtExpression,
-    override var extension: Boolean
+    override var extension: Boolean,
+    override val name: String = method.name
 ) : KtMemberInvoke {
     override fun code() = buildCode {
         operator?.let { op ->
@@ -25,7 +26,7 @@ data class KtMethodInvoke(
                     result
                 }
         } ?: run {
-            write(reference, reference.nullCheckedChain(), method.name)
+            write(reference, reference.nullCheckedChain(), name)
             braced { +args.joinToString { it.code().toString() } }
         }
     }

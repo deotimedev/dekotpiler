@@ -18,7 +18,8 @@ data class KtType(
     val simpleName get() =
         "$rawSimpleName${if (nullable) "?" else ""}"
 
-    val rawSimpleName get() = delegate.rawName.split(".").last()
+    val rawSimpleName get() =
+        delegate.rawName.split(".").last().replace("$", ".")
 
     override val type = this
     override fun code() = buildCode {
