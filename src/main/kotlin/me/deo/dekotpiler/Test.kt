@@ -7,10 +7,9 @@ import kotlin.random.Random
 
 class Test {
     fun test() {
-        val check by lazy { Random.nextInt() }
-        println("yes")
-        if (check == 55) {
-            println("wow")
+        val array = listOf("Okay", "yes").toTypedArray()
+        for (item in array) {
+            println("Item: $item")
         }
 //        val clazz = Test::class
 

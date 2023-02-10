@@ -1,15 +1,14 @@
 package me.deo.dekotpiler.model.expressions
 
 import me.deo.dekotpiler.model.KtExpression
-import me.deo.dekotpiler.model.KtType
 import me.deo.dekotpiler.coding.buildCode
+import me.deo.dekotpiler.model.KtType
 
-data class KtCastExpression(
+data class KtThrowExpression(
     var expression: KtExpression,
-    var cast: KtType
 ) : KtExpression {
-    override val type get() = cast
+    override val type = KtType.Nothing
     override fun code() = buildCode {
-        braced { write(expression, " as ", cast) }
+        write("throw ", expression)
     }
 }

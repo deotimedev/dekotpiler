@@ -9,16 +9,17 @@ import me.deo.dekotpiler.model.variable.KtLocalVariable
 private const val ExplicitType = true
 
 data class KtVariableAssignmentStatement(
-    val declaring: Boolean,
-    val variable: KtLocalVariable,
-    val expression: KtExpression
+    var declaring: Boolean,
+    var variable: KtLocalVariable,
+    var expression: KtExpression?
 ) : KtStatement {
 
     override fun code() = buildCode {
-        println()
         if (declaring) write(if (variable.final) "val" else "var", " ")
         +variable.name
         if (declaring && ExplicitType) write(": ", variable.type.simpleName)
-        write(" = ", expression) // TODO delegation could instead happen here
+        expression?.let {
+            write(" = ", it) // TODO delegation could instead happen here
+        }
     }
 }
