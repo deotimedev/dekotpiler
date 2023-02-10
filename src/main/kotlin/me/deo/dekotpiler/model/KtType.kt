@@ -10,7 +10,8 @@ import kotlin.reflect.typeOf
 
 data class KtType(
     internal val delegate: JavaTypeInstance, // TODO
-    val nullable: Boolean = true
+    val nullable: Boolean = true,
+    val generics: MutableList<KtType> = mutableListOf()
 ) : JavaTypeInstance by delegate,
     KtTyped,
     Codable {
@@ -19,6 +20,7 @@ data class KtType(
         "$rawSimpleName${if (nullable) "?" else ""}"
 
     val rawSimpleName get() =
+        // TODO this is broken with generics
         delegate.rawName.split(".").last().replace("$", ".")
 
     override val type = this

@@ -15,6 +15,7 @@ data class KtVariableAssignmentStatement(
 ) : KtStatement {
 
     override fun code() = buildCode {
+        println()
         if (declaring) write(if (variable.final) "val" else "var", " ")
         +variable.name
         if (declaring && ExplicitType) write(": ", variable.type.simpleName)

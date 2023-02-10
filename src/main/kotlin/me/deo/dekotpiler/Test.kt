@@ -7,13 +7,11 @@ import kotlin.random.Random
 
 class Test {
     fun test() {
-        val check = Base64.getEncoder()
-        var variable: String? = null
-        if (check.toString() == "Yes") {
-            variable = "stack"
-            println("Wow!")
+        val check by lazy { Random.nextInt() }
+        println("yes")
+        if (check == 55) {
+            println("wow")
         }
-        println(variable)
 //        val clazz = Test::class
 
 //        println(clazz.isData)

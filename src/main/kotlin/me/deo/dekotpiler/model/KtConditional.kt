@@ -3,7 +3,7 @@ package me.deo.dekotpiler.model
 import me.deo.dekotpiler.coding.buildCode
 import me.deo.dekotpiler.util.gather
 
-data class KtConditional(
+open class KtConditional(
     var underlying: KtExpression,
     var joined: Joined? = null,
     var inverse: Boolean = false
