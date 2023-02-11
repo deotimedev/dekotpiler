@@ -83,7 +83,6 @@ internal class TranslationImpl(
             if (type is JavaArrayTypeInstance) KtType.array(translateType(type.arrayStrippedType))
             else typeMappings.mapping(type) ?: KtType(
                 type.deGenerifiedType.rawName,
-                (type.deGenerifiedType as? JavaRefTypeInstance)?.rawShortName ?: type.rawName,
                 generics = (type as? JavaGenericRefTypeInstance)?.genericTypes.orEmpty().map(::translateType)
             )
 

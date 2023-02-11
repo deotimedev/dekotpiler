@@ -7,7 +7,6 @@ import me.deo.dekotpiler.matching.ClassMatcher
 import org.benf.cfr.reader.bytecode.analysis.types.MethodPrototype
 
 // Not to be confused with a companion object invoke
-// Can this also be used as a constructor?
 data class KtStaticInvoke(
     var enclosingType: KtType,
     override var method: MethodPrototype,

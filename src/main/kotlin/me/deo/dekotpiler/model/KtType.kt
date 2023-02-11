@@ -9,7 +9,7 @@ import kotlin.reflect.typeOf
 
 data class KtType(
     val typeName: String,
-    val simpleName: String = typeName,
+    val simpleName: String = typeName.split(".").last().replace("$", "."), // TODO
     val nullable: Boolean = true,
     val generics: List<KtType> = emptyList(),
 ) : KtTyped,
