@@ -7,10 +7,7 @@ import kotlin.random.Random
 
 class Test {
     fun test() {
-        val array = listOf("Okay", "yes").toTypedArray()
-        for (item in array) {
-            println("Item: $item")
-        }
+        TestHelper.getterSetterValue = "Truthy"
 //        val clazz = Test::class
 
 //        println(clazz.isData)

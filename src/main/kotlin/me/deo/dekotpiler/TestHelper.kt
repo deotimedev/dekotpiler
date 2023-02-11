@@ -7,6 +7,10 @@ object TestHelper {
     fun obj() = Opp()
     fun maybe(): String? = if (Random.nextBoolean()) "Hello" else null
 
+    var getterSetterValue
+        get() = "Got"
+        set(value) { println("Sot") }
+
     fun notInlinedClosure(closure: () -> Unit) {
         closure()
     }
