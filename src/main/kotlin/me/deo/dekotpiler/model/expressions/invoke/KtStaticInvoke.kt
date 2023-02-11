@@ -15,7 +15,7 @@ data class KtStaticInvoke(
 ) : KtInvoke {
     override val extension = false
     override fun code() = buildCode {
-        write(enclosingType.nullable(false).simpleName, ".", method.name)
+        write(enclosingType.simpleName, ".", method.name)
         braced { +args.joinToString { it.code().toString() } }
     }
 
@@ -26,7 +26,7 @@ data class KtStaticInvoke(
 
         override val clazz = KtStaticInvoke::class
         override fun KtStaticInvoke.match() =
-            enclosingType.rawName == className && name == functionName
+            enclosingType.typeName == className && name == functionName
 
         companion object {
             inline operator fun <reified T> invoke(functionName: String) =

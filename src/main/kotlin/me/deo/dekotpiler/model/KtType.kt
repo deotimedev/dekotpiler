@@ -2,32 +2,28 @@ package me.deo.dekotpiler.model
 
 import me.deo.dekotpiler.coding.Codable
 import me.deo.dekotpiler.coding.buildCode
-import me.deo.dekotpiler.matching.ClassMatcher
-import org.benf.cfr.reader.bytecode.analysis.types.JavaRefTypeInstance
-import org.benf.cfr.reader.bytecode.analysis.types.JavaTypeInstance
+import me.deo.dekotpiler.coding.codeOf
 import kotlin.reflect.KClass
+import kotlin.reflect.KType
 import kotlin.reflect.typeOf
 
 data class KtType(
-    internal val delegate: JavaTypeInstance, // TODO
+    val typeName: String,
+    val simpleName: String = typeName.split(".").last(),
     val nullable: Boolean = true,
-    val generics: MutableList<KtType> = mutableListOf()
-) : JavaTypeInstance by delegate,
-    KtTyped,
+    val generics: List<KtType> = emptyList(),
+) : KtTyped,
     Codable {
 
-    val simpleName get() =
-        "$rawSimpleName${if (nullable) "?" else ""}"
-
-    val rawSimpleName get() =
-        // TODO this is broken with generics
-        delegate.rawName.split(".").last().replace("$", ".")
+    val name = buildString {
+        append(simpleName)
+        if (generics.isNotEmpty())
+            append("<", generics.joinToString { it.simpleName }, ">")
+        if (nullable) append("?")
+    }
 
     override val type = this
-    override fun code() = buildCode {
-        write(delegate)
-        if (nullable) +"?"
-    }
+    override fun code() = codeOf(name)
 
     fun nullable(nullable: Boolean = true) = copy(nullable = nullable)
 
@@ -35,7 +31,7 @@ data class KtType(
 
         val Any = KtType<Any>()
         val Unit = KtType<Unit>()
-        val Nothing = KtType(JavaRefTypeInstance.createTypeConstant("kotlin.Nothing"), false)
+        val Nothing = KtType("kotlin.Nothing")
 
         val Int = KtType<Int>()
         val Long = KtType<Long>()
@@ -50,13 +46,34 @@ data class KtType(
         val JClass = KtType<Class<*>>()
 
 
-        fun java(clazz: Class<*>): JavaRefTypeInstance = JavaRefTypeInstance.createTypeConstant(
-            clazz.kotlin.qualifiedName ?: error("Glitchy class"),
-            *((clazz.interfaces + clazz.superclass).filterNotNull().map(::java)).toTypedArray()
-        )
+        operator fun invoke(
+            type: KClass<*>,
+            nullable: Boolean,
+            generics: List<KtType>
+        ) =
+            KtType(
+                type.qualifiedName!!,
+                type.simpleName!!,
+                nullable,
+                generics,
+            ).let { if (type.java.isArray) array(it) else it }
 
-        inline operator fun <reified T> invoke() =
-            KtType(java(T::class.java), typeOf<T>().isMarkedNullable)
+        operator fun invoke(
+            type: KType,
+        ): KtType =
+            invoke(
+                type.classifier as KClass<*>,
+                type.isMarkedNullable,
+                type.arguments.mapNotNull { it.type?.let(::invoke) }
+            )
+
+        inline operator fun <reified T> invoke() = invoke(typeOf<T>())
+
+        fun array(type: KtType) = KtType(
+            "kotlin.Array",
+            nullable = false,
+            generics = listOf(type)
+        )
     }
 
 }

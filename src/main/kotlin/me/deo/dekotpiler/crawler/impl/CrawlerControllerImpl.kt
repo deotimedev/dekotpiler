@@ -11,10 +11,8 @@ internal class CrawlerControllerImpl(
     override val crawlers: List<Crawler>
 ) : CrawlerController {
     override fun deploy(crawler: Crawler, block: KtBlockStatement) {
-        println("${block.statements.size} statements")
         val paths = paths(block)
         paths.forEach {
-            println("PATH: $it with ${it.size}")
             crawler.crawl(it)
         }
     }
@@ -24,7 +22,7 @@ internal class CrawlerControllerImpl(
             is KtMultiBodyStatement -> item.bodies.flatMap { paths(it) }.map { path ->
                 listOf(thing) + path
             }
-            else -> listOf()
+            else -> emptyList()
         }
     }.flatten())
 }

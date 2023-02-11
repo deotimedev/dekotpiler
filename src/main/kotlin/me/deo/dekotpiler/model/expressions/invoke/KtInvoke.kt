@@ -10,9 +10,4 @@ interface KtInvoke : KtExpression, KtStatement {
     val args: MutableList<KtExpression>
     val name: String get() = method.name
     val extension: Boolean
-
-    // This is incorrect and needs to be replaced once function wrapper is made
-    override val type: KtType
-        get() = KtType(method.returnType)
-
 }

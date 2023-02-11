@@ -27,21 +27,19 @@ import java.io.File
 class Main(
     private val metadataResolver: MetadataResolver,
     private val fileSelector: FileSelector,
-    private val engines: List<DecompilerEngine>,
+    private val engine: DecompilerEngine,
     private val translation: Translation,
     private val crawlerController: CrawlerController,
     private val testCrawler: LocalVariableDeclarationCrawler
 ) : CommandLineRunner {
     // This will eventually be replaced by a CLI
     override fun run(vararg args: String): Unit = runBlocking(Dispatchers.Default) {
-        // using cfr for testing
-        val cfr = engines.filterIsInstance<CFRDecompilerEngine>().first()
 
         // testing
         val file = File(File("").absolutePath, "/build/classes/kotlin/main/me/deo/dekotpiler/Test.class")
 
         val metadata by taskAsync("Metadata") { KotlinClassMetadata.read(metadataResolver.resolve(file)) }
-        val clazz by taskAsync("CFR") { cfr.decompile(file) ?: error("Couldn't read class.") }
+        val clazz by taskAsync("CFR") { engine.decompile(file) ?: error("Couldn't read class.") }
 
         task("Kotlin Decompilation") {
             clazz.methods.forEach { cfrMethod ->

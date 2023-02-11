@@ -19,6 +19,9 @@ import me.deo.dekotpiler.util.gather
 import org.benf.cfr.reader.bytecode.analysis.opgraph.Op04StructuredStatement
 import org.benf.cfr.reader.bytecode.analysis.parse.LValue
 import org.benf.cfr.reader.bytecode.analysis.parse.expression.ConditionalExpression
+import org.benf.cfr.reader.bytecode.analysis.types.JavaArrayTypeInstance
+import org.benf.cfr.reader.bytecode.analysis.types.JavaGenericRefTypeInstance
+import org.benf.cfr.reader.bytecode.analysis.types.JavaRefTypeInstance
 import org.benf.cfr.reader.bytecode.analysis.types.JavaTypeInstance
 import org.springframework.stereotype.Component
 import kotlin.reflect.KClass
@@ -71,7 +74,14 @@ internal class TranslationImpl(
         translateStatement(statement).asBlock()
 
     override fun <V : KtVariable> translateVariable(variable: LValue): V = (translate(variable) as? V) ?: error("what")
-    override fun translateType(type: JavaTypeInstance) = typeMappings.mapping(type) ?: KtType(type, true)
+    override fun translateType(type: JavaTypeInstance): KtType =
+        if (type is JavaArrayTypeInstance) KtType.array(translateType(type.arrayStrippedType))
+        else typeMappings.mapping(type) ?: KtType(
+            type.deGenerifiedType.rawName,
+            (type as? JavaRefTypeInstance)?.rawShortName ?: type.rawName,
+            generics = (type as? JavaGenericRefTypeInstance)?.genericTypes.orEmpty().map(::translateType)
+        )
+
     override fun translateConditional(conditional: ConditionalExpression): KtConditional =
         translate(conditional) ?: KtConditional(KtUnknown(conditional))
 }
