@@ -12,6 +12,7 @@ class TypeMappingsImpl : TypeMappings {
     override fun mapping(java: JavaTypeInstance) = when (java) {
         TypeConstants.OBJECT -> KtType.Any
         TypeConstants.STRING -> KtType.String
+        TypeConstants.CLASS -> KtType.JClass
         RawJavaType.VOID -> KtType.Unit
         RawJavaType.INT -> KtType.Int
         RawJavaType.LONG -> KtType.Long
@@ -23,6 +24,7 @@ class TypeMappingsImpl : TypeMappings {
         RawJavaType.CHAR -> KtType.Char
         else -> when (java.rawName) {
             "java.lang.Void" -> KtType.Nothing
+            "kotlin.reflect.KClass" -> KtType.KClass
             else -> null
         }
     }?.nullable()

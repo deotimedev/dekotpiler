@@ -27,7 +27,7 @@ sealed class KtLiteral<T>(override val type: KtType, val letter: Char? = null) :
     data class String(override var value: KtString) : KtLiteral<KtString>(KtType.String) {
         override fun code() = codeOf("\"", value, "\"")
     }
-    data class Class(override var value: KtType) : KtLiteral<KtType>(KtType.KClass) {
+    data class Class(override var value: KtType) : KtLiteral<KtType>(KtType.KClass.generics(value)) {
         override fun code() = codeOf(value.nullable(false).simpleName, "::class")
     }
     object Null : KtLiteral<Nothing?>(KtType.Nothing.nullable()) {

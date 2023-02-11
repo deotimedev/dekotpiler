@@ -13,17 +13,12 @@ import kotlin.jvm.internal.Intrinsics
 
 @Component
 class LocalVariableDeclarationCrawler : Crawler {
-    var did = false
     override fun crawl(path: List<KtBlockStatement>) {
         val declared = mutableMapOf<String, KtVariableAssignmentStatement>()
         fun declaration(variable: KtLocalVariable) = declared[variable.name]
         path.forEach { block ->
             block.statements.removeIf { stmt ->
                 if (stmt is KtVariableAssignmentStatement) {
-                    if (!did) {
-                        stmt.variable.name = "lol"
-                        did = true
-                    }
                     var declaration: KtVariableAssignmentStatement? = null
                     if (stmt.declaring) {
                         declared[stmt.variable.name] = stmt
@@ -35,8 +30,15 @@ class LocalVariableDeclarationCrawler : Crawler {
                         }
                     }
 
-                    if (stmt.expression == KtLiteral.Null)
-                        declaration?.variable?.apply { type = type.nullable() }
+                    declaration?.variable?.apply {
+                        if (!delegate.name.isGoodName) {
+                            value = declaration?.expression
+                            return@removeIf true
+                        }
+                        if (stmt.expression == KtLiteral.Null)
+                            type = type.nullable()
+                    }
+
                 } else if (stmt is KtStaticInvoke) {
                     if (NotNullCheckMatcher.match(stmt)) {
                         declaration((stmt.args[0] as KtLocalVariable))?.let { declaration ->

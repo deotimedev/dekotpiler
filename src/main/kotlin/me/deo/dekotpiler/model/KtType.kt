@@ -9,7 +9,7 @@ import kotlin.reflect.typeOf
 
 data class KtType(
     val typeName: String,
-    val simpleName: String = typeName.split(".").last(),
+    val simpleName: String = typeName,
     val nullable: Boolean = true,
     val generics: List<KtType> = emptyList(),
 ) : KtTyped,
@@ -26,8 +26,11 @@ data class KtType(
     override fun code() = codeOf(name)
 
     fun nullable(nullable: Boolean = true) = copy(nullable = nullable)
+    fun generics(vararg types: KtType) = copy(generics = types.toList())
 
     companion object {
+
+        val Star = KtType("*")
 
         val Any = KtType<Any>()
         val Unit = KtType<Unit>()
@@ -44,6 +47,7 @@ data class KtType(
         val String = KtType<String>()
         val KClass = KtType<KClass<*>>()
         val JClass = KtType<Class<*>>()
+
 
 
         operator fun invoke(
@@ -64,7 +68,7 @@ data class KtType(
             invoke(
                 type.classifier as KClass<*>,
                 type.isMarkedNullable,
-                type.arguments.mapNotNull { it.type?.let(::invoke) }
+                type.arguments.map { it.type?.let(::invoke) ?: Star }
             )
 
         inline operator fun <reified T> invoke() = invoke(typeOf<T>())

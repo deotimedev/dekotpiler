@@ -3,36 +3,29 @@ package me.deo.dekotpiler
 import me.deo.dekotpiler.matching.Matcher
 import me.deo.dekotpiler.matching.Matcher.Companion.match
 import java.util.Base64
+import java.util.function.Function
+import java.util.function.Supplier
 import kotlin.random.Random
 
 class Test {
     fun test() {
-        var helper = TestHelper.Opp()
-        helper = TestHelper.Opp()
-        helper[55, "yes"] = true
-//        val clazz = Test::class
+        val clazz = Test::class
 
-//        println(clazz.isData)
-//        val method = Test::test as Runnable
-//        println(method.run())
-//        val helper = TestHelper.Opp()
-//        helper[55, "yes"] = true
-//        val thing = "Hellok ${Random.nextInt()}!!! Great"
-//        "Okay".extensionValue
-//        "why".extensionValue = "okay"
-//        println(TestHelper.maybe())
-//        while (Random.nextBoolean()) {
-//            if (TestHelper.bool(true) && TestHelper.bool(false)) {
-//                val test = 55
-//                println("HEllo $test")
-//            }
-//        }
-    }
-
-    fun other() {
-        var helper = TestHelper.Opp()
-        helper = TestHelper.Opp()
+        println(clazz.isData)
+        val method = Test::test as Function<Int, String>
+        println(method.apply(55))
+        val helper = TestHelper.Opp()
         helper[55, "yes"] = true
+        val thing = "Hellok ${Random.nextInt()}!!! Great"
+        "Okay".extensionValue
+        "why".extensionValue = "okay"
+        println(TestHelper.maybe())
+        while (Random.nextBoolean()) {
+            if (TestHelper.bool(true) && TestHelper.bool(false)) {
+                val test = 55
+                println("HEllo $test")
+            }
+        }
     }
 }
 
