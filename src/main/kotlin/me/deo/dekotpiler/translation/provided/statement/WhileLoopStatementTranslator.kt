@@ -8,7 +8,7 @@ import org.benf.cfr.reader.bytecode.analysis.structured.statement.StructuredWhil
 import org.springframework.stereotype.Component
 
 @Component
-class WhileStatementTranslator : Translator<StructuredWhile, KtWhileStatement> {
+class WhileLoopStatementTranslator : Translator<StructuredWhile, KtWhileStatement> {
     override val type = StructuredWhile::class
     override fun Translation.Session.translation(value: StructuredWhile) = KtWhileStatement(
         translateConditional(value.condition),
