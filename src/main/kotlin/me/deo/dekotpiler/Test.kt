@@ -7,7 +7,9 @@ import kotlin.random.Random
 
 class Test {
     fun test() {
-        TestHelper.getterSetterValue = "Truthy"
+        var helper = TestHelper.Opp()
+        helper = TestHelper.Opp()
+        helper[55, "yes"] = true
 //        val clazz = Test::class
 
 //        println(clazz.isData)
@@ -25,6 +27,12 @@ class Test {
 //                println("HEllo $test")
 //            }
 //        }
+    }
+
+    fun other() {
+        var helper = TestHelper.Opp()
+        helper = TestHelper.Opp()
+        helper[55, "yes"] = true
     }
 }
 

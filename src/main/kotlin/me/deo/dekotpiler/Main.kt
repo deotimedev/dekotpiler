@@ -44,10 +44,10 @@ class Main(
         task("Kotlin Decompilation") {
             clazz.methods.forEach { cfrMethod ->
                 val block = cfrMethod.analysis.statement.let { stmt ->
-                    val translated = translation.translateStatement(stmt)
+                    val translated = translation.session().translateStatement(stmt)
                     if ((translated as KtBlockStatement).statements.isEmpty()) return@forEach
 
-                    println((translated as KtBlockStatement).statements.lastOrNull()?.let { it::class })
+                    println(translated.statements.lastOrNull()?.let { it::class })
                     translated
                 }
 

@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component
 @Component
 class ComparisonOperationTranslator : Translator<ComparisonOperation, KtComparisonInvoke> {
     override val type = ComparisonOperation::class
-    override fun Translation.translation(value: ComparisonOperation) =
+    override fun Translation.Session.translation(value: ComparisonOperation) =
         KtComparisonInvoke(
             translateExpression(value.lhs),
             translateExpression(value.rhs),

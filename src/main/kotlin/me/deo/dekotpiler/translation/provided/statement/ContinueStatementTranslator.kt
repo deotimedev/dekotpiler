@@ -13,6 +13,6 @@ import org.springframework.stereotype.Component
 @Component
 class ContinueStatementTranslator : Translator<StructuredContinue, KtContinueStatement> {
     override val type = StructuredContinue::class
-    override fun Translation.translation(value: StructuredContinue) =
+    override fun Translation.Session.translation(value: StructuredContinue) =
         KtContinueStatement(null)
 }

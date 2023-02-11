@@ -18,7 +18,8 @@ class FieldFacadeProcessor :
     ClassMatcher<KtMethodInvoke> by ClassMatcher() {
 
     override fun replace(value: KtMethodInvoke) =
-        if (value.name.startsWith("get")) KtGetterInvoke(value)
-        else if (value.name.startsWith("set")) KtSetterInvoke(value)
+        // TODO multiclass processing to confirm if these are actually field facades
+        if (value.name.startsWith("get") && value.args.isEmpty()) KtGetterInvoke(value)
+        else if (value.name.startsWith("set") && value.args.size == 1) KtSetterInvoke(value)
         else value
 }

@@ -15,6 +15,8 @@ object TestHelper {
         closure()
     }
 
+    fun generic(): List<String> = listOf("yes", "opk")
+
     inline fun inlinedClosure(closure: () -> Unit) {
         println("start of inline closure")
         closure()

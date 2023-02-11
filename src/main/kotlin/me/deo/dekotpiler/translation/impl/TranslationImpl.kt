@@ -6,7 +6,6 @@ import me.deo.dekotpiler.model.KtExpression
 import me.deo.dekotpiler.model.KtStatement
 import me.deo.dekotpiler.model.KtType
 import me.deo.dekotpiler.model.KtUnknown
-import me.deo.dekotpiler.model.statements.KtBlockStatement
 import me.deo.dekotpiler.model.statements.KtBlockStatement.Companion.asBlock
 import me.deo.dekotpiler.model.variable.KtVariable
 import me.deo.dekotpiler.processing.Processing
@@ -26,62 +25,69 @@ import org.benf.cfr.reader.bytecode.analysis.types.JavaTypeInstance
 import org.springframework.stereotype.Component
 import kotlin.reflect.KClass
 
-@Component
+
 @Suppress("UNCHECKED_CAST")
+@Component
 internal class TranslationImpl(
     translators: List<Translator<*, *>>,
     private val processing: Processing,
     private val typeMappings: TypeMappings
 ) : Translation {
     private val translatorsByType = translators.groupBy { it.type.java }
-
+    override fun session() = SessionImpl()
     override fun <C : Any, K> translators(type: KClass<out C>) =
         translatorsByType[type.java].orEmpty() as List<Translator<C, K>>
 
-    private fun <K : Any> translate(value: Any) =
-        translators<Any, K>(value::class)
-            .find { with(it) { value.match() } }
-            ?.run { translation(value) }
-            ?.let { translated ->
-                fun processors(obj: Any) =
-                    processing.processors(Processor.Mode.Pre, obj::class) as? List<Processor<Any>>
+    inner class SessionImpl : Translation.Session {
 
-                var result: Any = translated
-                processors(translated).gather { list ->
-                    list.find {
-                        if (!with(it) { result.match() }) return@find false
-                        val old = result::class.java
-                        result = it.replace(result)!!
-                        old != result::class.java
-                    }?.let { processors(result) }
+        private val cachedVariables = mutableMapOf<LValue, KtVariable>()
+        private fun <K : Any> translate(value: Any) =
+            translators<Any, K>(value::class)
+                .find { with(it) { value.match() } }
+                ?.run { translation(value) }
+                ?.let { translated ->
+                    fun processors(obj: Any) =
+                        processing.processors(Processor.Mode.Pre, obj::class) as? List<Processor<Any>>
+
+                    var result: Any = translated
+                    processors(translated).gather { list ->
+                        list.find {
+                            if (!with(it) { result.match() }) return@find false
+                            val old = result::class.java
+                            result = it.replace(result)!!
+                            old != result::class.java
+                        }?.let { processors(result) }
+                    }
+                    result as K
                 }
-                result as K
-            }
 
-    override fun translateExpression(expression: CFRExpression): KtExpression =
-        translate(expression) ?: KtUnknown(expression)
+        override fun translateExpression(expression: CFRExpression): KtExpression =
+            translate(expression) ?: KtUnknown(expression)
 
-    override fun translateStatement(statement: CFRStatement): KtStatement =
-        translate(statement) ?: KtUnknown(statement)
+        override fun translateStatement(statement: CFRStatement): KtStatement =
+            translate(statement) ?: KtUnknown(statement)
 
-    override fun translateStatement(statement: Op04StructuredStatement): KtStatement =
-        translate(statement) ?: KtUnknown(statement)
+        override fun translateStatement(statement: Op04StructuredStatement): KtStatement =
+            translate(statement) ?: KtUnknown(statement)
 
-    override fun translateBlock(statement: CFRStatement) =
-        translateStatement(statement).asBlock()
+        override fun translateBlock(statement: CFRStatement) =
+            translateStatement(statement).asBlock()
 
-    override fun translateBlock(statement: Op04StructuredStatement) =
-        translateStatement(statement).asBlock()
+        override fun translateBlock(statement: Op04StructuredStatement) =
+            translateStatement(statement).asBlock()
 
-    override fun <V : KtVariable> translateVariable(variable: LValue): V = (translate(variable) as? V) ?: error("what")
-    override fun translateType(type: JavaTypeInstance): KtType =
-        if (type is JavaArrayTypeInstance) KtType.array(translateType(type.arrayStrippedType))
-        else typeMappings.mapping(type) ?: KtType(
-            type.deGenerifiedType.rawName,
-            (type as? JavaRefTypeInstance)?.rawShortName ?: type.rawName,
-            generics = (type as? JavaGenericRefTypeInstance)?.genericTypes.orEmpty().map(::translateType)
-        )
+        override fun <V : KtVariable> translateVariable(variable: LValue): V =
+            (cachedVariables.computeIfAbsent(variable) { translate(variable)!! } ) as V
 
-    override fun translateConditional(conditional: ConditionalExpression): KtConditional =
-        translate(conditional) ?: KtConditional(KtUnknown(conditional))
+        override fun translateType(type: JavaTypeInstance): KtType =
+            if (type is JavaArrayTypeInstance) KtType.array(translateType(type.arrayStrippedType))
+            else typeMappings.mapping(type) ?: KtType(
+                type.deGenerifiedType.rawName,
+                (type.deGenerifiedType as? JavaRefTypeInstance)?.rawShortName ?: type.rawName,
+                generics = (type as? JavaGenericRefTypeInstance)?.genericTypes.orEmpty().map(::translateType)
+            )
+
+        override fun translateConditional(conditional: ConditionalExpression): KtConditional =
+            translate(conditional) ?: KtConditional(KtUnknown(conditional))
+    }
 }

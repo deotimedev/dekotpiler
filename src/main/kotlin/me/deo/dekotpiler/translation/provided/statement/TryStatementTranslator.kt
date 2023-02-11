@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component
 @Component
 class TryStatementTranslator : Translator<StructuredTry, KtTryStatement> {
     override val type = StructuredTry::class
-    override fun Translation.translation(value: StructuredTry) = KtTryStatement(
+    override fun Translation.Session.translation(value: StructuredTry) = KtTryStatement(
         translateBlock(value.tryBlock),
         value.catchBlocks.map { it.statement }.filterIsInstance<StructuredCatch>().map {
             KtTryStatement.Catch(

@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component
 @Component
 class BooleanOperationTranslator : Translator<BooleanOperation, KtConditional> {
     override val type = BooleanOperation::class
-    override fun Translation.translation(value: BooleanOperation) =
+    override fun Translation.Session.translation(value: BooleanOperation) =
         translateConditional(value.lhs).apply {
             joined = Joined(translateOp(value.op), translateConditional(value.rhs))
         }

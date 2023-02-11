@@ -18,15 +18,19 @@ import kotlin.reflect.KClass
 interface Translation {
 
     fun <C : Any, K> translators(type: KClass<out C>): List<Translator<C, K>>
+    fun session(): Session
 
-    fun translateExpression(expression: CFRExpression): KtExpression
-    fun translateStatement(statement: CFRStatement): KtStatement
-    fun translateStatement(statement: Op04StructuredStatement): KtStatement
-    fun translateBlock(statement: CFRStatement): KtBlockStatement
-    fun translateBlock(statement: Op04StructuredStatement): KtBlockStatement
-    fun <V : KtVariable> translateVariable(variable: LValue): V
-    fun translateType(type: JavaTypeInstance): KtType
-    fun translateType(type: InferredJavaType) = translateType(type.javaTypeInstance)
-    fun translateConditional(conditional: ConditionalExpression): KtConditional
+    interface Session {
+
+        fun translateExpression(expression: CFRExpression): KtExpression
+        fun translateStatement(statement: CFRStatement): KtStatement
+        fun translateStatement(statement: Op04StructuredStatement): KtStatement
+        fun translateBlock(statement: CFRStatement): KtBlockStatement
+        fun translateBlock(statement: Op04StructuredStatement): KtBlockStatement
+        fun <V : KtVariable> translateVariable(variable: LValue): V
+        fun translateType(type: JavaTypeInstance): KtType
+        fun translateType(type: InferredJavaType) = translateType(type.javaTypeInstance)
+        fun translateConditional(conditional: ConditionalExpression): KtConditional
+    }
 
 }

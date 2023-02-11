@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component
 class StaticFieldVariableTranslator : Translator<StaticVariable, KtStaticField> {
     override val type = StaticVariable::class
 
-    override fun Translation.translation(value: StaticVariable) = KtStaticField(
+    override fun Translation.Session.translation(value: StaticVariable) = KtStaticField(
         value,
         translateType(value.owningClassType).nullable(false), // TODO KtType.NonNull
         value.rawFieldName,
