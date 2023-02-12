@@ -2,16 +2,29 @@ package me.deo.dekotpiler
 
 import me.deo.dekotpiler.matching.Matcher
 import me.deo.dekotpiler.matching.Matcher.Companion.match
+import org.jetbrains.annotations.NotNull
 import java.util.Base64
 import java.util.function.Function
 import java.util.function.Supplier
 import kotlin.random.Random
+import kotlin.random.nextInt
+import kotlin.reflect.KClass
+import kotlin.reflect.typeOf
 
 class Test {
-    fun test() {
-        for (i in 0 .. 15) {
-            println("i: $i")
+    tailrec fun test() {
+        println(typeOf<String.(Int, Char) -> Boolean>())
+        val stringBuilder = StringBuilder()
+        stringBuilder.append("yess").append(555)
+        println(stringBuilder.toString())
+        TestHelper.getterSetterValue = "555"
+        if (TestHelper.obj().tset) {
+            repeat(25) {
+                println("Num: ${Random.nextInt(5..10)}")
+            }
         }
+
+        if (Random.nextBoolean()) test()
 //        val clazz = Test::class
 //
 //        println(clazz.isData)

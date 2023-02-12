@@ -11,7 +11,8 @@ data class KtLocalVariable(
     override var name: String,
     override var final: Boolean,
     override var type: KtType,
-    var value: KtExpression? = null
+    var value: KtExpression? = null,
+    var inlinable: Boolean = true
 ) : KtVariable {
 
     val inlined get() = value != null

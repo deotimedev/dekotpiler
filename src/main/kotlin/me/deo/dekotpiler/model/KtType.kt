@@ -48,6 +48,10 @@ data class KtType(
         val KClass = KtType<KClass<*>>()
         val JClass = KtType<Class<*>>()
 
+        // ranges
+        val IntRange = KtType<IntRange>()
+        val LongRange = KtType<LongRange>()
+        val CharRange = KtType<CharRange>()
 
 
         operator fun invoke(
