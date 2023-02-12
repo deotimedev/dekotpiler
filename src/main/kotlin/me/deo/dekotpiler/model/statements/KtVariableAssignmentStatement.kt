@@ -4,13 +4,14 @@ import me.deo.dekotpiler.model.KtExpression
 import me.deo.dekotpiler.model.KtStatement
 import me.deo.dekotpiler.coding.buildCode
 import me.deo.dekotpiler.model.variable.KtLocalVariable
+import me.deo.dekotpiler.model.variable.KtVariable
 
 // for testing but might be made config option
 private const val ExplicitType = true
 
-data class KtVariableAssignmentStatement(
+class KtVariableAssignmentStatement(
     var declaring: Boolean,
-    var variable: KtLocalVariable,
+    var variable: KtVariable,
     var expression: KtExpression?
 ) : KtStatement {
 

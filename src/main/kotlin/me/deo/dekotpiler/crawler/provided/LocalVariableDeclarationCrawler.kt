@@ -30,13 +30,13 @@ class LocalVariableDeclarationCrawler : Crawler {
                         }
                     }
 
-                    declaration?.variable?.apply {
-                        if (!delegate.name.isGoodName) {
+                    (declaration?.variable as? KtLocalVariable)?.apply {
+                        if (stmt.expression == KtLiteral.Null)
+                            type = type.nullable()
+                        if (inlinable && !delegate.name.isGoodName) {
                             value = declaration?.expression
                             return@removeIf true
                         }
-                        if (stmt.expression == KtLiteral.Null)
-                            type = type.nullable()
                     }
 
                 } else if (stmt is KtStaticInvoke) {

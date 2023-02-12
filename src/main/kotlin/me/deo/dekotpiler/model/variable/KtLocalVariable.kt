@@ -12,10 +12,12 @@ data class KtLocalVariable(
     override var final: Boolean,
     override var type: KtType,
     var value: KtExpression? = null,
-    var inlinable: Boolean = true
 ) : KtVariable {
 
-    val inlined get() = value != null
+    var uses = -1
+
+    val inlinable get() = uses <= 1
+    val inlined get() = inlinable && value != null
 
     override fun code() = codeOf(if (inlined) value else name)
 }

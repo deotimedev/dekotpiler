@@ -7,6 +7,7 @@ import me.deo.dekotpiler.model.KtStatement
 import me.deo.dekotpiler.model.KtType
 import me.deo.dekotpiler.model.KtUnknown
 import me.deo.dekotpiler.model.statements.KtBlockStatement.Companion.asBlock
+import me.deo.dekotpiler.model.variable.KtLocalVariable
 import me.deo.dekotpiler.model.variable.KtVariable
 import me.deo.dekotpiler.processing.Processing
 import me.deo.dekotpiler.processing.Processor
@@ -77,7 +78,9 @@ internal class TranslationImpl(
             translateStatement(statement).asBlock()
 
         override fun <V : KtVariable> translateVariable(variable: LValue): V =
-            (cachedVariables.computeIfAbsent(variable) { translate(variable)!! } ) as V
+            ((cachedVariables.computeIfAbsent(variable) { translate(variable)!! } ) as V).also {
+                if (it is KtLocalVariable) it.uses++
+            }
 
         override fun translateType(type: JavaTypeInstance): KtType =
             if (type is JavaArrayTypeInstance) KtType.array(translateType(type.arrayStrippedType))
