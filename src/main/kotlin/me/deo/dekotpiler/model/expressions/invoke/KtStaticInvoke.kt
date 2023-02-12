@@ -4,32 +4,32 @@ import me.deo.dekotpiler.model.KtExpression
 import me.deo.dekotpiler.model.KtType
 import me.deo.dekotpiler.coding.buildCode
 import me.deo.dekotpiler.matching.ClassMatcher
+import me.deo.dekotpiler.model.function.KtFunction
 import org.benf.cfr.reader.bytecode.analysis.types.MethodPrototype
 
 // Not to be confused with a companion object invoke
 data class KtStaticInvoke(
-    var enclosingType: KtType,
-    override var method: MethodPrototype,
+    override var method: KtFunction,
     override var args: MutableList<KtExpression>,
 ) : KtInvoke {
     override val extension = false
     override fun code() = buildCode {
-        write(enclosingType.simpleName, ".", method.name)
+        write(method.enclosing?.simpleName, ".", method.name)
         braced { +args.joinToString { it.code().toString() } }
     }
 
     class Matcher(
         val className: String,
-        val functionName: String
+        val functionNames: List<String>
     ) : ClassMatcher<KtStaticInvoke> {
 
         override val clazz = KtStaticInvoke::class
         override fun KtStaticInvoke.match() =
-            enclosingType.typeName == className && name == functionName
+            method.enclosing?.typeName == className && name in functionNames
 
         companion object {
-            inline operator fun <reified T> invoke(functionName: String) =
-                Matcher(T::class.qualifiedName!!, functionName)
+            inline operator fun <reified T> invoke(vararg functionNames: String) =
+                Matcher(T::class.qualifiedName!!, functionNames.toList())
         }
     }
 }

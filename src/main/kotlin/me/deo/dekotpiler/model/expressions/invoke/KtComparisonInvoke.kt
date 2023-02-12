@@ -4,6 +4,7 @@ import me.deo.dekotpiler.coding.buildCode
 import me.deo.dekotpiler.model.KtConditional
 import me.deo.dekotpiler.model.KtExpression
 import me.deo.dekotpiler.model.KtType
+import me.deo.dekotpiler.model.function.KtFunction
 import org.benf.cfr.reader.bytecode.analysis.types.MethodPrototype
 
 class KtComparisonInvoke(
@@ -16,7 +17,7 @@ class KtComparisonInvoke(
     override val args: MutableList<KtExpression> get() = mutableListOf(comparing)
     override val extension = false
     override val type = KtType.Boolean
-    override val method: MethodPrototype
+    override val method: KtFunction
         get() = TODO()
 
     override fun code() = buildCode {

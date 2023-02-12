@@ -12,7 +12,9 @@ import kotlin.reflect.KClass
 import kotlin.reflect.typeOf
 
 class Test {
-    tailrec fun test() {
+    fun test(test: String) {
+        println(1..10)
+        println(test.length)
         println(typeOf<String.(Int, Char) -> Boolean>())
         val stringBuilder = StringBuilder()
         stringBuilder.append("yess").append(555)
@@ -24,24 +26,24 @@ class Test {
             }
         }
 
-        if (Random.nextBoolean()) test()
-//        val clazz = Test::class
-//
-//        println(clazz.isData)
-//        val method = Test::test as Function<Int, String>
-//        println(method.apply(55))
-//        val helper = TestHelper.Opp()
-//        helper[55, "yes"] = true
-//        val thing = "Hellok ${Random.nextInt()}!!! Great"
-//        "Okay".extensionValue
-//        "why".extensionValue = "okay"
-//        println(TestHelper.maybe())
-//        while (Random.nextBoolean()) {
-//            if (TestHelper.bool(true) && TestHelper.bool(false)) {
-//                val test = 55
-//                println("HEllo $test")
-//            }
-//        }
+        if (Random.nextBoolean()) test("T")
+        val clazz = Test::class
+
+        println(clazz.isData)
+        val method = Test::test as Function<Int, String>
+        println(method.apply(55))
+        val helper = TestHelper.Opp()
+        helper[55, "yes"] = true
+        val thing = "Hellok ${Random.nextInt()}!!! Great"
+        "Okay".extensionValue
+        "why".extensionValue = "okay"
+        println(TestHelper.maybe())
+        while (Random.nextBoolean()) {
+            if (TestHelper.bool(true) && TestHelper.bool(false)) {
+                val test = 55
+                println("HEllo $test")
+            }
+        }
     }
 }
 

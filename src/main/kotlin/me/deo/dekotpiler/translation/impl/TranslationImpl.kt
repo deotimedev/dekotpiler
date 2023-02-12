@@ -5,7 +5,9 @@ import me.deo.dekotpiler.model.KtConditional
 import me.deo.dekotpiler.model.KtExpression
 import me.deo.dekotpiler.model.KtStatement
 import me.deo.dekotpiler.model.KtType
+import me.deo.dekotpiler.model.KtTypeParameter
 import me.deo.dekotpiler.model.KtUnknown
+import me.deo.dekotpiler.model.function.KtFunction
 import me.deo.dekotpiler.model.statements.KtBlockStatement.Companion.asBlock
 import me.deo.dekotpiler.model.variable.KtLocalVariable
 import me.deo.dekotpiler.model.variable.KtVariable
@@ -21,8 +23,8 @@ import org.benf.cfr.reader.bytecode.analysis.parse.LValue
 import org.benf.cfr.reader.bytecode.analysis.parse.expression.ConditionalExpression
 import org.benf.cfr.reader.bytecode.analysis.types.JavaArrayTypeInstance
 import org.benf.cfr.reader.bytecode.analysis.types.JavaGenericRefTypeInstance
-import org.benf.cfr.reader.bytecode.analysis.types.JavaRefTypeInstance
 import org.benf.cfr.reader.bytecode.analysis.types.JavaTypeInstance
+import org.benf.cfr.reader.bytecode.analysis.types.MethodPrototype
 import org.springframework.stereotype.Component
 import kotlin.reflect.KClass
 
@@ -39,9 +41,11 @@ internal class TranslationImpl(
     override fun <C : Any, K> translators(type: KClass<out C>) =
         translatorsByType[type.java].orEmpty() as List<Translator<C, K>>
 
+    private val computedFunctions = mutableMapOf<MethodPrototype, KtFunction>()
+
     inner class SessionImpl : Translation.Session {
 
-        private val cachedVariables = mutableMapOf<LValue, KtVariable>()
+        private val computedVariables = mutableMapOf<LValue, KtVariable>()
         private fun <K : Any> translate(value: Any) =
             translators<Any, K>(value::class)
                 .find { with(it) { value.match() } }
@@ -78,7 +82,7 @@ internal class TranslationImpl(
             translateStatement(statement).asBlock()
 
         override fun <V : KtVariable> translateVariable(variable: LValue): V =
-            ((cachedVariables.computeIfAbsent(variable) { translate(variable)!! } ) as V).also {
+            ((computedVariables.computeIfAbsent(variable) { translate(variable)!! }) as V).also {
                 if (it is KtLocalVariable) it.uses++
             }
 
@@ -91,5 +95,36 @@ internal class TranslationImpl(
 
         override fun translateConditional(conditional: ConditionalExpression): KtConditional =
             translate(conditional) ?: KtConditional(KtUnknown(conditional))
+
+        // this eventually needs to be able to resolve a function from other
+        // class files if provided
+        override fun translateFunction(function: MethodPrototype) = KtFunction(
+            function.name,
+            function.originalDescriptor,
+            null, // evaluate receiver in post processing
+            (if (function.parametersComputed())
+                function.parameterLValues.map {
+                    KtFunction.Parameter(
+                        it.localVariable.name.stringName,
+                        translateType(it.localVariable.inferredJavaType.javaTypeInstance),
+                    )
+                } else
+                function.args.map { KtFunction.Parameter(null, translateType(it)) }).toMutableList(),
+            function.formalParameterMap.map { (name, param) ->
+                KtTypeParameter(
+                    name,
+                    listOf(translateType(param.bound))
+                )
+            }.toMutableList(),
+            translateType(function.returnType).let {
+                if (function.constructorFlag.isConstructor) it.nullable(false) else it
+            },
+            translateType(function.classType).nullable(false),
+            when {
+                function.isInstanceMethod -> KtFunction.Kind.Instance
+                function.constructorFlag.isConstructor -> KtFunction.Kind.Constructor
+                else -> KtFunction.Kind.TopLevel
+            }
+        )
     }
 }

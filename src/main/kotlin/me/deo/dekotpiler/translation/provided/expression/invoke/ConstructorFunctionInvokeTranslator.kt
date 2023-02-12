@@ -12,8 +12,7 @@ import org.springframework.stereotype.Component
 class ConstructorFunctionInvokeTranslator : Translator<ConstructorInvokationSimple, KtConstructorInvoke> {
     override val type = ConstructorInvokationSimple::class
     override fun Translation.Session.translation(value: ConstructorInvokationSimple) = KtConstructorInvoke(
-        translateType(value.typeInstance).nullable(false),
-        value.constructorPrototype,
+        translateFunction(value.constructorPrototype),
         value.args.map { translateExpression(it) }.toMutableList(),
     )
 

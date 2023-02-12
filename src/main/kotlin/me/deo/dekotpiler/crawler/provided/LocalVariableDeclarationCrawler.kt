@@ -8,8 +8,14 @@ import me.deo.dekotpiler.model.expressions.invoke.KtStaticInvoke
 import me.deo.dekotpiler.model.statements.KtBlockStatement
 import me.deo.dekotpiler.model.statements.KtVariableAssignmentStatement
 import me.deo.dekotpiler.model.variable.KtLocalVariable
+import org.benf.cfr.reader.bytecode.analysis.variables.NamedVariable
 import org.springframework.stereotype.Component
 import kotlin.jvm.internal.Intrinsics
+
+val NamedVariable.isGoodKotlinName
+    // inline markers are our one saving grace when it comes
+    // to detecting inlined closures, so dont remove them
+    get() = isGoodName || stringName.startsWith("\$i")
 
 @Component
 class LocalVariableDeclarationCrawler : Crawler {
@@ -33,7 +39,8 @@ class LocalVariableDeclarationCrawler : Crawler {
                     (declaration?.variable as? KtLocalVariable)?.apply {
                         if (stmt.expression == KtLiteral.Null)
                             type = type.nullable()
-                        if (inlinable && !delegate.name.isGoodName) {
+                        if (inlinable && !delegate.name.isGoodKotlinName) {
+                            println("removing variable ${delegate.name}")
                             value = declaration?.expression
                             return@removeIf true
                         }
@@ -55,6 +62,9 @@ class LocalVariableDeclarationCrawler : Crawler {
     }
 
     companion object {
-        val NotNullCheckMatcher = KtStaticInvoke.Matcher<Intrinsics>("checkNotNull")
+        val NotNullCheckMatcher = KtStaticInvoke.Matcher<Intrinsics>(
+            "checkNotNull",
+            "checkNotNullParameter"
+        )
     }
 }

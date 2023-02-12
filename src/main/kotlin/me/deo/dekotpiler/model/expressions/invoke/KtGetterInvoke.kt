@@ -10,8 +10,6 @@ data class KtGetterInvoke(
     override val prefix = "get"
     override val name: String
         get() = super<KtFieldFacadeInvoke>.name
-    override val type: KtType
-        get() = actual.type
 
     override fun code() = codeOf(reference, ".", name)
 }
