@@ -1,5 +1,6 @@
 package me.deo.dekotpiler
 
+import kotlinx.coroutines.delay
 import me.deo.dekotpiler.matching.Matcher
 import me.deo.dekotpiler.matching.Matcher.Companion.match
 import org.jetbrains.annotations.NotNull
