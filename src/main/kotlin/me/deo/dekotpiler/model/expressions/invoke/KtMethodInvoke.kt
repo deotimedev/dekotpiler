@@ -2,8 +2,7 @@ package me.deo.dekotpiler.model.expressions.invoke
 
 import me.deo.dekotpiler.coding.buildCode
 import me.deo.dekotpiler.model.KtExpression
-import me.deo.dekotpiler.model.function.KtFunction
-import org.benf.cfr.reader.bytecode.analysis.types.MethodPrototype
+import me.deo.dekotpiler.model.structure.KtFunction
 
 data class KtMethodInvoke(
     override var method: KtFunction,
@@ -28,7 +27,7 @@ data class KtMethodInvoke(
                 }
         } ?: run {
             write(reference, reference.nullCheckedChain(), name)
-            braced { +args.joinToString { it.code().toString() } }
+            writeInvoker(args)
         }
     }
 

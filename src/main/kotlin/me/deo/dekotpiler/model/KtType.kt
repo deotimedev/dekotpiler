@@ -54,6 +54,22 @@ data class KtType(
         val CharRange = KtType<CharRange>()
 
 
+        val PrimitiveToArray = mapOf(
+            Int to KtType<IntArray>(),
+            Long to KtType<LongArray>(),
+            Short to KtType<ShortArray>(),
+            Byte to KtType<ByteArray>(),
+            Float to KtType<FloatArray>(),
+            Double to KtType<DoubleArray>(),
+            Boolean to KtType<BooleanArray>(),
+            Char to KtType<CharArray>()
+        )
+
+        // efficiency at its finest
+        val Primitives = PrimitiveToArray.keys.toList()
+
+        val KtType.isPrimitive get() = this in Primitives
+
         operator fun invoke(
             type: KClass<*>,
             nullable: Boolean,
@@ -64,7 +80,7 @@ data class KtType(
                 type.simpleName!!,
                 nullable,
                 generics,
-            ).let { if (type.java.isArray) array(it) else it }
+            )
 
         operator fun invoke(
             type: KType,
@@ -77,11 +93,13 @@ data class KtType(
 
         inline operator fun <reified T> invoke() = invoke(typeOf<T>())
 
-        fun array(type: KtType) = KtType(
-            "kotlin.Array",
-            nullable = false,
-            generics = listOf(type)
-        )
+        fun array(type: KtType) =
+            if (type.isPrimitive) PrimitiveToArray[type]!!
+            else KtType(
+                "kotlin.Array",
+                nullable = false,
+                generics = listOf(type)
+            )
     }
 
 }

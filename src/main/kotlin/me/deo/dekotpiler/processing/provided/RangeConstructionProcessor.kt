@@ -25,10 +25,7 @@ class RangeConstructionProcessor :
     companion object {
         private val Ranges = listOf(KtType.IntRange, KtType.LongRange, KtType.CharRange)
         val RangeConstructionProcessor = ClassMatcher<KtConstructorInvoke>() + Matcher {
-            val enclosing = method.enclosing
-            val result = method.enclosing in Ranges
-            println()
-            result
+            method.enclosing in Ranges
         }
     }
 }

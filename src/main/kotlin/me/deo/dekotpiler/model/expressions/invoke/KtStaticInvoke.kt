@@ -1,11 +1,9 @@
 package me.deo.dekotpiler.model.expressions.invoke
 
 import me.deo.dekotpiler.model.KtExpression
-import me.deo.dekotpiler.model.KtType
 import me.deo.dekotpiler.coding.buildCode
 import me.deo.dekotpiler.matching.ClassMatcher
-import me.deo.dekotpiler.model.function.KtFunction
-import org.benf.cfr.reader.bytecode.analysis.types.MethodPrototype
+import me.deo.dekotpiler.model.structure.KtFunction
 
 // Not to be confused with a companion object invoke
 data class KtStaticInvoke(
@@ -15,7 +13,7 @@ data class KtStaticInvoke(
     override val extension = false
     override fun code() = buildCode {
         write(method.enclosing?.simpleName, ".", method.name)
-        braced { +args.joinToString { it.code().toString() } }
+        writeInvoker(args)
     }
 
     class Matcher(

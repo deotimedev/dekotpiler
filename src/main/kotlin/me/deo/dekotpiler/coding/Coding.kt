@@ -1,6 +1,6 @@
 package me.deo.dekotpiler.coding
 
-import me.deo.dekotpiler.coding.Codable
+import me.deo.dekotpiler.model.KtType
 import me.deo.dekotpiler.util.update
 
 inline fun buildCode(closure: Code.() -> Unit) =
@@ -8,6 +8,7 @@ inline fun buildCode(closure: Code.() -> Unit) =
 
 fun emptyCode() = Code()
 fun codeOf(vararg values: Any?) = buildCode { values.forEach { +it } }
+
 class Code(
     private val lines: MutableList<String> = mutableListOf(""),
 ) {
@@ -65,6 +66,14 @@ class Code(
     fun line(value: Any?) {
         newline()
         write(value)
+    }
+
+    fun writeGeneric(type: KtType) {
+        write("<", type, ">")
+    }
+
+    fun writeInvoker(args: Iterable<Codable>) {
+        braced { +args.joinToString { it.code().toString() } }
     }
 
     // warning: majorly cursed alert

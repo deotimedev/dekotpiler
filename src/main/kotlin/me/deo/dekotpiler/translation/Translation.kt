@@ -4,7 +4,8 @@ import me.deo.dekotpiler.model.KtConditional
 import me.deo.dekotpiler.model.KtExpression
 import me.deo.dekotpiler.model.KtStatement
 import me.deo.dekotpiler.model.KtType
-import me.deo.dekotpiler.model.function.KtFunction
+import me.deo.dekotpiler.model.expressions.KtLiteral
+import me.deo.dekotpiler.model.structure.KtFunction
 import me.deo.dekotpiler.model.statements.KtBlockStatement
 import me.deo.dekotpiler.model.variable.KtVariable
 import me.deo.dekotpiler.util.CFRExpression
@@ -32,6 +33,8 @@ interface Translation {
         fun <V : KtVariable> translateVariable(variable: LValue): V
         fun translateType(type: JavaTypeInstance): KtType
         fun translateType(type: InferredJavaType) = translateType(type.javaTypeInstance)
+        fun translateArrayType(type: JavaTypeInstance): KtType
+        fun translateArrayType(type: InferredJavaType) = translateArrayType(type.javaTypeInstance)
         fun translateConditional(conditional: ConditionalExpression): KtConditional
         fun translateFunction(function: MethodPrototype): KtFunction
 

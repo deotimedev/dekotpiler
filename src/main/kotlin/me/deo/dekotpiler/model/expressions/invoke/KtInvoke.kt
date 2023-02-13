@@ -2,9 +2,7 @@ package me.deo.dekotpiler.model.expressions.invoke
 
 import me.deo.dekotpiler.model.KtExpression
 import me.deo.dekotpiler.model.KtStatement
-import me.deo.dekotpiler.model.KtType
-import me.deo.dekotpiler.model.function.KtFunction
-import org.benf.cfr.reader.bytecode.analysis.types.MethodPrototype
+import me.deo.dekotpiler.model.structure.KtFunction
 
 interface KtInvoke : KtExpression, KtStatement {
     val method: KtFunction

@@ -39,12 +39,14 @@ class Test {
         "why".extensionValue = "okay"
         println(TestHelper.maybe())
         while (Random.nextBoolean()) {
-            if (TestHelper.bool(true) && TestHelper.bool(false)) {
+            if (TestHelper.bool(true) && TestHelper.bool(false) || TestHelper.bool(true)) {
                 val test = 55
                 println("HEllo $test")
             }
         }
+        println(charArrayOf('a', 'b', 'c'))
     }
+
 }
 
 //// testing stuff

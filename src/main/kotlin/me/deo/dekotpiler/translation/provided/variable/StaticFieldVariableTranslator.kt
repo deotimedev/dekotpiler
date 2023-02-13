@@ -16,7 +16,7 @@ class StaticFieldVariableTranslator : Translator<StaticVariable, KtStaticField> 
 
     override fun Translation.Session.translation(value: StaticVariable) = KtStaticField(
         value,
-        translateType(value.owningClassType).nullable(false), // TODO KtType.NonNull
+        translateType(value.owningClassType).nullable(false),
         value.rawFieldName,
         value.isFinal,
         translateType(value.inferredJavaType)

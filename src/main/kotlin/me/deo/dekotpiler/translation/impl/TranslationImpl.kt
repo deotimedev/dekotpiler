@@ -7,7 +7,7 @@ import me.deo.dekotpiler.model.KtStatement
 import me.deo.dekotpiler.model.KtType
 import me.deo.dekotpiler.model.KtTypeParameter
 import me.deo.dekotpiler.model.KtUnknown
-import me.deo.dekotpiler.model.function.KtFunction
+import me.deo.dekotpiler.model.structure.KtFunction
 import me.deo.dekotpiler.model.statements.KtBlockStatement.Companion.asBlock
 import me.deo.dekotpiler.model.variable.KtLocalVariable
 import me.deo.dekotpiler.model.variable.KtVariable
@@ -92,6 +92,9 @@ internal class TranslationImpl(
                 type.deGenerifiedType.rawName,
                 generics = (type as? JavaGenericRefTypeInstance)?.genericTypes.orEmpty().map(::translateType)
             )
+
+        override fun translateArrayType(type: JavaTypeInstance) =
+            translateType(type.arrayStrippedType).nullable(false)
 
         override fun translateConditional(conditional: ConditionalExpression): KtConditional =
             translate(conditional) ?: KtConditional(KtUnknown(conditional))

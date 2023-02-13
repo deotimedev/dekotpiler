@@ -15,7 +15,9 @@ class LiteralExpressionTranslator : Translator<Literal, KtExpression> {
     override val type = Literal::class
     override fun Translation.Session.translation(value: Literal): KtExpression {
         val literal = value.value
-        if (literal.inferredJavaType.rawType == RawJavaType.BOOLEAN) return KtLiteral.Boolean(literal.boolValue)
+        val raw = literal.inferredJavaType.rawType
+        if (raw == RawJavaType.BOOLEAN) return KtLiteral.Boolean(literal.boolValue)
+        if (raw == RawJavaType.CHAR) return KtLiteral.Char(literal.intValue.toChar())
         return when (literal.type) {
             TypedLiteral.LiteralType.Integer -> KtLiteral.Int(literal.intValue)
             TypedLiteral.LiteralType.Long -> KtLiteral.Long(literal.longValue)

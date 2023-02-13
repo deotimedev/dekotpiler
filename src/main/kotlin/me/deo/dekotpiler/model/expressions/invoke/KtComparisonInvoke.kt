@@ -4,8 +4,7 @@ import me.deo.dekotpiler.coding.buildCode
 import me.deo.dekotpiler.model.KtConditional
 import me.deo.dekotpiler.model.KtExpression
 import me.deo.dekotpiler.model.KtType
-import me.deo.dekotpiler.model.function.KtFunction
-import org.benf.cfr.reader.bytecode.analysis.types.MethodPrototype
+import me.deo.dekotpiler.model.structure.KtFunction
 
 class KtComparisonInvoke(
     override var reference: KtExpression,
