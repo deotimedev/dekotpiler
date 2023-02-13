@@ -22,7 +22,8 @@ import kotlin.time.Duration.Companion.milliseconds
 
 class Test {
     fun test() {
-        println(TestHelper.Parent.child)
+        val test = TestHelper.obj()
+        println(test::class)
     }
 
 }
