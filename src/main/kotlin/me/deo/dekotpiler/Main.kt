@@ -24,6 +24,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.builder.SpringApplicationBuilder
 import org.springframework.stereotype.Component
 import java.io.File
+import kotlin.jvm.internal.CallableReference
 
 @Component
 class Main(

@@ -47,7 +47,9 @@ class LocalVariableDeclarationCrawler : Crawler {
                     }
 
                 } else if (stmt is KtStaticInvoke) {
-                    if (NotNullCheckMatcher.match(stmt)) {
+                    // holding off on this check as there could potentially be useful
+                    // information in the intrinsic message
+                    if (false && NotNullCheckMatcher.match(stmt)) {
                         declaration((stmt.args[0] as KtLocalVariable))?.let { declaration ->
                             declaration.expression?.let {
                                 declaration.expression = KtNotNullAssertionExpression(it)

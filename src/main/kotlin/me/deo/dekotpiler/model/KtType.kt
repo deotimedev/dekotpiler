@@ -94,7 +94,7 @@ data class KtType(
         inline operator fun <reified T> invoke() = invoke(typeOf<T>())
 
         fun array(type: KtType) =
-            if (type.isPrimitive) PrimitiveToArray[type]!!
+            if (type.nullable(false).isPrimitive) PrimitiveToArray[type.nullable(false)]!!
             else KtType(
                 "kotlin.Array",
                 nullable = false,

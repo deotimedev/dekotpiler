@@ -1,51 +1,56 @@
 package me.deo.dekotpiler
 
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.runBlocking
 import me.deo.dekotpiler.matching.Matcher
 import me.deo.dekotpiler.matching.Matcher.Companion.match
 import org.jetbrains.annotations.NotNull
 import java.util.Base64
 import java.util.function.Function
 import java.util.function.Supplier
+import kotlin.math.absoluteValue
 import kotlin.random.Random
 import kotlin.random.nextInt
 import kotlin.reflect.KClass
 import kotlin.reflect.typeOf
+import kotlin.time.Duration.Companion.milliseconds
 
 class Test {
-    fun test(test: String) {
-        println(1..10)
-        println(test.length)
-        println(typeOf<String.(Int, Char) -> Boolean>())
-        val stringBuilder = StringBuilder()
-        stringBuilder.append("yess").append(555)
-        println(stringBuilder.toString())
-        TestHelper.getterSetterValue = "555"
-        if (TestHelper.obj().tset) {
-            repeat(25) {
-                println("Num: ${Random.nextInt(5..10)}")
-            }
-        }
-
-        if (Random.nextBoolean()) test("T")
-        val clazz = Test::class
-
-        println(clazz.isData)
-        val method = Test::test as Function<Int, String>
-        println(method.apply(55))
-        val helper = TestHelper.Opp()
-        helper[55, "yes"] = true
-        val thing = "Hellok ${Random.nextInt()}!!! Great"
-        "Okay".extensionValue
-        "why".extensionValue = "okay"
-        println(TestHelper.maybe())
-        while (Random.nextBoolean()) {
-            if (TestHelper.bool(true) && TestHelper.bool(false) || TestHelper.bool(true)) {
-                val test = 55
-                println("HEllo $test")
-            }
-        }
-        println(charArrayOf('a', 'b', 'c'))
+    fun test() {
+        println(enumValues<DeprecationLevel>())
+//        println(1..10)
+//        println(test.length)
+//        println(typeOf<String.(Int, Char) -> Boolean>())
+//        val stringBuilder = StringBuilder()
+//        stringBuilder.append("yess").append(555)
+//        println(stringBuilder.toString())
+//        TestHelper.getterSetterValue = "555"
+//        if (TestHelper.obj().tset) {
+//            repeat(25) {
+//                println("Num: ${Random.nextInt(5..10)}")
+//            }
+//        }
+//
+//        if (Random.nextBoolean()) test("T")
+//        val clazz = Test::class
+//
+//        println(clazz.isData)
+//        val method = Test::test as Function<Int, String>
+//        println(method.apply(55))
+//        val helper = TestHelper.Opp()
+//        helper[55, "yes"] = true
+//        val thing = "Hellok ${Random.nextInt()}!!! Great"
+//        "Okay".extensionValue
+//        "why".extensionValue = "okay"
+//        println(TestHelper.maybe())
+//        while (Random.nextBoolean()) {
+//            if (TestHelper.bool(true) && TestHelper.bool(false) || TestHelper.bool(true)) {
+//                val test = 55
+//                println("HEllo $test")
+//            }
+//        }
+//        println(charArrayOf('a', 'b', 'c'))
     }
 
 }
