@@ -12,6 +12,7 @@ class KClassProcessor :
     PreProcessor<KtStaticInvoke>,
     ClassMatcher<KtStaticInvoke> by KClassMatcher {
 
+    // TODO fix class instance references
     override fun replace(value: KtStaticInvoke) =
         (value.args[0] as KtJClassExpression).clazz
 
