@@ -15,7 +15,7 @@ import kotlin.jvm.internal.Intrinsics
 val NamedVariable.isGoodKotlinName
     // inline markers are our one saving grace when it comes
     // to detecting inlined closures, so dont remove them
-    get() = isGoodName || stringName.startsWith("\$i")
+    get() = isGoodName || stringName.startsWith("\$")
 
 @Component
 class LocalVariableDeclarationCrawler : Crawler {
@@ -49,7 +49,7 @@ class LocalVariableDeclarationCrawler : Crawler {
                 } else if (stmt is KtStaticInvoke) {
                     // holding off on this check as there could potentially be useful
                     // information in the intrinsic message
-                    if (false && NotNullCheckMatcher.match(stmt)) {
+                    if (NotNullCheckMatcher.match(stmt)) {
                         declaration((stmt.args[0] as KtLocalVariable))?.let { declaration ->
                             declaration.expression?.let {
                                 declaration.expression = KtNotNullAssertionExpression(it)

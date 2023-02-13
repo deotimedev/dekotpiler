@@ -50,8 +50,6 @@ class Main(
                 val block = cfrMethod.analysis.statement.let { stmt ->
                     val translated = translation.session().translateStatement(stmt)
                     if ((translated as KtBlockStatement).statements.isEmpty()) return@forEach
-
-                    println(translated.statements.lastOrNull()?.let { it::class })
                     translated
                 }
 

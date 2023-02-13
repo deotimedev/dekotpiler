@@ -39,16 +39,17 @@ sealed class KtLiteral<T>(override val type: KtType, val letter: KtChar? = null)
         override var value = null
     }
 
-    class Boolean private constructor(override val value: KtBoolean) : KtLiteral<KtBoolean>(KtType.Boolean) {
+    class Boolean internal constructor(
+        val _overload: Nothing?,
+        override val value: KtBoolean
+        ) : KtLiteral<KtBoolean>(KtType.Boolean) {
         companion object {
             operator fun invoke(value: KtBoolean) = if (value) True else False
-
-            internal fun _create(boolean: KtBoolean) = Boolean(boolean)
         }
     }
 
     companion object {
-        val True = Boolean._create(true)
-        val False = Boolean._create(false)
+        val True = Boolean(null, true)
+        val False = Boolean(null, false)
     }
 }

@@ -36,7 +36,10 @@ interface Translation {
         fun translateArrayType(type: JavaTypeInstance): KtType
         fun translateArrayType(type: InferredJavaType) = translateArrayType(type.javaTypeInstance)
         fun translateConditional(conditional: ConditionalExpression): KtConditional
-        fun translateFunction(function: MethodPrototype): KtFunction
+        fun translateFunction(
+            function: MethodPrototype,
+            kind: KtFunction.Kind
+        ): KtFunction
 
     }
 

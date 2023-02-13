@@ -14,11 +14,12 @@ import kotlin.random.Random
 import kotlin.random.nextInt
 import kotlin.reflect.KClass
 import kotlin.reflect.typeOf
+import kotlin.streams.toList
 import kotlin.time.Duration.Companion.milliseconds
 
 class Test {
     fun test() {
-        println(enumValues<DeprecationLevel>())
+
 //        println(1..10)
 //        println(test.length)
 //        println(typeOf<String.(Int, Char) -> Boolean>())

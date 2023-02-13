@@ -101,7 +101,10 @@ internal class TranslationImpl(
 
         // this eventually needs to be able to resolve a function from other
         // class files if provided
-        override fun translateFunction(function: MethodPrototype) = KtFunction(
+        override fun translateFunction(
+            function: MethodPrototype,
+            kind: KtFunction.Kind
+        ) = KtFunction(
             function.name,
             function.originalDescriptor,
             null, // evaluate receiver in post processing
@@ -119,15 +122,9 @@ internal class TranslationImpl(
                     listOf(translateType(param.bound))
                 )
             }.toMutableList(),
-            translateType(function.returnType).let {
-                if (function.constructorFlag.isConstructor) it.nullable(false) else it
-            },
+            translateType(function.returnType).nullable(kind != KtFunction.Kind.Constructor),
             translateType(function.classType).nullable(false),
-            when {
-                function.isInstanceMethod -> KtFunction.Kind.Instance
-                function.constructorFlag.isConstructor -> KtFunction.Kind.Constructor
-                else -> KtFunction.Kind.TopLevel
-            }
+            kind
         )
     }
 }
