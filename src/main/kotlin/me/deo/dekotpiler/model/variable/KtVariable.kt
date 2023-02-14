@@ -1,11 +1,7 @@
 package me.deo.dekotpiler.model.variable
 
-import me.deo.dekotpiler.coding.buildCode
 import me.deo.dekotpiler.model.KtExpression
-import me.deo.dekotpiler.model.KtType
 import org.benf.cfr.reader.bytecode.analysis.parse.LValue
-import org.benf.cfr.reader.bytecode.analysis.parse.lvalue.AbstractFieldVariable
-import org.benf.cfr.reader.bytecode.analysis.types.JavaRefTypeInstance
 
 interface KtVariable : KtExpression {
 

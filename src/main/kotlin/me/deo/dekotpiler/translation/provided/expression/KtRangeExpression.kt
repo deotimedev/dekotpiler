@@ -1,9 +1,8 @@
 package me.deo.dekotpiler.translation.provided.expression
 
-import me.deo.dekotpiler.coding.Code
 import me.deo.dekotpiler.coding.codeOf
 import me.deo.dekotpiler.model.KtExpression
-import me.deo.dekotpiler.model.KtType
+import me.deo.dekotpiler.model.type.KtType
 
 data class KtRangeExpression(
     var from: KtExpression,

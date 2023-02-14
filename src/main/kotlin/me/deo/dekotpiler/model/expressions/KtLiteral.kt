@@ -3,8 +3,8 @@ package me.deo.dekotpiler.model.expressions
 import me.deo.dekotpiler.coding.buildCode
 import me.deo.dekotpiler.coding.codeOf
 import me.deo.dekotpiler.model.KtExpression
-import me.deo.dekotpiler.model.KtType
-import kotlin.Boolean
+import me.deo.dekotpiler.model.type.KtNothingType
+import me.deo.dekotpiler.model.type.KtType
 import kotlin.Boolean as KtBoolean
 import kotlin.Double as KtDouble
 import kotlin.Float as KtFloat
@@ -32,10 +32,10 @@ sealed class KtLiteral<T>(override val type: KtType, val letter: KtChar? = null)
     data class String(override var value: KtString) : KtLiteral<KtString>(KtType.String) {
         override fun code() = codeOf("\"", value, "\"")
     }
-    data class Class(override var value: KtType) : KtLiteral<KtType>(KtType.KClass.generics(value)) {
-        override fun code() = codeOf(value.nullable(false).simpleName, "::class")
+    data class Class(override var value: KtType) : KtLiteral<KtType>(KtType.KClass.parameterize(value)) {
+        override fun code() = codeOf(value.nullable(false).name, "::class")
     }
-    object Null : KtLiteral<Nothing?>(KtType.Nothing.nullable()) {
+    object Null : KtLiteral<Nothing?>(KtNothingType.Nullable) {
         override var value = null
     }
 

@@ -1,6 +1,7 @@
 package me.deo.dekotpiler.mapping
 
-import me.deo.dekotpiler.model.KtType
+import me.deo.dekotpiler.model.type.KtNothingType
+import me.deo.dekotpiler.model.type.KtType
 import org.benf.cfr.reader.bytecode.analysis.types.JavaTypeInstance
 import org.benf.cfr.reader.bytecode.analysis.types.RawJavaType
 import org.benf.cfr.reader.bytecode.analysis.types.TypeConstants
@@ -23,7 +24,7 @@ class TypeMappingsImpl : TypeMappings {
         RawJavaType.BOOLEAN -> KtType.Boolean
         RawJavaType.CHAR -> KtType.Char
         else -> when (java.rawName) {
-            "java.lang.Void" -> KtType.Nothing
+            "java.lang.Void" -> KtNothingType
             "kotlin.reflect.KClass" -> KtType.KClass
             else -> null
         }

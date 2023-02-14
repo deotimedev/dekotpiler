@@ -11,7 +11,7 @@ data class KtStaticInvoke(
 ) : KtInvoke {
     override val extension = false
     override fun code() = buildCode {
-        write(method.enclosing?.simpleName, ".", method.name)
+        write(method.enclosing?.name, ".", method.name)
         writeInvoker(args)
     }
 
@@ -21,7 +21,7 @@ data class KtStaticInvoke(
     ) : me.deo.dekotpiler.matching.Matcher<KtStaticInvoke> {
 
         override fun KtStaticInvoke.match() =
-            method.enclosing?.typeName == className && name in functionNames
+            method.enclosing?.qualifiedName == className && name in functionNames
 
         companion object {
             inline operator fun <reified T> invoke(vararg functionNames: String) =

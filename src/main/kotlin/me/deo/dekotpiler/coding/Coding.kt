@@ -1,6 +1,6 @@
 package me.deo.dekotpiler.coding
 
-import me.deo.dekotpiler.model.KtType
+import me.deo.dekotpiler.model.type.KtType
 import me.deo.dekotpiler.util.update
 
 inline fun buildCode(closure: Code.() -> Unit) =

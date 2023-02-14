@@ -1,5 +1,6 @@
 package me.deo.dekotpiler.model
 
+import me.deo.dekotpiler.model.type.KtType
 import kotlin.reflect.KTypeParameter
 
 data class KtTypeParameter(

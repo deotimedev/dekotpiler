@@ -3,8 +3,7 @@ package me.deo.dekotpiler.translation
 import me.deo.dekotpiler.model.KtConditional
 import me.deo.dekotpiler.model.KtExpression
 import me.deo.dekotpiler.model.KtStatement
-import me.deo.dekotpiler.model.KtType
-import me.deo.dekotpiler.model.expressions.KtLiteral
+import me.deo.dekotpiler.model.type.KtType
 import me.deo.dekotpiler.model.structure.KtFunction
 import me.deo.dekotpiler.model.statements.KtBlockStatement
 import me.deo.dekotpiler.model.variable.KtVariable

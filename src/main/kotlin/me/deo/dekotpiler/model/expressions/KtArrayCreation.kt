@@ -1,9 +1,9 @@
 package me.deo.dekotpiler.model.expressions
 
 import me.deo.dekotpiler.model.KtExpression
-import me.deo.dekotpiler.model.KtType
+import me.deo.dekotpiler.model.type.KtType
 import me.deo.dekotpiler.coding.buildCode
-import me.deo.dekotpiler.model.KtType.Companion.isPrimitive
+import me.deo.dekotpiler.model.type.KtType.Companion.isPrimitive
 
 data class KtArrayCreation(
     var componentType: KtType,
@@ -13,7 +13,7 @@ data class KtArrayCreation(
     override val type get() = KtType.array(componentType)
     override fun code() = buildCode {
         if (componentType.isPrimitive) {
-            write(componentType.simpleName.lowercase(), "ArrayOf")
+            write(componentType.name.lowercase(), "ArrayOf")
             writeInvoker(initializers.orEmpty())
         } else {
             initializers?.let {

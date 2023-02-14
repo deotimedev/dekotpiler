@@ -1,4 +1,6 @@
-package me.deo.dekotpiler.model
+package me.deo.dekotpiler.model.type
+
+import me.deo.dekotpiler.model.type.KtType
 
 interface KtTyped {
     val type: KtType

@@ -2,7 +2,7 @@ package me.deo.dekotpiler.model.statements
 
 import me.deo.dekotpiler.coding.buildCode
 import me.deo.dekotpiler.model.KtStatement
-import me.deo.dekotpiler.model.KtType
+import me.deo.dekotpiler.model.type.KtType
 import me.deo.dekotpiler.util.flatMapInclusive
 
 data class KtBlockStatement(

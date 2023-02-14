@@ -2,7 +2,7 @@ package me.deo.dekotpiler.processing.provided
 
 import me.deo.dekotpiler.matching.Matcher
 import me.deo.dekotpiler.matching.ValueMatcher
-import me.deo.dekotpiler.model.KtType
+import me.deo.dekotpiler.model.type.KtType
 import me.deo.dekotpiler.model.expressions.KtCastExpression
 import me.deo.dekotpiler.processing.PreProcessor
 import org.springframework.stereotype.Component

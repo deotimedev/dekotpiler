@@ -1,6 +1,7 @@
 package me.deo.dekotpiler.model
 
 import me.deo.dekotpiler.coding.buildCode
+import me.deo.dekotpiler.model.type.KtType
 import me.deo.dekotpiler.util.gather
 
 open class KtConditional(

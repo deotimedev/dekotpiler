@@ -1,7 +1,7 @@
 package me.deo.dekotpiler.processing.provided
 
 import me.deo.dekotpiler.matching.Matcher
-import me.deo.dekotpiler.model.KtType
+import me.deo.dekotpiler.model.type.KtType
 import me.deo.dekotpiler.model.expressions.invoke.KtConstructorInvoke
 import me.deo.dekotpiler.processing.PreProcessor
 import me.deo.dekotpiler.translation.provided.expression.KtRangeExpression

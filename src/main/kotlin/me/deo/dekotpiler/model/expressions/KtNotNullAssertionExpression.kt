@@ -2,7 +2,6 @@ package me.deo.dekotpiler.model.expressions
 
 import me.deo.dekotpiler.model.KtExpression
 import me.deo.dekotpiler.coding.buildCode
-import me.deo.dekotpiler.model.KtType
 
 data class KtNotNullAssertionExpression(
     var expression: KtExpression,

@@ -1,18 +1,15 @@
 package me.deo.dekotpiler.model.structure
 
-import me.deo.dekotpiler.model.KtType
+import me.deo.dekotpiler.model.type.KtType
 import me.deo.dekotpiler.model.KtTypeParameter
-import me.deo.dekotpiler.model.KtTyped
+import me.deo.dekotpiler.model.type.KtTyped
 import kotlin.reflect.KFunction
-import kotlin.reflect.KFunction1
 import kotlin.reflect.KParameter
-import kotlin.reflect.KType
 import kotlin.reflect.full.extensionReceiverParameter
 import kotlin.reflect.full.instanceParameter
 import kotlin.reflect.full.valueParameters
 import kotlin.reflect.jvm.javaConstructor
 import kotlin.reflect.jvm.javaMethod
-import kotlin.reflect.typeOf
 
 data class KtFunction(
     var name: String,

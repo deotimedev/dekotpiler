@@ -3,7 +3,7 @@ package me.deo.dekotpiler.model.expressions.invoke
 import me.deo.dekotpiler.coding.buildCode
 import me.deo.dekotpiler.model.KtConditional
 import me.deo.dekotpiler.model.KtExpression
-import me.deo.dekotpiler.model.KtType
+import me.deo.dekotpiler.model.type.KtType
 import me.deo.dekotpiler.model.structure.KtFunction
 
 class KtComparisonInvoke(

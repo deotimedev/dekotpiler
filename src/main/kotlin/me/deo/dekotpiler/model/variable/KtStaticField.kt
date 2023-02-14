@@ -1,7 +1,7 @@
 package me.deo.dekotpiler.model.variable
 
 import me.deo.dekotpiler.coding.buildCode
-import me.deo.dekotpiler.model.KtType
+import me.deo.dekotpiler.model.type.KtType
 import org.benf.cfr.reader.bytecode.analysis.parse.lvalue.StaticVariable
 
 data class KtStaticField(
@@ -13,7 +13,7 @@ data class KtStaticField(
     var objectReference: Boolean = false
 ) : KtField {
     override fun code() = buildCode {
-        +declaring.simpleName
+        +declaring.name
         if (!objectReference) write(".", name)
     }
 }

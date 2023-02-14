@@ -1,9 +1,8 @@
 package me.deo.dekotpiler.model.variable
 
-import me.deo.dekotpiler.coding.Code
 import me.deo.dekotpiler.coding.codeOf
 import me.deo.dekotpiler.model.KtExpression
-import me.deo.dekotpiler.model.KtType
+import me.deo.dekotpiler.model.type.KtType
 import org.benf.cfr.reader.bytecode.analysis.parse.lvalue.LocalVariable
 
 data class KtLocalVariable(
