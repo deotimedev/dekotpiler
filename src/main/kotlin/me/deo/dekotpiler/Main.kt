@@ -15,8 +15,6 @@ import me.deo.dekotpiler.util.getValue
 import me.deo.dekotpiler.ui.FileSelector
 import me.deo.dekotpiler.util.task
 import me.deo.dekotpiler.util.taskAsync
-import me.deotime.kpoetdsl.FunctionBuilder.Initializer.invoke
-import me.deotime.kpoetdsl.metadata.toSpec
 import org.springframework.boot.Banner
 import org.springframework.boot.CommandLineRunner
 import org.springframework.boot.WebApplicationType
@@ -41,12 +39,12 @@ class Main(
         // testing
         val file = File(File("").absolutePath, "/build/classes/kotlin/main/me/deo/dekotpiler/Test.class")
 
-        val metadata by taskAsync("Metadata") { KotlinClassMetadata.read(metadataResolver.resolve(file)) as KotlinClassMetadata.Class }
-        val clazz by taskAsync("CFR") { engine.decompile(file) ?: error("Couldn't read class.") }
+        val metadata = taskAsync("Metadata") { KotlinClassMetadata.read(metadataResolver.resolve(file)) as KotlinClassMetadata.Class }
+        val clazz = taskAsync("CFR") { engine.decompile(file) ?: error("Couldn't read class.") }
 
         task("Kotlin Decompilation") {
-            val metaClass = metadata.toKmClass()
-            clazz.methods.forEach { cfrMethod ->
+            val metaClass = metadata.await().toKmClass()
+            clazz.await().methods.forEach { cfrMethod ->
                 val block = cfrMethod.analysis.statement.let { stmt ->
                     val translated = translation.session().translateStatement(stmt)
                     if ((translated as KtBlockStatement).statements.isEmpty()) return@forEach
@@ -102,7 +100,7 @@ class Main(
         }
 
         @SpringBootApplication
-        class App
+        open class App
 
     }
 }

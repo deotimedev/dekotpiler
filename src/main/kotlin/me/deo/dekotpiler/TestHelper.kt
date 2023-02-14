@@ -15,6 +15,10 @@ object TestHelper {
         closure()
     }
 
+    inline fun <reified T> reified() {
+        println(T::class.java)
+    }
+
     fun generic(): List<String> = listOf("yes", "opk")
 
     inline fun inlinedClosure(closure: () -> Unit) {

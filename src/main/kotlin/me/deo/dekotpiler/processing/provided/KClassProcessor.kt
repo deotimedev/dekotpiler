@@ -6,6 +6,7 @@ import me.deo.dekotpiler.model.expressions.KtJClassExpression
 import me.deo.dekotpiler.model.expressions.invoke.KtGetterInvoke
 import me.deo.dekotpiler.model.expressions.invoke.KtStaticInvoke
 import me.deo.dekotpiler.processing.PreProcessor
+import me.deo.dekotpiler.util.unwrap
 import org.springframework.stereotype.Component
 import kotlin.jvm.internal.Reflection
 
@@ -15,7 +16,7 @@ class KClassProcessor :
     Matcher<KtStaticInvoke> by KClassMatcher {
 
     override fun replace(value: KtStaticInvoke): Any? = when (val arg = value.args[0]) {
-        is KtJClassExpression -> arg.clazz
+        is KtJClassExpression -> arg.clazz.unwrap()
         is KtGetterInvoke -> KtGetDynamicKClass(arg.reference)
         else -> value
     }
