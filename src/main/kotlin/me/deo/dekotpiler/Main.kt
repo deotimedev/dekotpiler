@@ -15,6 +15,9 @@ import me.deo.dekotpiler.util.getValue
 import me.deo.dekotpiler.ui.FileSelector
 import me.deo.dekotpiler.util.task
 import me.deo.dekotpiler.util.taskAsync
+import me.deotime.kpoetdsl.FunctionBuilder.Initializer.invoke
+import me.deotime.kpoetdsl.kotlin
+import me.deotime.kpoetdsl.metadata.toSpec
 import org.springframework.boot.Banner
 import org.springframework.boot.CommandLineRunner
 import org.springframework.boot.WebApplicationType
@@ -44,10 +47,10 @@ class Main(
 
         task("Kotlin Decompilation") {
             val metaClass = metadata.await().toKmClass()
-            clazz.await().methods.forEach { cfrMethod ->
+            val methods = clazz.await().methods.mapNotNull { cfrMethod ->
                 val block = cfrMethod.analysis.statement.let { stmt ->
                     val translated = translation.session().translateStatement(stmt)
-                    if ((translated as KtBlockStatement).statements.isEmpty()) return@forEach
+                    if ((translated as KtBlockStatement).statements.isEmpty()) return@mapNotNull null
                     translated
                 }
 
@@ -57,16 +60,25 @@ class Main(
                     ex.printStackTrace()
                 }
 
-//                val method = metaClass.functions.find { it.name == cfrMethod.name }?.toSpec()?.invoke {
-//                    code {
-//                        +block.code().toString()
-//                    }
-//                }
-                println("------------${cfrMethod.name}---------------")
-                println(block.code())
-                println("------------${cfrMethod.name}---------------")
-
+                val method = metaClass.functions.find { it.name == cfrMethod.name }?.toSpec()?.invoke {
+                    code {
+                        +block.code().toString()
+                    }
+                }
+//                println("------------${cfrMethod.name}---------------")
+//                println(block.code())
+//                println("------------${cfrMethod.name}---------------")
+                method
             }
+            val spec = metaClass.toSpec {
+                source.funSpecs.clear()
+                source.funSpecs.addAll(methods)
+            }
+            val output = kotlin {
+                name("test") packaged "testing"
+                +spec
+            }
+            println(output.properFormatting().withoutPublic())
         }
         // testing only
 //        (metadata as KotlinClassMetadata.Class).let { meta ->
