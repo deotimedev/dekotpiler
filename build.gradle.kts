@@ -72,9 +72,11 @@ tasks.test {
 
 tasks.withType<KotlinCompile> {
     kotlinOptions.jvmTarget = "1.8"
+    kotlinOptions.languageVersion = "1.8"
     kotlinOptions.freeCompilerArgs = listOf(
         "-Xskip-prerelease-check",
-        "-Xuse-k2"
+        "-Xuse-k2",
+        "-Xuse-experimental"
     )
 }
 

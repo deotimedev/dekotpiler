@@ -1,6 +1,5 @@
 package me.deo.dekotpiler.util
 
-// change to value class when generics work
 class Single<T>(val value: T) : AbstractList<T>() {
 
     override val size = 1

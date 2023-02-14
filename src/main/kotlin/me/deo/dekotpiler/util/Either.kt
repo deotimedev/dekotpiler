@@ -7,8 +7,10 @@ import kotlin.contracts.contract
 
 sealed interface Either<out L, out R> {
 
-    data class Left<L>(val value: L) : Either<L, Nothing>
-    data class Right<R>(val value: R) : Either<Nothing, R>
+    @JvmInline
+    value class Left<L>(val value: L) : Either<L, Nothing>
+    @JvmInline
+    value class Right<R>(val value: R) : Either<Nothing, R>
 
 }
 
