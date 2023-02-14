@@ -1,6 +1,6 @@
 package me.deo.dekotpiler.processing.provided
 
-import me.deo.dekotpiler.matching.ClassMatcher
+import me.deo.dekotpiler.matching.Matcher
 import me.deo.dekotpiler.matching.ValueMatcher
 import me.deo.dekotpiler.model.KtType
 import me.deo.dekotpiler.model.expressions.KtCastExpression
@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component
 @Component
 class UselessCastProcessor :
     PreProcessor<KtCastExpression>,
-    ClassMatcher<KtCastExpression> by UselessCastMatcher {
+    Matcher<KtCastExpression> by UselessCastMatcher {
 
     override fun replace(value: KtCastExpression) = value.expression
 

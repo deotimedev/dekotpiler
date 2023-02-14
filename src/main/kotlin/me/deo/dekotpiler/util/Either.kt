@@ -13,18 +13,6 @@ sealed interface Either<out L, out R> {
 
 }
 
-// todo will change for .right if you wanted to do that for ome reasons
-class LeftCheck<L, R, U>(
-    private val either: Either<L, R>,
-    private val left: (L) -> U
-) {
-    fun right(closure: (R) -> U): U =
-        when (either) {
-            is Either.Left<L> -> left(either.value)
-            is Either.Right<R> -> closure(either.value)
-        }
-}
-
 inline fun <L> left(value: L) = Either.Left(value)
 inline fun <R> right(value: R) = Either.Right(value)
 
@@ -40,4 +28,36 @@ inline fun <L, R> Either<L, R>.isRight(): Boolean {
     return this is Either.Right<R>
 }
 
-fun <L, R, U> Either<L, R>.left(closure: (L) -> U) = LeftCheck(this, closure)
+@DslMarker
+annotation class MatcherDsl
+
+class Match<L, R, U>(@PublishedApi internal val either: Either<L, R>) {
+
+    @PublishedApi
+    internal var value: Any? = Uninitialized
+
+    @MatcherDsl
+    val left = Left
+    @MatcherDsl
+    val right = Right
+
+    inline operator fun Left.compareTo(closure: (L) -> U): Int {
+        if (either.isLeft()) value = closure(either.value)
+        return 0
+    }
+
+    inline operator fun Right.compareTo(closure: (R) -> U): Int {
+        if (either.isRight()) value = closure(either.value)
+        return 0
+    }
+
+    fun match() = value as U
+
+    private object Uninitialized
+    object Left
+    object Right
+
+}
+
+@MatcherDsl
+inline fun <L, R, U> match(either: Either<L, R>, matcher: Match<L, R, U>.() -> Unit): U = Match<L, R, U>(either).apply(matcher).match()

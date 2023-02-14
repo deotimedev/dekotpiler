@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component
 
 @Component
 class ExpressionStatementTranslator : Translator<StructuredExpressionStatement, KtExpression> {
-    override val type = StructuredExpressionStatement::class
+    
     // does this need a seperate statement?... maybe
     override fun Translation.Session.translation(value: StructuredExpressionStatement): KtExpression =
         translateExpression(value.expression)

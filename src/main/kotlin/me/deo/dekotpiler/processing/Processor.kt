@@ -1,8 +1,8 @@
 package me.deo.dekotpiler.processing
 
-import me.deo.dekotpiler.matching.ClassMatcher
+import me.deo.dekotpiler.matching.Matcher
 
-interface Processor<T : Any> : ClassMatcher<T> {
+interface Processor<T : Any> : Matcher<T> {
     val mode: Mode
 
     fun replace(value: T): Any? = value.also { modify(it) }

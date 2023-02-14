@@ -1,14 +1,8 @@
 package me.deo.dekotpiler.translation
 
-import me.deo.dekotpiler.matching.ClassMatcher
-import kotlin.reflect.KClass
+import me.deo.dekotpiler.matching.Matcher
 
-interface Translator<J : Any, K> : ClassMatcher<J> {
-    val type: KClass<out J>
+interface Translator<J : Any, K> : Matcher<J> {
     fun Translation.Session.translation(value: J): K
-
-    // temp stuff
-    override val clazz get() = type as KClass<J>
     override fun J.match() = true
-
 }

@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component
 
 @Component
 class IfStatementTranslator : Translator<StructuredIf, KtIfStatement> {
-    override val type = StructuredIf::class
+    
     override fun Translation.Session.translation(value: StructuredIf) = KtIfStatement(
         translateConditional(value.conditionalExpression),
         translateBlock(value.ifTaken),

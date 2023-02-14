@@ -1,8 +1,7 @@
 package me.deo.dekotpiler.model.expressions.invoke
 
-import me.deo.dekotpiler.model.KtExpression
 import me.deo.dekotpiler.coding.buildCode
-import me.deo.dekotpiler.matching.ClassMatcher
+import me.deo.dekotpiler.model.KtExpression
 import me.deo.dekotpiler.model.structure.KtFunction
 
 // Not to be confused with a companion object invoke
@@ -19,9 +18,8 @@ data class KtStaticInvoke(
     class Matcher(
         val className: String,
         val functionNames: List<String>
-    ) : ClassMatcher<KtStaticInvoke> {
+    ) : me.deo.dekotpiler.matching.Matcher<KtStaticInvoke> {
 
-        override val clazz = KtStaticInvoke::class
         override fun KtStaticInvoke.match() =
             method.enclosing?.typeName == className && name in functionNames
 

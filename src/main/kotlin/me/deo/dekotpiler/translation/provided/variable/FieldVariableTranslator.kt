@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component
 
 @Component
 class FieldVariableTranslator : Translator<FieldVariable, KtMemberField> {
-    override val type = FieldVariable::class
+    
 
     override fun Translation.Session.translation(value: FieldVariable) = KtMemberField(
         value,

@@ -5,12 +5,18 @@ import me.deo.dekotpiler.model.KtType
 import me.deo.dekotpiler.coding.Code
 import me.deo.dekotpiler.coding.buildCode
 import me.deo.dekotpiler.util.Either
+import me.deo.dekotpiler.util.match
 
 data class KtJClassExpression(
-    var clazz: Either<KtLiteral<KtType>, KtExpression>
+    var clazz: Either<KtLiteral.Class, KtGetDynamicKClass>
 ) : KtExpression {
     override val type get() = KtType.JClass
     override fun code() = buildCode {
-        write(clazz.value, ".java")
+        write(
+            match(clazz) {
+                left > { it.value }
+                right > { it }
+            }, ".java"
+        )
     }
 }

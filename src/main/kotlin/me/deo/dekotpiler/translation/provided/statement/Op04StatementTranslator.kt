@@ -8,6 +8,6 @@ import org.springframework.stereotype.Component
 
 @Component
 class Op04StatementTranslator : Translator<Op04StructuredStatement, KtStatement> {
-    override val type = Op04StructuredStatement::class
+    
     override fun Translation.Session.translation(value: Op04StructuredStatement): KtStatement = translateStatement(value.statement)
 }

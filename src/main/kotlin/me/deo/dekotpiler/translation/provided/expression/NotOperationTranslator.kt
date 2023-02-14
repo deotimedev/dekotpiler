@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component
 
 @Component
 class NotOperationTranslator : Translator<NotOperation, KtConditional> {
-    override val type = NotOperation::class
+    
     override fun Translation.Session.translation(value: NotOperation) =
         translateConditional(value.inner).apply { inverse = true }
 }

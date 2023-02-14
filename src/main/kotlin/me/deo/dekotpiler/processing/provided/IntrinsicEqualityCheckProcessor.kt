@@ -1,6 +1,6 @@
 package me.deo.dekotpiler.processing.provided
 
-import me.deo.dekotpiler.matching.ClassMatcher
+import me.deo.dekotpiler.matching.Matcher
 import me.deo.dekotpiler.model.expressions.invoke.KtComparisonInvoke
 import me.deo.dekotpiler.model.expressions.invoke.KtStaticInvoke
 import me.deo.dekotpiler.processing.PreProcessor
@@ -10,7 +10,7 @@ import kotlin.jvm.internal.Intrinsics
 @Component
 class IntrinsicEqualityCheckProcessor :
     PreProcessor<KtStaticInvoke>,
-    ClassMatcher<KtStaticInvoke> by IntrinsicEqualityCheckMatcher {
+    Matcher<KtStaticInvoke> by IntrinsicEqualityCheckMatcher {
 
     override fun replace(value: KtStaticInvoke) =
         KtComparisonInvoke(

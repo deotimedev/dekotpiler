@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component
 
 @Component
 class BlockStatementTranslator : Translator<Block, KtBlockStatement> {
-    override val type = Block::class
+    
     override fun Translation.Session.translation(value: Block) =
         // todo fix comments being weird
         KtBlockStatement(value.blockStatements.filter { it.statement !is StructuredComment }.map { stmt ->

@@ -18,6 +18,7 @@ import me.deo.dekotpiler.translation.Translator
 import me.deo.dekotpiler.util.CFRExpression
 import me.deo.dekotpiler.util.CFRStatement
 import me.deo.dekotpiler.util.gather
+import me.deo.dekotpiler.util.resolveTypeParameter
 import org.benf.cfr.reader.bytecode.analysis.opgraph.Op04StructuredStatement
 import org.benf.cfr.reader.bytecode.analysis.parse.LValue
 import org.benf.cfr.reader.bytecode.analysis.parse.expression.ConditionalExpression
@@ -36,10 +37,9 @@ internal class TranslationImpl(
     private val processing: Processing,
     private val typeMappings: TypeMappings
 ) : Translation {
-    private val translatorsByType = translators.groupBy { it.type.java }
+    private val translatorsByType = translators.groupBy { resolveTypeParameter(it::class, Translator::class, "J")!! }
     override fun session() = SessionImpl()
-    override fun <C : Any, K> translators(type: KClass<out C>) =
-        translatorsByType[type.java].orEmpty() as List<Translator<C, K>>
+    override fun <C : Any, K> translators(type: KClass<out C>) = translatorsByType[type].orEmpty() as List<Translator<C, K>>
 
     private val computedFunctions = mutableMapOf<MethodPrototype, KtFunction>()
 

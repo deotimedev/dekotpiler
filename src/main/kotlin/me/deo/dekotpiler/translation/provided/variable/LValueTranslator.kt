@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component
 
 @Component
 class LValueTranslator : Translator<LValueExpression, KtVariable> {
-    override val type = LValueExpression::class
+    
     override fun Translation.Session.translation(value: LValueExpression) =
         translateVariable<KtVariable>(value.lValue)
 }

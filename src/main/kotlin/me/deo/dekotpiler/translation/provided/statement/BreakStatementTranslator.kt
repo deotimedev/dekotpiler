@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component
 
 @Component
 class BreakStatementTranslator : Translator<StructuredBreak, KtBreakStatement> {
-    override val type = StructuredBreak::class
+    
     override fun Translation.Session.translation(value: StructuredBreak) =
         KtBreakStatement(value.breakBlock.name)
 }

@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component
 
 @Component
 class DoWhileLoopStatementTranslator : Translator<StructuredDo, KtDoWhileStatement> {
-    override val type = StructuredDo::class
+    
     override fun Translation.Session.translation(value: StructuredDo) = KtDoWhileStatement(
         translateConditional(value.condition),
         translateBlock(value.body)
