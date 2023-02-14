@@ -2,20 +2,17 @@ package me.deo.dekotpiler.crawler.provided
 
 import me.deo.dekotpiler.crawler.Crawler
 import me.deo.dekotpiler.matching.Matcher.Companion.match
+import me.deo.dekotpiler.model.expressions.KtIfElseExpression
 import me.deo.dekotpiler.model.expressions.KtLiteral
 import me.deo.dekotpiler.model.expressions.KtNotNullAssertionExpression
+import me.deo.dekotpiler.model.expressions.invoke.KtComparisonInvoke
 import me.deo.dekotpiler.model.expressions.invoke.KtStaticInvoke
 import me.deo.dekotpiler.model.statements.KtBlockStatement
 import me.deo.dekotpiler.model.statements.KtVariableAssignmentStatement
 import me.deo.dekotpiler.model.variable.KtLocalVariable
-import org.benf.cfr.reader.bytecode.analysis.variables.NamedVariable
+import me.deo.dekotpiler.util.push
 import org.springframework.stereotype.Component
 import kotlin.jvm.internal.Intrinsics
-
-val NamedVariable.isGoodKotlinName
-    // inline markers are our one saving grace when it comes
-    // to detecting inlined closures, so dont remove them
-    get() = isGoodName || stringName.startsWith("\$")
 
 @Component
 class LocalVariableDeclarationCrawler : Crawler {
@@ -25,23 +22,35 @@ class LocalVariableDeclarationCrawler : Crawler {
         path.forEach { block ->
             block.statements.removeIf { stmt ->
                 if (stmt is KtVariableAssignmentStatement) {
+                    val variable = stmt.variable as? KtLocalVariable ?: return@removeIf false
                     var declaration: KtVariableAssignmentStatement? = null
                     if (stmt.declaring) {
-                        declared[stmt.variable.name] = stmt
+                        declared[variable.name] = stmt
                         declaration = stmt
                     } else {
-                        declared[stmt.variable.name]?.let {
+                        val expr = stmt.expression
+//                        if (
+//                            expr is KtIfElseExpression &&
+//                            expr.then == KtLiteral.One && expr.orElse == KtLiteral.Zero
+//                        ) {
+//                            variable.inlineValues.push(
+//                                expr.condition
+//                            )
+//                            variable.forceNextInline = true
+//                            return@removeIf true
+//                        }
+                        declared[variable.name]?.let {
                             declaration = it
-                            declaration?.variable?.final = false
+                            variable.final = false
                         }
                     }
 
                     (declaration?.variable as? KtLocalVariable)?.apply {
                         if (stmt.expression == KtLiteral.Null)
                             type = type.nullable()
-                        if (inlinable && !delegate.name.isGoodKotlinName) {
-                            println("removing variable ${delegate.name}")
-                            value = declaration?.expression
+                        if (inlinable && synthetic) {
+                            println("removing variable $name")
+                            declaration?.expression?.let { inlineValues.push(it) }
                             return@removeIf true
                         }
                     }

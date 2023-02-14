@@ -13,10 +13,10 @@ class FieldVariableTranslator : Translator<FieldVariable, KtMemberField> {
     
 
     override fun Translation.Session.translation(value: FieldVariable) = KtMemberField(
-        value,
         translateExpression(value.`object`),
         value.rawFieldName,
         value.isFinal,
-        translateType(value.inferredJavaType)
+        translateType(value.inferredJavaType),
+        false // todo?
     )
 }

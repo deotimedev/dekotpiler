@@ -8,7 +8,7 @@ import kotlin.reflect.typeOf
 class Test {
     fun test() {
         println(1..10)
-        println(typeOf<String.(Int, Char) -> Boolean>())
+        println(typeOf<Array<String>>())
         val stringBuilder = StringBuilder()
         stringBuilder.append("yess").append(555)
         println(stringBuilder.toString())

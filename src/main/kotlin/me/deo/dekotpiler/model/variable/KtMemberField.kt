@@ -6,11 +6,11 @@ import me.deo.dekotpiler.model.type.KtType
 import org.benf.cfr.reader.bytecode.analysis.parse.lvalue.FieldVariable
 
 data class KtMemberField(
-    override val delegate: FieldVariable,
     var member: KtExpression,
     override var name: String,
     override var final: Boolean,
-    override val type: KtType
+    override val type: KtType,
+    override var synthetic: Boolean
 ) : KtField {
     override fun code() = buildCode {
         write(member, member.nullCheckedChain(), name)

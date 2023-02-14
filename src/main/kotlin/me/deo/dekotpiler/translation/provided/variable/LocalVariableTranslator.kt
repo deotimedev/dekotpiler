@@ -12,9 +12,9 @@ class LocalVariableTranslator : Translator<LocalVariable, KtLocalVariable> {
 
     // needs to be linked somehow...
     override fun Translation.Session.translation(value: LocalVariable): KtLocalVariable = KtLocalVariable(
-        value,
         value.name.stringName,
         true,
-        translateType(value.inferredJavaType.javaTypeInstance).nullable(false)
+        translateType(value.inferredJavaType.javaTypeInstance).nullable(false),
+        !value.name.isGoodName && value.name.stringName.startsWith("var")
     )
 }

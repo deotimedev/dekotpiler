@@ -5,9 +5,9 @@ import org.benf.cfr.reader.bytecode.analysis.parse.LValue
 
 interface KtVariable : KtExpression {
 
-    val delegate: LValue // TODO remove
-    var name: String
+    val name: String
     var final: Boolean
+    val synthetic: Boolean
 
 }
 

@@ -3,20 +3,24 @@ package me.deo.dekotpiler.model.variable
 import me.deo.dekotpiler.coding.codeOf
 import me.deo.dekotpiler.model.KtExpression
 import me.deo.dekotpiler.model.type.KtType
-import org.benf.cfr.reader.bytecode.analysis.parse.lvalue.LocalVariable
+import me.deo.dekotpiler.util.MutableQueue
+import me.deo.dekotpiler.util.mutableQueueOf
+import me.deo.dekotpiler.util.poll
 
 data class KtLocalVariable(
-    override val delegate: LocalVariable,
     override var name: String,
     override var final: Boolean,
     override var type: KtType,
-    var value: KtExpression? = null,
+    override var synthetic: Boolean,
 ) : KtVariable {
 
     var uses = -1
 
+    val inlineValues: MutableQueue<KtExpression> = mutableQueueOf()
     val inlinable get() = uses <= 1
-    val inlined get() = inlinable && value != null
+    val inlined get() = inlinable && inlineValues.isNotEmpty()
 
-    override fun code() = codeOf(if (inlined) value else name)
+    override fun code() = codeOf(if (inlined) inlineValues.poll().also {
+        println("inlined ${it?.code().toString()}")
+    } else name)
 }

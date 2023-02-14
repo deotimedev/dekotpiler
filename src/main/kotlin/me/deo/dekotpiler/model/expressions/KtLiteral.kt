@@ -51,5 +51,8 @@ sealed class KtLiteral<T>(override val type: KtType, val letter: KtChar? = null)
     companion object {
         val True = Boolean(null, true)
         val False = Boolean(null, false)
+
+        val Zero = Int(0)
+        val One = Int(1)
     }
 }
