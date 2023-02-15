@@ -3,6 +3,8 @@ package me.deo.dekotpiler.model
 import me.deo.dekotpiler.coding.buildCode
 import me.deo.dekotpiler.model.type.KtType
 import me.deo.dekotpiler.util.gather
+import me.deo.dekotpiler.util.view
+import me.deo.dekotpiler.util.views
 
 open class KtConditional(
     var underlying: KtExpression,
@@ -12,6 +14,7 @@ open class KtConditional(
 
     override val type = KtType.Boolean
 
+    override val expressionView: KtExpressionView = views(::underlying, ::joined)
     override fun code() = buildCode {
         if (inverse) +"!"
         +underlying
@@ -24,9 +27,11 @@ open class KtConditional(
 
     inner class Joined(
         var operation: Operation,
-        var conditional: KtConditional
-    ) {
+        val conditional: KtConditional
+    ) : KtExpression by conditional {
         val with = this@KtConditional
+        override val type: KtType
+            get() = conditional.type
     }
 
     enum class Operation(val symbol: String) {

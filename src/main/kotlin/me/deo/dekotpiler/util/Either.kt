@@ -66,5 +66,11 @@ inline fun <reified T> Either<*, *>.unwrap() =
         right > { it }
     } as T
 
+fun <T> Either<*, *>.unsafeUnwrap() =
+    match(this) {
+        left > { it }
+        right > { it }
+    } as T
+
 @MatcherDsl
 inline fun <L, R, U> match(either: Either<L, R>, matcher: Match<L, R, U>.() -> Unit): U = Match<L, R, U>(either).apply(matcher).match()
