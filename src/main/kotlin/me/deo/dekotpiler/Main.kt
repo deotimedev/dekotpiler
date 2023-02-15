@@ -2,27 +2,27 @@ package me.deo.dekotpiler
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
-import kotlinx.metadata.jvm.KotlinClassMetadata
 import me.deo.dekotpiler.crawler.CrawlerController
 import me.deo.dekotpiler.crawler.provided.LocalVariableDeclarationCrawler
-import me.deo.dekotpiler.decompile.CFRDecompilerEngine
+import me.deo.dekotpiler.decompile.KotlinJarLoader
 import me.deo.dekotpiler.metadata.MetadataResolver
+import me.deo.dekotpiler.model.type.KtType
 import me.deo.dekotpiler.translation.Translation
 import me.deo.dekotpiler.ui.FileSelector
 import me.deo.dekotpiler.util.task
-import me.deo.dekotpiler.util.taskAsync
 import org.springframework.boot.Banner
 import org.springframework.boot.CommandLineRunner
 import org.springframework.boot.WebApplicationType
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.builder.SpringApplicationBuilder
 import org.springframework.stereotype.Component
+import kotlin.time.Duration
 
 @Component
 class Main(
     private val metadataResolver: MetadataResolver,
     private val fileSelector: FileSelector,
-    private val engine: CFRDecompilerEngine,
+    private val engine: KotlinJarLoader,
     private val translation: Translation,
     private val crawlerController: CrawlerController,
     private val testCrawler: LocalVariableDeclarationCrawler
@@ -39,9 +39,9 @@ class Main(
             "*.jar"
         ) ?: return@runBlocking
 //        val metadata = taskAsync("Metadata") { KotlinClassMetadata.read(metadataResolver.resolve(file)) as KotlinClassMetadata.Class }
-        val jar = taskAsync("CFR") { engine.decompile(file) ?: error("Couldn't read class.") }
+        val jar = task("CFR") { engine.decompile(file) ?: error("Couldn't read class.") }
 
-        println(jar.await().classCache.loadedTypes)
+        println(jar.metadata(KtType<Duration>()))
 //        task("Kotlin Decompilation") {
 //            val metaClass = metadata.await().toKmClass()
 //            val methods = clazz.await().methods.mapNotNull { cfrMethod ->
