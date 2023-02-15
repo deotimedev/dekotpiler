@@ -2,7 +2,9 @@ package me.deo.dekotpiler.model.expressions.invoke
 
 import me.deo.dekotpiler.coding.buildCode
 import me.deo.dekotpiler.model.KtExpression
+import me.deo.dekotpiler.model.KtExpressionView
 import me.deo.dekotpiler.model.structure.KtFunction
+import me.deo.dekotpiler.util.views
 
 data class KtMethodInvoke(
     override var method: KtFunction,
@@ -11,6 +13,7 @@ data class KtMethodInvoke(
     override var extension: Boolean,
     override val name: String = method.name
 ) : KtMemberInvoke {
+    override val expressionView: KtExpressionView = views(::args, ::reference)
     override fun code() = buildCode {
         operator?.let { op ->
             +op.format

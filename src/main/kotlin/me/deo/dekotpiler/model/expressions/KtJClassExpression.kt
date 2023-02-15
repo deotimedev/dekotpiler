@@ -9,6 +9,7 @@ import me.deo.dekotpiler.util.unwrap
 data class KtJClassExpression(
     var clazz: Either<KtLiteral.Class, KtGetDynamicKClass>
 ) : KtExpression {
+    // MAJOR TODO support either views
     override val type get() = KtType.JClass
     override fun code() = buildCode {
         write(clazz.unwrap<KtExpression>(), ".java")

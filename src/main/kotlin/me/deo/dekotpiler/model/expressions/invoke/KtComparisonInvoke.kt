@@ -3,16 +3,17 @@ package me.deo.dekotpiler.model.expressions.invoke
 import me.deo.dekotpiler.coding.buildCode
 import me.deo.dekotpiler.model.KtConditional
 import me.deo.dekotpiler.model.KtExpression
+import me.deo.dekotpiler.model.KtExpressionView
 import me.deo.dekotpiler.model.type.KtType
 import me.deo.dekotpiler.model.structure.KtFunction
+import me.deo.dekotpiler.util.views
 
 class KtComparisonInvoke(
     override var reference: KtExpression,
     var comparing: KtExpression,
     var mode: Type
-) : KtMemberInvoke, KtConditional(
-    reference
-) {
+) : KtMemberInvoke, KtConditional(reference) {
+    override val expressionView: KtExpressionView = super<KtConditional>.expressionView + views(::reference, ::comparing)
     override val args: MutableList<KtExpression> get() = mutableListOf(comparing)
     override val extension = false
     override val type = KtType.Boolean

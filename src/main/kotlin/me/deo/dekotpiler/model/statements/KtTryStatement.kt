@@ -34,7 +34,7 @@ data class KtTryStatement(
     }
 
     data class Catch(
-        var throwable: KtLocalVariable,
+        var throwable: KtLocalVariable, // it would not make sense for this to have an expression view
         var statement: KtBlockStatement
     ) : KtStatement {
         override fun code() = buildCode {

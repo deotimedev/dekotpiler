@@ -3,8 +3,10 @@ package me.deo.dekotpiler.model.statements
 import me.deo.dekotpiler.model.KtExpression
 import me.deo.dekotpiler.model.KtStatement
 import me.deo.dekotpiler.coding.buildCode
+import me.deo.dekotpiler.model.KtExpressionView
 import me.deo.dekotpiler.model.variable.KtLocalVariable
 import me.deo.dekotpiler.model.variable.KtVariable
+import me.deo.dekotpiler.util.views
 
 // for testing but might be made config option
 private const val ExplicitType = true
@@ -15,6 +17,7 @@ class KtVariableAssignmentStatement(
     var expression: KtExpression?
 ) : KtStatement {
 
+    override val expressionView: KtExpressionView = views(::variable, ::expression)
     override fun code() = buildCode {
         if (declaring) write(if (variable.final) "val" else "var", " ")
         +variable.name

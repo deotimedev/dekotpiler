@@ -1,6 +1,8 @@
 package me.deo.dekotpiler.model.expressions.invoke
 
 import me.deo.dekotpiler.coding.codeOf
+import me.deo.dekotpiler.model.KtExpressionView
+import me.deo.dekotpiler.util.views
 
 data class KtGetterInvoke(
     override val actual: KtMemberInvoke
