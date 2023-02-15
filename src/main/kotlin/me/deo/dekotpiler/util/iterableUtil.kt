@@ -9,3 +9,10 @@ fun <T> MutableList<T>.update(index: Int, closure: (T) -> T) =
         set(index, new)
         old to new
     }
+
+fun <T> MutableList<T>.updateLast(closure: (T) -> T) =
+    getOrNull(lastIndex)?.let { old ->
+        val new = closure(old)
+        set(lastIndex, new)
+        old to new
+    }

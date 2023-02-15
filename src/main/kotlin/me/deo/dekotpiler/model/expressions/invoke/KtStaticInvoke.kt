@@ -14,8 +14,10 @@ data class KtStaticInvoke(
     override val expressionView: KtExpressionView = views(::args)
     override val extension = false
     override fun code() = buildCode {
-        write(method.enclosing?.name, ".", method.name)
-        writeInvoker(args)
+        if (method.kind != KtFunction.Kind.TopLevel)
+            write(method.enclosing?.name, ".")
+        +method.name
+        writeArgs()
     }
 
     class Matcher(
