@@ -108,7 +108,7 @@ class Main(
                     .headless(false)
                     .application()
             }.run()
-            exportTasks()
+//            exportTasks()
         }
 
         @SpringBootApplication
