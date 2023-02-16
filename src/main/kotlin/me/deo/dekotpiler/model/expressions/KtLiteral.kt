@@ -6,51 +6,88 @@ import me.deo.dekotpiler.model.KtExpression
 import me.deo.dekotpiler.model.type.KtNothingType
 import me.deo.dekotpiler.model.type.KtType
 import kotlin.Boolean as KtBoolean
+import kotlin.Char as KtChar
 import kotlin.Double as KtDouble
 import kotlin.Float as KtFloat
 import kotlin.Int as KtInt
 import kotlin.Long as KtLong
 import kotlin.String as KtString
-import kotlin.Char as KtChar
 
-sealed class KtLiteral<T>(override val type: KtType, val letter: KtChar? = null) : KtExpression {
+sealed interface KtLiteral<T> : KtExpression {
 
-    abstract val value: T
+    override val type: KtType
+    val letter: KtChar? get() = null
+    val value: T
 
     override fun code() = buildCode {
         write(value)
         letter?.let { +it }
     }
 
-    data class Int(override var value: KtInt) : KtLiteral<KtInt>(KtType.Int)
-    data class Long(override var value: KtLong) : KtLiteral<KtLong>(KtType.Long, 'L')
-    data class Float(override var value: KtFloat) : KtLiteral<KtFloat>(KtType.Float, 'F')
-    data class Double(override var value: KtDouble) : KtLiteral<KtDouble>(KtType.Double)
-    data class Char(override var value: KtChar) : KtLiteral<KtChar>(KtType.Char) {
+    @JvmInline
+    value class Int(override val value: KtInt) : KtLiteral<KtInt> {
+        override val type: KtType
+            get() = KtType.Int
+    }
+    @JvmInline
+    value class Long(override val value: KtLong) : KtLiteral<KtLong> {
+        override val type: KtType
+            get() = KtType.Long
+        override val letter: kotlin.Char?
+            get() = 'L'
+    }
+    @JvmInline
+    value class Float(override val value: KtFloat) : KtLiteral<KtFloat> {
+        override val type: KtType
+            get() = KtType.Float
+        override val letter: kotlin.Char?
+            get() = 'F'
+    }
+    @JvmInline
+    value class Double(override val value: KtDouble) : KtLiteral<KtDouble> {
+        override val type: KtType
+            get() = KtType.Double
+    }
+    @JvmInline
+    value class Char(override val value: KtChar) : KtLiteral<KtChar> {
+        override val type: KtType
+            get() = KtType.Char
         override fun code() = codeOf("'", value, "'")
     }
-    data class String(override var value: KtString) : KtLiteral<KtString>(KtType.String) {
+
+    @JvmInline
+    value class String(override val value: KtString) : KtLiteral<KtString> {
+        override val type: KtType
+            get() = KtType.String
         override fun code() = codeOf("\"", value, "\"")
     }
-    data class Class(override var value: KtType) : KtLiteral<KtType>(KtType.KClass.parameterize(value)) {
+
+    @JvmInline
+    value class Class(override val value: KtType) : KtLiteral<KtType> {
+        override val type: KtType
+            get() = KtType.KClass.parameterize(value)
         override fun code() = codeOf(value.nullable(false).name, "::class")
     }
-    object Null : KtLiteral<Nothing?>(KtNothingType.Nullable) {
+
+    data object Null : KtLiteral<Nothing?> {
+        override val type = KtNothingType.Nullable
         override var value = null
     }
 
-    class Boolean internal constructor(
-        val _overload: Nothing?,
+    @JvmInline
+    value class Boolean internal constructor(
         override val value: KtBoolean
-        ) : KtLiteral<KtBoolean>(KtType.Boolean) {
+    ) : KtLiteral<KtBoolean> {
+        override val type: KtType
+            get() = KtType.Boolean
         companion object {
             operator fun invoke(value: KtBoolean) = if (value) True else False
         }
     }
 
     companion object {
-        val True = Boolean(null, true)
-        val False = Boolean(null, false)
+        val True = Boolean(true)
+        val False = Boolean(false)
 
         val Zero = Int(0)
         val One = Int(1)

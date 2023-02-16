@@ -5,7 +5,8 @@ import me.deo.dekotpiler.model.KtConditional
 import me.deo.dekotpiler.processing.PreProcessor
 import org.springframework.stereotype.Component
 
-
+// todo this is broken
+// or maybe conditionals are just broken?
 @Component
 class UnclearConditionalProcessor :
     PreProcessor<KtConditional>,

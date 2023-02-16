@@ -10,7 +10,10 @@ import me.deo.dekotpiler.model.expressions.invoke.KtStaticInvoke
 import me.deo.dekotpiler.model.statements.KtBlockStatement
 import me.deo.dekotpiler.model.statements.KtVariableAssignmentStatement
 import me.deo.dekotpiler.model.variable.KtLocalVariable
+import me.deo.dekotpiler.util.View
 import me.deo.dekotpiler.util.push
+import me.deo.dekotpiler.util.unsafeUnwrap
+import me.deo.dekotpiler.util.unwrap
 import org.springframework.stereotype.Component
 import kotlin.jvm.internal.Intrinsics
 
@@ -19,6 +22,12 @@ class LocalVariableDeclarationCrawler : Crawler {
     override fun crawl(path: List<KtBlockStatement>) {
         val declared = mutableMapOf<String, KtVariableAssignmentStatement>()
         fun declaration(variable: KtLocalVariable) = declared[variable.name]
+        path.flatMap {
+            it.flatten().flatMap { it.expressionView }
+        }.forEach { expr ->
+            println("Expr: ${expr.unwrap<View<*, *>>().get()}")
+            expr
+        }
         path.forEach { block ->
             block.statements.removeIf { stmt ->
                 if (stmt is KtVariableAssignmentStatement) {
@@ -50,7 +59,7 @@ class LocalVariableDeclarationCrawler : Crawler {
                             type = type.nullable()
                         if (inlinable && synthetic) {
                             println("removing variable $name")
-                            declaration?.expression?.let { inlineValues.push(it) }
+                            declaration?.expression?.let { inlineValue = it }
                             return@removeIf true
                         }
                     }
