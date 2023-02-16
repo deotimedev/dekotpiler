@@ -4,7 +4,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
 import kotlinx.metadata.jvm.KotlinClassMetadata
 import me.deo.dekotpiler.crawler.CrawlerController
-import me.deo.dekotpiler.crawler.impl.CrawlerControllerImpl
 import me.deo.dekotpiler.crawler.provided.LocalVariableDeclarationCrawler
 import me.deo.dekotpiler.decompile.KotlinJarLoader
 import me.deo.dekotpiler.metadata.MetadataResolver
@@ -23,7 +22,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.builder.SpringApplicationBuilder
 import org.springframework.stereotype.Component
 import java.io.File
-import kotlin.time.Duration
 
 @Component
 class Main(
@@ -46,7 +44,7 @@ class Main(
 //            "*.jar"
 //        ) ?: return@runBlocking
 //        val metadata = taskAsync("Metadata") { KotlinClassMetadata.read(metadataResolver.resolve(file)) as KotlinClassMetadata.Class }
-        val jar = task("CFR") { engine.decompile(file) ?: error("Couldn't read class.") }
+        val jar = task("CFR") { engine.load(file) ?: error("Couldn't read class.") }
 
         val target = KtType<Test>()
         val metadata = jar.metadata(target) as KotlinClassMetadata.Class

@@ -26,11 +26,11 @@ class CFRKotlinJarLoader(
         TIDY_VARIABLE_NAMES set false
     }
 
-    override fun decompile(file: File): KotlinJar {
+    override fun load(jar: File): KotlinJar {
         val result = CfrDriver.Builder()
             .withOptions(config)
             .build()
-            .analyse(file.absolutePath)
+            .analyse(jar.absolutePath)
         val session = translation.session()
         val typeConversions = result.second.values
             .flatten()
