@@ -8,10 +8,9 @@ import me.deo.dekotpiler.util.views
 
 data class KtMethodInvoke(
     override var function: KtFunction,
-    override var args: MutableList<KtExpression>,
     override var reference: KtExpression,
-    override var extension: Boolean,
-    override val name: String = function.name
+    override var args: MutableList<KtExpression>,
+    override var extension: Boolean = false,
 ) : KtMemberInvoke {
     override val expressionView: KtExpressionView = views(::args, ::reference)
     override fun code() = buildCode {

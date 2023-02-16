@@ -1,8 +1,11 @@
 package me.deo.dekotpiler.processing.provided
 
 import me.deo.dekotpiler.matching.Matcher
-import me.deo.dekotpiler.model.expressions.invoke.KtComparisonInvoke
+import me.deo.dekotpiler.model.expressions.invoke.KtComparison
+import me.deo.dekotpiler.model.expressions.invoke.KtMemberInvoke
+import me.deo.dekotpiler.model.expressions.invoke.KtMethodInvoke
 import me.deo.dekotpiler.model.expressions.invoke.KtStaticInvoke
+import me.deo.dekotpiler.model.structure.KtFunction
 import me.deo.dekotpiler.processing.PreProcessor
 import org.springframework.stereotype.Component
 import kotlin.jvm.internal.Intrinsics
@@ -13,10 +16,10 @@ class IntrinsicEqualityCheckProcessor :
     Matcher<KtStaticInvoke> by IntrinsicEqualityCheckMatcher {
 
     override fun replace(value: KtStaticInvoke) =
-        KtComparisonInvoke(
+        KtMethodInvoke(
+            KtFunction.Equals,
             value.args[0],
-            value.args[1],
-            KtComparisonInvoke.Type.Equality
+            mutableListOf(value.args[1])
         )
 
     companion object {

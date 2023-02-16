@@ -6,13 +6,14 @@ import me.deo.dekotpiler.util.gather
 import me.deo.dekotpiler.util.view
 import me.deo.dekotpiler.util.views
 
+// todo this should really be an interface
 open class KtConditional(
     var underlying: KtExpression,
     var joined: Joined? = null,
     var inverse: Boolean = false
 ) : KtExpression {
 
-    override val type = KtType.Boolean
+    final override val type = KtType.Boolean
 
     override val expressionView: KtExpressionView = views(::underlying, ::joined)
     override fun code() = buildCode {

@@ -28,22 +28,20 @@ data class KtFunction(
     var operator: Operator? = null
         get() = field ?: Operator.All.find { it.functionName == name }
 
-    // i dont think this is needed anymore
-//    constructor(reflect: KFunction<*>) : this(
-//        reflect.name,
-//        reflect.signature,
-//        reflect.extensionReceiverParameter?.type?.let { KtType(it) },
-//        reflect.valueParameters.map { Parameter(it) }.toMutableList(),
-//        reflect.typeParameters.map { KtTypeParameter(it) }.toMutableList(),
-//        KtType(reflect.returnType),
-//        reflect.instanceParameter?.type?.let { KtType(it) },
-//        when {
-//            reflect.javaConstructor != null -> Kind.Constructor
-//            reflect.instanceParameter != null -> Kind.Instance
-//            else -> Kind.TopLevel
-//        },
-//        isOperator = reflect.isOperator
-//    )
+    constructor(reflect: KFunction<*>) : this(
+        reflect.name,
+        reflect.signature,
+        reflect.extensionReceiverParameter?.type?.let { KtType(it) },
+        reflect.valueParameters.map { Parameter(it) }.toMutableList(),
+        reflect.typeParameters.map { KtTypeParameter(it) }.toMutableList(),
+        KtType(reflect.returnType),
+        reflect.instanceParameter?.type?.let { KtType(it) },
+        when {
+            reflect.javaConstructor != null -> Kind.Constructor
+            reflect.instanceParameter != null -> Kind.Instance
+            else -> Kind.TopLevel
+        }
+    )
 
     enum class Kind {
         Instance,
@@ -99,6 +97,9 @@ data class KtFunction(
     }
 
     companion object {
+
+        val Equals = KtFunction(Any::equals)
+
         // kotlin enums initialize very strange
         private fun arith(char: Char) = "@ $char #1"
         private fun augment(char: Char) = "@ $char= #1"

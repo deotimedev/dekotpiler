@@ -16,7 +16,7 @@ import org.springframework.stereotype.Component
 import java.io.File
 
 @Component
-class CFRKotlinJarLoader(
+internal class CFRKotlinJarLoader(
     private val translation: Translation,
     private val metadataResolver: MetadataResolver
 ) : KotlinJarLoader {
@@ -55,7 +55,6 @@ class CFRKotlinJarLoader(
                     ?.let(state::getClassContent)
                     ?.let(metadataResolver::resolve)
                     ?.let(KotlinMetadataReader::read)
-//                KotlinClassMetadata.read(metadataResolver.resolve(state.getClassContent(typeMappings[type.qualifiedName])))
         }
     }
 

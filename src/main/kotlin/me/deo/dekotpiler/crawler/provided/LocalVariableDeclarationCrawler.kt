@@ -2,17 +2,13 @@ package me.deo.dekotpiler.crawler.provided
 
 import me.deo.dekotpiler.crawler.Crawler
 import me.deo.dekotpiler.matching.Matcher.Companion.match
-import me.deo.dekotpiler.model.expressions.KtIfElseExpression
 import me.deo.dekotpiler.model.expressions.KtLiteral
 import me.deo.dekotpiler.model.expressions.KtNotNullAssertionExpression
-import me.deo.dekotpiler.model.expressions.invoke.KtComparisonInvoke
 import me.deo.dekotpiler.model.expressions.invoke.KtStaticInvoke
 import me.deo.dekotpiler.model.statements.KtBlockStatement
 import me.deo.dekotpiler.model.statements.KtVariableAssignmentStatement
 import me.deo.dekotpiler.model.variable.KtLocalVariable
 import me.deo.dekotpiler.util.View
-import me.deo.dekotpiler.util.push
-import me.deo.dekotpiler.util.unsafeUnwrap
 import me.deo.dekotpiler.util.unwrap
 import org.springframework.stereotype.Component
 import kotlin.jvm.internal.Intrinsics
