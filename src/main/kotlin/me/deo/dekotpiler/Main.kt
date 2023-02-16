@@ -46,7 +46,11 @@ class Main(
 //        val metadata = taskAsync("Metadata") { KotlinClassMetadata.read(metadataResolver.resolve(file)) as KotlinClassMetadata.Class }
         val jar = task("CFR") { engine.load(file) ?: error("Couldn't read class.") }
 
-        val target = KtType<Test>()
+//        jar.types.forEach {
+//            println("type: ${it.qualifiedName}")
+//        }
+        val target = KtType<Companion>()
+        println("qualified: ${target.qualifiedName}")
         val metadata = jar.metadata(target) as KotlinClassMetadata.Class
         val clazz = jar.load(target)
         task("Kotlin Decompilation") {

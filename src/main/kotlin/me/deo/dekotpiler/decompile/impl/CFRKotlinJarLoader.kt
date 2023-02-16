@@ -37,7 +37,10 @@ class CFRKotlinJarLoader(
             .associateBy {
                 session.translateType(it) as KtReferenceType
             }
-        val typeMappings = typeConversions.mapKeys { (type, _)  -> type.qualifiedName }
+        val typeMappings = typeConversions.mapKeys { (type, _)  ->
+            type.qualifiedName
+                .replace("$", ".") // This line should only be teporary until nested classes can be resolved properly
+        }
         val state = result.first
         return object : KotlinJar {
             override val types = typeConversions.keys.toList()

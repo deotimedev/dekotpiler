@@ -63,7 +63,7 @@ interface KtType : KtTyped, Codable {
             generics: List<KtType>
         ) =
             KtReferenceType(
-                type.qualifiedName!!,
+                type.java.canonicalName!!,
                 type.simpleName!!,
                 nullable,
                 generics,
