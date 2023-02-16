@@ -1,9 +1,8 @@
-package me.deo.dekotpiler.decompile
+package me.deo.dekotpiler.jar
 
 import kotlinx.metadata.jvm.KotlinClassMetadata
 import me.deo.dekotpiler.model.type.KtReferenceType
 import org.benf.cfr.reader.entities.ClassFile
-import org.benf.cfr.reader.state.DCCommonState
 
 interface KotlinJar {
     val types: List<KtReferenceType>

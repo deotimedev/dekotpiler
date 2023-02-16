@@ -5,13 +5,12 @@ import kotlinx.coroutines.runBlocking
 import kotlinx.metadata.jvm.KotlinClassMetadata
 import me.deo.dekotpiler.crawler.CrawlerController
 import me.deo.dekotpiler.crawler.provided.LocalVariableDeclarationCrawler
-import me.deo.dekotpiler.decompile.KotlinJarLoader
+import me.deo.dekotpiler.jar.KotlinJarLoader
 import me.deo.dekotpiler.metadata.MetadataResolver
 import me.deo.dekotpiler.model.statements.KtBlockStatement
 import me.deo.dekotpiler.model.type.KtType
 import me.deo.dekotpiler.translation.Translation
 import me.deo.dekotpiler.ui.FileSelector
-import me.deo.dekotpiler.ui.impl.FileSelectorImpl
 import me.deo.dekotpiler.util.task
 import me.deotime.kpoetdsl.FunctionBuilder.Initializer.invoke
 import me.deotime.kpoetdsl.kotlin

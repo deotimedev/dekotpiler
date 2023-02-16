@@ -1,17 +1,19 @@
-package me.deo.dekotpiler.decompile.impl
+package me.deo.dekotpiler.jar.impl
 
-import kotlinx.metadata.jvm.KotlinClassMetadata
-import me.deo.dekotpiler.decompile.KotlinJar
-import me.deo.dekotpiler.decompile.KotlinJarLoader
+import me.deo.dekotpiler.jar.KotlinJar
+import me.deo.dekotpiler.jar.KotlinJarLoader
 import me.deo.dekotpiler.metadata.MetadataResolver
 import me.deo.dekotpiler.model.type.KtReferenceType
 import me.deo.dekotpiler.translation.Translation
+import me.deo.dekotpiler.util.KotlinMetadataReader
 import org.benf.cfr.reader.api.CfrDriver
+import org.benf.cfr.reader.util.getopt.OptionsImpl.ALLOW_CORRECTING
+import org.benf.cfr.reader.util.getopt.OptionsImpl.ANTI_OBF
+import org.benf.cfr.reader.util.getopt.OptionsImpl.DECOMPILER_COMMENTS
+import org.benf.cfr.reader.util.getopt.OptionsImpl.TIDY_VARIABLE_NAMES
+import org.benf.cfr.reader.util.getopt.PermittedOptionProvider
 import org.springframework.stereotype.Component
 import java.io.File
-
-import org.benf.cfr.reader.util.getopt.OptionsImpl.*
-import org.benf.cfr.reader.util.getopt.PermittedOptionProvider
 
 @Component
 class CFRKotlinJarLoader(
@@ -37,16 +39,23 @@ class CFRKotlinJarLoader(
             .associateBy {
                 session.translateType(it) as KtReferenceType
             }
-        val typeMappings = typeConversions.mapKeys { (type, _)  ->
+        val typeMappings = typeConversions.mapKeys { (type, _) ->
             type.qualifiedName
                 .replace("$", ".") // This line should only be teporary until nested classes can be resolved properly
         }
         val state = result.first
         return object : KotlinJar {
             override val types = typeConversions.keys.toList()
-            override fun load(type: KtReferenceType) = state.getClassFile(typeMappings[type.qualifiedName])
+            override fun load(type: KtReferenceType) =
+                typeMappings[type.qualifiedName]
+                    ?.let(state::getClassFile)
+
             override fun metadata(type: KtReferenceType) =
-                KotlinClassMetadata.read(metadataResolver.resolve(state.getClassContent(typeMappings[type.qualifiedName])))
+                typeMappings[type.qualifiedName]
+                    ?.let(state::getClassContent)
+                    ?.let(metadataResolver::resolve)
+                    ?.let(KotlinMetadataReader::read)
+//                KotlinClassMetadata.read(metadataResolver.resolve(state.getClassContent(typeMappings[type.qualifiedName])))
         }
     }
 
