@@ -10,15 +10,15 @@ import me.deo.dekotpiler.util.peek
 import me.deo.dekotpiler.util.singleOf
 
 interface KtInvoke : KtExpression, KtStatement {
-    val method: KtFunction
+    val function: KtFunction
     val args: MutableList<KtExpression>
-    val name: String get() = method.name
+    val name: String get() = function.name
     val extension: Boolean
     override val type
-        get() = method.returns
+        get() = function.returns
 
     fun Code.writeArgs() {
-        val mappedArgs = method.parameters.flatMapIndexed { i: Int, parameter: KtFunction.Parameter ->
+        val mappedArgs = function.parameters.flatMapIndexed { i: Int, parameter: KtFunction.Parameter ->
             val arg = args[i]
             // todo this is so cursed please fix
             // will fix with a crawler once views are setup properly......

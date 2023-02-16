@@ -7,6 +7,6 @@ import org.benf.cfr.reader.state.DCCommonState
 
 interface KotlinJar {
     val types: List<KtReferenceType>
-    fun load(type: KtReferenceType): ClassFile
-    fun metadata(type: KtReferenceType): KotlinClassMetadata
+    fun load(type: KtReferenceType): ClassFile?
+    fun metadata(type: KtReferenceType): KotlinClassMetadata?
 }

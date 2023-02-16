@@ -1,15 +1,15 @@
 package me.deo.dekotpiler
 
 import java.util.function.Function
+import kotlin.enums.EnumEntries
 import kotlin.random.Random
 import kotlin.random.nextInt
 import kotlin.reflect.typeOf
 
 class Test {
+    @OptIn(ExperimentalStdlibApi::class)
     fun test() {
-        val target = 123
-        val items = listOf(55, 342, 333, 123)
-        println(target in items)
+        println(TestHelper.SomeEnum.entries)
     //        println(1..10)
 //        println(typeOf<Array<String>>())
 //        val stringBuilder = StringBuilder()

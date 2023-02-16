@@ -1,14 +1,7 @@
 package me.deo.dekotpiler.processing.provided
 
-import me.deo.dekotpiler.model.KtExpression
-import me.deo.dekotpiler.model.expressions.KtArrayCreation
-import me.deo.dekotpiler.model.expressions.invoke.KtGetterInvoke
-import me.deo.dekotpiler.model.expressions.invoke.KtMethodInvoke
-import me.deo.dekotpiler.model.expressions.invoke.KtSetterInvoke
 import me.deo.dekotpiler.model.expressions.invoke.KtStaticInvoke
-import me.deo.dekotpiler.model.structure.KtFunction
 import me.deo.dekotpiler.processing.PreProcessor
-import me.deo.dekotpiler.util.update
 import org.springframework.stereotype.Component
 
 @Component
@@ -16,22 +9,30 @@ class ExtensionProcessor :
     PreProcessor<KtStaticInvoke> {
 
     override fun KtStaticInvoke.match() =
-        method.enclosing?.name in StandardLibraryExtensionFiles
-    override fun replace(value: KtStaticInvoke): KtExpression {
+        function.enclosing?.name in StandardLibraryExtensionFiles
 
-        StandardTopLevelFunctions[value.name]?.let { vararg ->
-            value.method.kind = KtFunction.Kind.TopLevel
-            value.method.parameters.last().vararg = vararg
-            return value
-        }
-
-        return KtMethodInvoke(
-            value.method,
-            value.args.subList(1, value.args.size),
-            value.args[0],
-            extension = true
-        )
-    }
+    // TODO resolve standard library
+//    override fun replace(value: KtStaticInvoke): KtExpression {
+//
+//        StandardTopLevelFunctions[value.name]?.let { vararg ->
+//            value.method.kind = KtFunction.Kind.TopLevel
+//            value.method.parameters.last().vararg = vararg
+//            return value
+//        }
+//
+//        return try {
+//            KtMethodInvoke(
+//                value.method,
+//                value.args.subList(1, value.args.size),
+//                value.args[0],
+//                extension = true
+//            )
+//        } catch (ex: Exception) {
+//            repeat(100) { ex.printStackTrace() }
+//            System.exit(1)
+//            error("")
+//        }
+//    }
 
 
     companion object {

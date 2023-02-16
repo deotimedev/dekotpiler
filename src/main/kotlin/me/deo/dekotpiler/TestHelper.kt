@@ -59,6 +59,13 @@ object TestHelper {
     }
 
     fun bool(value: Boolean) = value
+
+    enum class SomeEnum {
+        Thing,
+        AnotherThing,
+        Crazy,
+        Stack
+    }
 }
 
 fun String.stringExtension() {

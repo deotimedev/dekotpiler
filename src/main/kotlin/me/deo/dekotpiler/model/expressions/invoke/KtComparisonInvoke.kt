@@ -17,7 +17,7 @@ class KtComparisonInvoke(
     override val args: MutableList<KtExpression> get() = mutableListOf(comparing)
     override val extension = false
     override val type = KtType.Boolean
-    override val method: KtFunction
+    override val function: KtFunction
         get() = TODO()
 
     override fun code() = buildCode {

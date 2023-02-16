@@ -41,9 +41,9 @@ class CFRKotlinJarLoader(
         val state = result.first
         return object : KotlinJar {
             override val types = typeConversions.keys.toList()
-            override fun load(type: KtReferenceType) = state.getClassFile(typeMappings[type.qualifiedName])!!
+            override fun load(type: KtReferenceType) = state.getClassFile(typeMappings[type.qualifiedName])
             override fun metadata(type: KtReferenceType) =
-                KotlinClassMetadata.read(metadataResolver.resolve(state.getClassContent(typeMappings[type.qualifiedName])))!!
+                KotlinClassMetadata.read(metadataResolver.resolve(state.getClassContent(typeMappings[type.qualifiedName])))
         }
     }
 

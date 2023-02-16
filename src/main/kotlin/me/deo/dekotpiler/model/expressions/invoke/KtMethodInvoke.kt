@@ -7,15 +7,15 @@ import me.deo.dekotpiler.model.structure.KtFunction
 import me.deo.dekotpiler.util.views
 
 data class KtMethodInvoke(
-    override var method: KtFunction,
+    override var function: KtFunction,
     override var args: MutableList<KtExpression>,
     override var reference: KtExpression,
     override var extension: Boolean,
-    override val name: String = method.name
+    override val name: String = function.name
 ) : KtMemberInvoke {
     override val expressionView: KtExpressionView = views(::args, ::reference)
     override fun code() = buildCode {
-        operator?.let { op ->
+        function.operator?.takeIf { !reference.type.nullable }?.let { op ->
             +op.format
                 .replace("@", reference.code().toString())
                 .replace("!MID!", args.dropLast(1).joinToString { it.code().toString() })
@@ -34,45 +34,9 @@ data class KtMethodInvoke(
         }
     }
 
-    val operator
-        get() =
-            takeUnless { reference.type.nullable }?.let { Operator.All.find { it.functionName == name } }
 
-    companion object {
-        // kotlin enums initialize very strange
-        private fun arith(char: Char) = "@ $char #1"
-        private fun augment(char: Char) = "@ $char= #1"
-    }
 
-    enum class Operator(val format: String) {
-        UnaryPlus("+@"),
-        UnaryMinus("-@"),
-        Not("!@"),
-        Inc("@++"),
-        Dec("@--"),
-        Plus(arith('+')),
-        Minus(arith('-')),
-        Times(arith('*')),
-        Div(arith('/')),
-        Rem(arith('%')),
-        PlusAssign(augment('+')),
-        MinusAssign(augment('-')),
-        TimesAssign(augment('*')),
-        DivAssign(augment('/')),
-        RemAssign(augment('%')),
-        RangeTo("@..#1"),
-        Contains("#1 in @"),
-        Get("@[!MID!]"),
-        Set("@[!MID!] = !LAST!"),
-        Invoke("@(!MID!, !LAST!)"), // TODO lambda
-        Equals("@ == #1"),
-        // TODO: delegators and compareTo
-        ;
 
-        val functionName = name.replaceFirstChar { it.lowercase() }
 
-        companion object {
-            val All by lazy { values().toSet() }
-        }
-    }
+
 }

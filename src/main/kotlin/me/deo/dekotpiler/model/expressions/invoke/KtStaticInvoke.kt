@@ -8,15 +8,15 @@ import me.deo.dekotpiler.util.views
 
 // Not to be confused with a companion object invoke
 data class KtStaticInvoke(
-    override var method: KtFunction,
+    override var function: KtFunction,
     override var args: MutableList<KtExpression>,
 ) : KtInvoke {
     override val expressionView: KtExpressionView = views(::args)
     override val extension = false
     override fun code() = buildCode {
-        if (method.kind != KtFunction.Kind.TopLevel)
-            write(method.enclosing?.name, ".")
-        +method.name
+        if (function.kind != KtFunction.Kind.TopLevel)
+            write(function.enclosing?.name, ".")
+        +function.name
         writeArgs()
     }
 
@@ -26,7 +26,7 @@ data class KtStaticInvoke(
     ) : me.deo.dekotpiler.matching.Matcher<KtStaticInvoke> {
 
         override fun KtStaticInvoke.match() =
-            method.enclosing?.qualifiedName == className && name in functionNames
+            function.enclosing?.qualifiedName == className && name in functionNames
 
         companion object {
             inline operator fun <reified T> invoke(vararg functionNames: String) =

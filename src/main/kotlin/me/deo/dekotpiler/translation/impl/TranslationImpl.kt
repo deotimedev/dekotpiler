@@ -28,6 +28,7 @@ import org.benf.cfr.reader.bytecode.analysis.types.JavaGenericRefTypeInstance
 import org.benf.cfr.reader.bytecode.analysis.types.JavaTypeInstance
 import org.benf.cfr.reader.bytecode.analysis.types.MethodPrototype
 import org.springframework.stereotype.Component
+import java.util.concurrent.ConcurrentHashMap
 import kotlin.reflect.KClass
 
 
@@ -46,7 +47,7 @@ internal class TranslationImpl(
 
     inner class SessionImpl : Translation.Session {
 
-        private val computedVariables = mutableMapOf<LValue, KtVariable>()
+        private val computedVariables = ConcurrentHashMap<LValue, KtVariable>()
         private fun <K : Any> translate(value: Any) =
             translators<Any, K>(value::class)
                 .find { with(it) { value.match() } }
