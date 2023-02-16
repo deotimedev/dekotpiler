@@ -1,5 +1,6 @@
 package me.deo.dekotpiler.jar.impl
 
+import kotlinx.metadata.jvm.KotlinClassMetadata
 import me.deo.dekotpiler.jar.KotlinJar
 import me.deo.dekotpiler.jar.KotlinJarLoader
 import me.deo.dekotpiler.metadata.MetadataResolver
@@ -54,7 +55,8 @@ internal class CFRKotlinJarLoader(
                 typeMappings[type.qualifiedName]
                     ?.let(state::getClassContent)
                     ?.let(metadataResolver::resolve)
-                    ?.let(KotlinMetadataReader::read)
+                    ?.let(KotlinClassMetadata.Companion::read) // https://youtrack.jetbrains.com/issue/KT-56750
+//                    ?.let(KotlinMetadataReader::read)
         }
     }
 

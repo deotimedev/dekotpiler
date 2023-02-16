@@ -75,6 +75,7 @@ tasks.withType<KotlinCompile> {
     kotlinOptions.languageVersion = "1.9"
     kotlinOptions.freeCompilerArgs = listOf(
         "-Xskip-prerelease-check",
+        "-Xuse-k2",
         "-Xuse-experimental",
         "-XXLanguage:+EnumEntries"
     )
