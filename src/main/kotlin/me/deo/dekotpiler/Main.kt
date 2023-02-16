@@ -50,7 +50,7 @@ class Main(
 //        jar.types.forEach {
 //            println("type: ${it.qualifiedName}")
 //        }
-        val target = KtType<FileSelectorImpl>()
+        val target = KtType<Test>()
         println("qualified: ${target.qualifiedName}")
         val metadata = jar.metadata(target) as KotlinClassMetadata.Class
         val clazz = jar.load(target)
@@ -80,14 +80,14 @@ class Main(
                 method
             }
 
-            // removed for now since kotlin poet is annoying
-//            val spec = metaClass.toSpec {
-//                source.funSpecs.clear()
-//                source.funSpecs.addAll(methods)
-//            }
+            // todo wont work with objects and some other stuff because of synthetic constructors
+            val spec = metaClass.toSpec {
+                source.funSpecs.clear()
+                source.funSpecs.addAll(methods)
+            }
             val output = kotlin {
                 name("test") packaged "testing"
-                methods.forEach { +it }
+                +spec
             }
             println(output.properFormatting().withoutPublic())
         }
