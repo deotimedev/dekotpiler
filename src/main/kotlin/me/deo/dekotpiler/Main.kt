@@ -11,6 +11,7 @@ import me.deo.dekotpiler.model.statements.KtBlockStatement
 import me.deo.dekotpiler.model.type.KtType
 import me.deo.dekotpiler.translation.Translation
 import me.deo.dekotpiler.ui.FileSelector
+import me.deo.dekotpiler.ui.impl.FileSelectorImpl
 import me.deo.dekotpiler.util.task
 import me.deotime.kpoetdsl.FunctionBuilder.Initializer.invoke
 import me.deotime.kpoetdsl.kotlin
@@ -49,7 +50,7 @@ class Main(
 //        jar.types.forEach {
 //            println("type: ${it.qualifiedName}")
 //        }
-        val target = KtType<Companion>()
+        val target = KtType<FileSelectorImpl>()
         println("qualified: ${target.qualifiedName}")
         val metadata = jar.metadata(target) as KotlinClassMetadata.Class
         val clazz = jar.load(target)
@@ -78,13 +79,15 @@ class Main(
 //                println("------------${cfrMethod.name}---------------")
                 method
             }
-            val spec = metaClass.toSpec {
-                source.funSpecs.clear()
-                source.funSpecs.addAll(methods)
-            }
+
+            // removed for now since kotlin poet is annoying
+//            val spec = metaClass.toSpec {
+//                source.funSpecs.clear()
+//                source.funSpecs.addAll(methods)
+//            }
             val output = kotlin {
                 name("test") packaged "testing"
-                +spec
+                methods.forEach { +it }
             }
             println(output.properFormatting().withoutPublic())
         }

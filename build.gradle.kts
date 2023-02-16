@@ -16,13 +16,13 @@ repositories {
     mavenCentral()
     mavenLocal()
 
-    maven {
-        name = "kotlin-poet-dsl"
-        url = uri("https://repo.q64.io/deotime")
-        content {
-            includeGroup("me.deotime")
-        }
-    }
+//    maven {
+//        name = "kotlin-poet-dsl"
+//        url = uri("https://repo.q64.io/deotime")
+//        content {
+//            includeGroup("me.deotime")
+//        }
+//    }
 }
 
 javafx {
@@ -61,7 +61,7 @@ dependencies {
 
     implementation("org.jetbrains.kotlin:kotlin-reflect:1.8.20-Beta")
 
-    val kotlinPoetDslVersion = "2.0.4"
+    val kotlinPoetDslVersion = "2.0.6"
     implementation("me.deotime:kotlin-poet-dsl-dsl:$kotlinPoetDslVersion")
     implementation("me.deotime:kotlin-poet-dsl-metadata:$kotlinPoetDslVersion")
 }
