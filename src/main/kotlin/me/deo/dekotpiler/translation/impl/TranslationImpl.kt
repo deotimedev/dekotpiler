@@ -125,7 +125,7 @@ internal class TranslationImpl(
                 )
             }.toMutableList(),
             translateType(function.returnType).nullable(kind != KtFunction.Kind.Constructor),
-            translateType(function.classType).nullable(false) as? KtReferenceType,
+            translateType(function.classType).nullable(false) as KtReferenceType,
             kind
         )
     }

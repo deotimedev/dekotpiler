@@ -1,10 +1,7 @@
 package me.deo.dekotpiler.model.structure
 
-import com.squareup.kotlinpoet.KModifier
-import kotlinx.metadata.Flag
 import me.deo.dekotpiler.model.type.KtType
 import me.deo.dekotpiler.model.KtTypeParameter
-import me.deo.dekotpiler.model.expressions.invoke.KtMethodInvoke
 import me.deo.dekotpiler.model.type.KtReferenceType
 import me.deo.dekotpiler.model.type.KtTyped
 import kotlin.reflect.KFunction
@@ -15,15 +12,18 @@ import kotlin.reflect.full.valueParameters
 import kotlin.reflect.jvm.javaConstructor
 import kotlin.reflect.jvm.javaMethod
 
-data class KtFunction(
+class KtFunction(
     var name: String,
-    var signature: String,
+    var descriptor: String,
     var receiver: KtType?,
     val parameters: MutableList<Parameter>,
     val typeParameters: MutableList<KtTypeParameter>,
     var returns: KtType,
-    var enclosing: KtReferenceType?, // null if top level function
+    var enclosing: KtReferenceType,
     var kind: Kind,
+    // will this technically not work with multiple vararg parameters? yes. is anyone making
+    // functions with multiple vararg parameters? no (unless you are kotlinpoet for some reason)
+    var vararg: Boolean = false
 ) {
 
     var operator: Operator? = null
@@ -36,7 +36,8 @@ data class KtFunction(
         reflect.valueParameters.map { Parameter(it) }.toMutableList(),
         reflect.typeParameters.map { KtTypeParameter(it) }.toMutableList(),
         KtType(reflect.returnType),
-        reflect.instanceParameter?.type?.let { KtType(it) },
+        reflect.instanceParameter?.type?.let {
+            KtType(it) } ?: KtType.invoke(reflect.javaMethod!!.declaringClass.kotlin),
         when {
             reflect.javaConstructor != null -> Kind.Constructor
             reflect.instanceParameter != null -> Kind.Instance

@@ -9,8 +9,10 @@ import org.springframework.stereotype.Component
 internal class KotlinJarPoolImpl : KotlinJarPool {
 
     private val jars = mutableSetOf<KotlinJar>()
+    override fun locate(type: String) = jars.firstNotNullOfOrNull { it.type(type) }
 
-    override fun locate(type: KtReferenceType) = jars.find { type in it }
+    override fun containingJar(type: KtReferenceType) =
+        jars.find { type in it }
 
     override fun register(jar: KotlinJar) {
         jars += jar

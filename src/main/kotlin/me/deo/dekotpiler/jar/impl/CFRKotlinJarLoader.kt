@@ -7,7 +7,6 @@ import me.deo.dekotpiler.jar.KotlinJarPool
 import me.deo.dekotpiler.metadata.MetadataResolver
 import me.deo.dekotpiler.model.type.KtReferenceType
 import me.deo.dekotpiler.translation.Translation
-import me.deo.dekotpiler.util.KotlinMetadataReader
 import org.benf.cfr.reader.api.CfrDriver
 import org.benf.cfr.reader.util.getopt.OptionsImpl.ALLOW_CORRECTING
 import org.benf.cfr.reader.util.getopt.OptionsImpl.ANTI_OBF
@@ -37,30 +36,34 @@ internal class CFRKotlinJarLoader(
             .build()
             .analyse(jar.absolutePath)
         val session = translation.session()
-        val typeConversions = result.second.values
-            .flatten()
-            .associateBy {
-                session.translateType(it) as KtReferenceType
-            }
-        val typeMappings = typeConversions.mapKeys { (type, _) ->
-            type.qualifiedName
-                .replace("$", ".") // This line should only be teporary until nested classes can be resolved properly
-        }
+
+        // fixme
+        fun realName(type: KtReferenceType) = type.qualifiedName.replace("$", ".")
+
+        val jarTypes = result.second.values.flatten()
+        val mappedTypes = jarTypes
+            .map(session::translateType)
+            .filterIsInstance<KtReferenceType>()
+
+        val javaByName = jarTypes.associateBy { it.rawName }
+        val byName = mappedTypes.associateBy(::realName)
         val state = result.first
         return object : KotlinJar {
-            override val types = typeConversions.keys.toList()
+            override val types = mappedTypes
             override fun load(type: KtReferenceType) =
-                typeMappings[type.qualifiedName]
+                javaByName[type.qualifiedName]
                     ?.let(state::getClassFile)
 
+            override fun type(name: String) = byName[name]
+
             override fun metadata(type: KtReferenceType) =
-                typeMappings[type.qualifiedName]
+                javaByName[type.qualifiedName]
                     ?.let(state::getClassContent)
                     ?.let(metadataResolver::resolve)
                     ?.let(KotlinClassMetadata.Companion::read) // https://youtrack.jetbrains.com/issue/KT-56750
 //                    ?.let(KotlinMetadataReader::read)
 
-            override fun contains(type: KtReferenceType) = type.qualifiedName in typeMappings.keys
+            override fun contains(type: KtReferenceType) = type.qualifiedName in byName.keys
         }.also { jarPool.register(it) }
     }
 
