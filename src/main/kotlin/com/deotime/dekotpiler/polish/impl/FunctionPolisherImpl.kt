@@ -11,6 +11,7 @@ import me.deotime.kpoetdsl.metadata.rawName
 import org.benf.cfr.reader.bytecode.analysis.types.JavaRefTypeInstance
 import org.springframework.stereotype.Component
 
+// todo this NEEDS to be removed at some point
 @Component
 internal class FunctionPolisherImpl(
     private val metadataLocator: MetadataLocator,

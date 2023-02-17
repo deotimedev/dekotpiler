@@ -4,6 +4,7 @@ import com.deotime.dekotpiler.coding.Code
 import com.deotime.dekotpiler.model.KtExpression
 import com.deotime.dekotpiler.model.KtStatement
 import com.deotime.dekotpiler.model.structure.KtFunction
+import com.deotime.dekotpiler.model.variable.KtLocalVariable
 
 interface KtInvoke : KtExpression, KtStatement {
     val function: KtFunction
@@ -22,4 +23,5 @@ interface KtInvoke : KtExpression, KtStatement {
 //        }
         writeInvoker(args)
     }
+
 }

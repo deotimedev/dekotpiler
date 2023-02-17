@@ -1,11 +1,12 @@
 package com.deotime.dekotpiler
 
-interface Test {
-    fun noDefault(): Int
+class Test {
     fun test() {
-        println("This is my default implementatio")
-        println(noDefault())
+        "hello".extensionValue = "Yes1"
     }
+}
+
+
 //    @OptIn(ExperimentalStdlibApi::class)
 //    fun test() {
 //        "Yes!".stringExtension()
@@ -45,7 +46,6 @@ interface Test {
 //        println("yes")
 //    }
 
-}
 
 //// testing stuff
 //

@@ -13,7 +13,8 @@ class ExtensionProcessor(
     PreProcessor<KtStaticInvoke> {
 
     override fun KtStaticInvoke.match() =
-        function.receiver != null
+        (function.receiver != null)
+
 
 
     override fun replace(value: KtStaticInvoke) =

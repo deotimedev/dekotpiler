@@ -18,7 +18,11 @@ data class KtLocalVariable(
     val inlinable get() = uses <= 1
     val inlined get() = inlinable && inlineValue != null
 
-    override fun code() = codeOf(if (inlined) inlineValue.also {
+
+    val thisRef = name == "\$this"
+
+    override fun code() =
+        codeOf(if (inlined) inlineValue.also {
         println("inlined ${it?.code().toString()}")
-    } else name)
+    } else if (thisRef) "this" else name) // todo this should encapsulate all synthetic references
 }

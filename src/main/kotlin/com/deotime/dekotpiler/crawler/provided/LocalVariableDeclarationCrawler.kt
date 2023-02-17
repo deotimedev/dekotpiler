@@ -21,8 +21,8 @@ class LocalVariableDeclarationCrawler : Crawler {
         path.flatMap {
             it.flatten().flatMap { it.expressionView }
         }.forEach { expr ->
-            println("Expr: ${expr.unwrap<View<*, *>>().get()}")
-            expr
+//            println("Expr: ${expr.unwrap<View<*, *>>().get()}")
+//            expr
         }
         path.forEach { block ->
             block.statements.removeIf { stmt ->
