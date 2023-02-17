@@ -3,6 +3,7 @@ package me.deo.dekotpiler
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
 import kotlinx.metadata.jvm.KotlinClassMetadata
+import me.deo.dekotpiler.classfile.ClassFileController
 import me.deo.dekotpiler.crawler.CrawlerController
 import me.deo.dekotpiler.crawler.provided.LocalVariableDeclarationCrawler
 import me.deo.dekotpiler.jar.KotlinJarLoader
@@ -28,9 +29,7 @@ class Main(
     private val metadataResolver: MetadataResolver,
     private val fileSelector: FileSelector,
     private val engine: KotlinJarLoader,
-    private val translation: Translation,
-    private val crawlerController: CrawlerController,
-    private val testCrawler: LocalVariableDeclarationCrawler,
+    private val classFileController: ClassFileController
 ) : CommandLineRunner {
     // This will eventually be replaced by a CLI
     override fun run(vararg args: String): Unit = runBlocking(Dispatchers.Default) {
@@ -52,37 +51,23 @@ class Main(
         val target = KtType<Test>()
         println("qualified: ${target.qualifiedName}")
         val metadata = jar.metadata(target) as KotlinClassMetadata.Class
-        val clazz = jar.load(target)
+        val clazz = jar.load(target) ?: return@runBlocking
         task("Kotlin Decompilation") {
             val metaClass = metadata.toKmClass()
-            val methods = clazz?.methods.orEmpty().mapNotNull { cfrMethod ->
-                val block = cfrMethod.analysis.statement.let { stmt ->
-                    val translated = translation.session().translateStatement(stmt)
-                    if ((translated as KtBlockStatement).statements.isEmpty()) return@mapNotNull null
-                    translated
-                }
+            val methods = classFileController.analyze(clazz)
 
-                try {
-                    crawlerController.deploy(testCrawler, block)
-                } catch (ex: Exception) {
-                    ex.printStackTrace()
-                }
-
-                val method = metaClass.functions.find { it.name == cfrMethod.name }?.toSpec()?.invoke {
+            val specMethods = methods.mapNotNull { (cfr, block) ->
+                metaClass.functions.find { it.name == cfr.name }?.toSpec()?.invoke {
                     code {
-                        +block.code().toString()
+                        block?.code()?.let { +it.toString() }
                     }
                 }
-//                println("------------${cfrMethod.name}---------------")
-//                println(block.code())
-//                println("------------${cfrMethod.name}---------------")
-                method
             }
 
             // todo wont work with objects and some other stuff because of synthetic constructors
             val spec = metaClass.toSpec {
                 source.funSpecs.clear()
-                source.funSpecs.addAll(methods)
+                source.funSpecs.addAll(specMethods)
             }
             val output = kotlin {
                 name("test") packaged "testing"

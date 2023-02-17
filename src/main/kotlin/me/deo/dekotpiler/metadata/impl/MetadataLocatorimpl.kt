@@ -14,7 +14,7 @@ internal class MetadataLocatorimpl(
     private val jarPool: KotlinJarPool
 ) : MetadataLocator {
     private val classMetadata = cache<KtReferenceType, List<KmFunction>> {
-        jarPool.containingJar(it)?.metadata(it)
+        jarPool.locateJar(it)?.metadata(it)
             ?.let(::functions).orEmpty()
 
     }

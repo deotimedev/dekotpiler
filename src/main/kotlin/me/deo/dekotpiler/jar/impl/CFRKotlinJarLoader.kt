@@ -37,16 +37,13 @@ internal class CFRKotlinJarLoader(
             .analyse(jar.absolutePath)
         val session = translation.session()
 
-        // fixme
-        fun realName(type: KtReferenceType) = type.qualifiedName.replace("$", ".")
-
         val jarTypes = result.second.values.flatten()
         val mappedTypes = jarTypes
             .map(session::translateType)
             .filterIsInstance<KtReferenceType>()
 
         val javaByName = jarTypes.associateBy { it.rawName }
-        val byName = mappedTypes.associateBy(::realName)
+        val byName = mappedTypes.associateBy { it.qualifiedName }
         val state = result.first
         return object : KotlinJar {
             override val types = mappedTypes

@@ -6,10 +6,15 @@ import kotlin.random.Random
 import kotlin.random.nextInt
 import kotlin.reflect.typeOf
 
-class Test {
-    @OptIn(ExperimentalStdlibApi::class)
+interface Test {
+    fun noDefault(): Int
     fun test() {
-        "Yes!".stringExtension()
+        println("This is my default implementatio")
+        println(noDefault())
+    }
+//    @OptIn(ExperimentalStdlibApi::class)
+//    fun test() {
+//        "Yes!".stringExtension()
 //        println(TestHelper.SomeEnum.entries)
 //        println(1..10)
 //        println(typeOf<Array<String>>())
@@ -44,7 +49,7 @@ class Test {
 //        println(charArrayOf('a', 'b', 'c'))
 //        TestHelper.reified<String>()
 //        println("yes")
-    }
+//    }
 
 }
 
