@@ -4,7 +4,6 @@ import me.deo.dekotpiler.classfile.ClassFileController
 import me.deo.dekotpiler.crawler.CrawlerController
 import me.deo.dekotpiler.crawler.provided.LocalVariableDeclarationCrawler
 import me.deo.dekotpiler.model.statements.KtBlockStatement
-import me.deo.dekotpiler.model.structure.KtClass
 import me.deo.dekotpiler.translation.Translation
 import org.benf.cfr.reader.entities.ClassFile
 import org.benf.cfr.reader.entities.Method

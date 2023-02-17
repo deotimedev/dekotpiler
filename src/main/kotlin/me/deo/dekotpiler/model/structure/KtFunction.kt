@@ -12,6 +12,13 @@ import kotlin.reflect.full.valueParameters
 import kotlin.reflect.jvm.javaConstructor
 import kotlin.reflect.jvm.javaMethod
 
+// i dont really like this implementation and dont think it will work long term
+// since kotlin generates multiple synthetics and it doesnt make sense to have
+// a ktfunction for all of them
+// ideally instead of doing ktfunctionpolishing we have some immutable instance of
+// the actual function (amy be synthetic) which acts as the backend of this, and then
+// polishers an processors can make adjustments to ktfunction (the frontend) to make it
+// look accurte since synthetics will never be dispalyed
 class KtFunction(
     var name: String,
     var descriptor: String,
