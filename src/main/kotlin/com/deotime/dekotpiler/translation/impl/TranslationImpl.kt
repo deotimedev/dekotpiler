@@ -4,12 +4,12 @@ import com.deotime.dekotpiler.mapping.TypeMappings
 import com.deotime.dekotpiler.model.KtConditional
 import com.deotime.dekotpiler.model.KtExpression
 import com.deotime.dekotpiler.model.KtStatement
-import com.deotime.dekotpiler.model.type.KtType
 import com.deotime.dekotpiler.model.KtTypeParameter
 import com.deotime.dekotpiler.model.KtUnknown
-import com.deotime.dekotpiler.model.structure.KtFunction
 import com.deotime.dekotpiler.model.statements.KtBlockStatement.Companion.asBlock
+import com.deotime.dekotpiler.model.structure.KtFunction
 import com.deotime.dekotpiler.model.type.KtReferenceType
+import com.deotime.dekotpiler.model.type.KtType
 import com.deotime.dekotpiler.model.variable.KtLocalVariable
 import com.deotime.dekotpiler.model.variable.KtVariable
 import com.deotime.dekotpiler.polish.FunctionPolisher
@@ -43,7 +43,8 @@ internal class TranslationImpl(
 ) : Translation {
     private val translatorsByType = translators.groupBy { resolveTypeParameter(it::class, Translator::class, "J")!! }
     override fun session() = SessionImpl()
-    override fun <C : Any, K> translators(type: KClass<out C>) = translatorsByType[type].orEmpty() as List<Translator<C, K>>
+    override fun <C : Any, K> translators(type: KClass<out C>) =
+        translatorsByType[type].orEmpty() as List<Translator<C, K>>
 
     private val computedFunctions = mutableMapOf<MethodPrototype, KtFunction>()
 

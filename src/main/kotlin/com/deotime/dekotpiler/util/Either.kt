@@ -9,6 +9,7 @@ sealed interface Either<out L, out R> {
 
     @JvmInline
     value class Left<L>(val value: L) : Either<L, Nothing>
+
     @JvmInline
     value class Right<R>(val value: R) : Either<Nothing, R>
 
@@ -39,6 +40,7 @@ class Match<L, R, U>(@PublishedApi internal val either: Either<L, R>) {
 
     @MatcherDsl
     val left = Left
+
     @MatcherDsl
     val right = Right
 
@@ -73,4 +75,5 @@ fun <T> Either<*, *>.unsafeUnwrap() =
     } as T
 
 @MatcherDsl
-inline fun <L, R, U> match(either: Either<L, R>, matcher: Match<L, R, U>.() -> Unit): U = Match<L, R, U>(either).apply(matcher).match()
+inline fun <L, R, U> match(either: Either<L, R>, matcher: Match<L, R, U>.() -> Unit): U =
+    Match<L, R, U>(either).apply(matcher).match()

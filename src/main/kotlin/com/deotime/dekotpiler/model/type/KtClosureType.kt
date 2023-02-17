@@ -1,11 +1,6 @@
 package com.deotime.dekotpiler.model.type
 
-import com.deotime.dekotpiler.coding.Codable
 import com.deotime.dekotpiler.coding.buildCode
-import com.deotime.dekotpiler.coding.codeOf
-import kotlin.reflect.KClass
-import kotlin.reflect.KType
-import kotlin.reflect.typeOf
 
 data class KtClosureType internal constructor(
     val parameters: List<KtType>,

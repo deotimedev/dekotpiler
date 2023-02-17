@@ -16,10 +16,16 @@ class View<T, F>(
 )
 
 fun <T, F> T.view(focus: KProperty0<out F>) = View(this, focus.getter,
-    ((focus as? KMutableProperty0<out F>)?.setter ?: { error("Setted the unsettable") }) as (F) -> Unit) // fixme
+    ((focus as? KMutableProperty0<out F>)?.setter ?: { error("Setted the unsettable") }) as (F) -> Unit
+) // fixme
+
 fun <T, F> T.views(vararg focuses: KProperty0<*>): ViewableList<T, F> =
     focuses.map { field ->
-        if ((MutableList::class.java.isAssignableFrom((field.returnType.classifier as KClass<*>).java))) right(view(field))
+        if ((MutableList::class.java.isAssignableFrom((field.returnType.classifier as KClass<*>).java))) right(
+            view(
+                field
+            )
+        )
         else left(view(field))
     } as ViewableList<T, F>
 

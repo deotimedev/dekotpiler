@@ -1,7 +1,5 @@
 package com.deotime.dekotpiler.matching
 
-import kotlin.reflect.KClass
-
 interface ValueMatcher<T : Any, V> : Matcher<T> {
 
     val reference: (T) -> V
@@ -15,6 +13,7 @@ interface ValueMatcher<T : Any, V> : Matcher<T> {
     }
 
     companion object {
-        inline operator fun <reified T : Any, V> invoke(noinline reference: (T) -> V, value: V): ValueMatcher<T, V> = Simple(reference, value)
+        inline operator fun <reified T : Any, V> invoke(noinline reference: (T) -> V, value: V): ValueMatcher<T, V> =
+            Simple(reference, value)
     }
 }

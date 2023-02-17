@@ -3,9 +3,6 @@ package com.deotime.dekotpiler.model.variable
 import com.deotime.dekotpiler.coding.codeOf
 import com.deotime.dekotpiler.model.KtExpression
 import com.deotime.dekotpiler.model.type.KtType
-import com.deotime.dekotpiler.util.MutableQueue
-import com.deotime.dekotpiler.util.mutableQueueOf
-import com.deotime.dekotpiler.util.poll
 
 data class KtLocalVariable(
     override var name: String,

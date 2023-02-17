@@ -3,10 +3,7 @@ package com.deotime.dekotpiler.model.expressions.invoke
 import com.deotime.dekotpiler.coding.Code
 import com.deotime.dekotpiler.model.KtExpression
 import com.deotime.dekotpiler.model.KtStatement
-import com.deotime.dekotpiler.model.expressions.KtArrayCreation
 import com.deotime.dekotpiler.model.structure.KtFunction
-import com.deotime.dekotpiler.model.variable.KtLocalVariable
-import com.deotime.dekotpiler.util.singleOf
 
 interface KtInvoke : KtExpression, KtStatement {
     val function: KtFunction

@@ -1,6 +1,5 @@
 package com.deotime.dekotpiler.model.statements
 
-import com.deotime.dekotpiler.coding.Code
 import com.deotime.dekotpiler.coding.buildCode
 
 data class KtContinueStatement(

@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component
 
 @Component
 class WhileLoopStatementTranslator : Translator<StructuredWhile, KtWhileStatement> {
-    
+
     override fun Translation.Session.translation(value: StructuredWhile) = KtWhileStatement(
         translateConditional(value.condition),
         translateStatement(value.body).asBlock()

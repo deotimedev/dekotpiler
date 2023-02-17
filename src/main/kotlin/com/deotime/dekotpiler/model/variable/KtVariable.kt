@@ -1,7 +1,6 @@
 package com.deotime.dekotpiler.model.variable
 
 import com.deotime.dekotpiler.model.KtExpression
-import org.benf.cfr.reader.bytecode.analysis.parse.LValue
 
 interface KtVariable : KtExpression {
 

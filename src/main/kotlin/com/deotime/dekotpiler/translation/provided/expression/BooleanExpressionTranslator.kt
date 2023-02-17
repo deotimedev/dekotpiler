@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component
 
 @Component
 class BooleanExpressionTranslator : Translator<BooleanExpression, KtConditional> {
-    
+
     override fun Translation.Session.translation(value: BooleanExpression) =
         KtConditional(translateExpression(value.inner))
 }

@@ -1,11 +1,5 @@
 package com.deotime.dekotpiler
 
-import java.util.function.Function
-import kotlin.jvm.internal.Intrinsics
-import kotlin.random.Random
-import kotlin.random.nextInt
-import kotlin.reflect.typeOf
-
 interface Test {
     fun noDefault(): Int
     fun test() {

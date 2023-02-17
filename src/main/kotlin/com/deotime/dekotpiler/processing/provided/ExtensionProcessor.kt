@@ -1,7 +1,5 @@
 package com.deotime.dekotpiler.processing.provided
 
-import kotlinx.metadata.jvm.KotlinClassMetadata
-import kotlinx.metadata.jvm.signature
 import com.deotime.dekotpiler.jar.KotlinJarPool
 import com.deotime.dekotpiler.model.expressions.invoke.KtMethodInvoke
 import com.deotime.dekotpiler.model.expressions.invoke.KtStaticInvoke
@@ -25,7 +23,6 @@ class ExtensionProcessor(
             value.args.subList(1, value.args.size),
             extension = true
         )
-
 
 
     companion object {

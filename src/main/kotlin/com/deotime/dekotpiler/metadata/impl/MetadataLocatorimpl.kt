@@ -1,12 +1,12 @@
 package com.deotime.dekotpiler.metadata.impl
 
-import kotlinx.metadata.KmFunction
-import kotlinx.metadata.jvm.KotlinClassMetadata
-import kotlinx.metadata.jvm.signature
 import com.deotime.dekotpiler.jar.KotlinJarPool
 import com.deotime.dekotpiler.metadata.MetadataLocator
 import com.deotime.dekotpiler.model.type.KtReferenceType
 import com.deotime.dekotpiler.util.cache
+import kotlinx.metadata.KmFunction
+import kotlinx.metadata.jvm.KotlinClassMetadata
+import kotlinx.metadata.jvm.signature
 import org.springframework.stereotype.Component
 
 @Component

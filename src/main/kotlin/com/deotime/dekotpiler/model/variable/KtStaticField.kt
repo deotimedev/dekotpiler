@@ -2,7 +2,6 @@ package com.deotime.dekotpiler.model.variable
 
 import com.deotime.dekotpiler.coding.buildCode
 import com.deotime.dekotpiler.model.type.KtType
-import org.benf.cfr.reader.bytecode.analysis.parse.lvalue.StaticVariable
 
 data class KtStaticField(
     var declaring: KtType,

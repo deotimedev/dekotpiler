@@ -1,7 +1,7 @@
 package com.deotime.dekotpiler.metadata
 
-import kotlinx.metadata.KmFunction
 import com.deotime.dekotpiler.model.type.KtReferenceType
+import kotlinx.metadata.KmFunction
 
 interface MetadataLocator {
     fun function(type: KtReferenceType, name: String, descriptor: String): KmFunction?

@@ -1,8 +1,6 @@
 package com.deotime.dekotpiler.processing.provided
 
 import com.deotime.dekotpiler.matching.Matcher
-import com.deotime.dekotpiler.model.expressions.invoke.KtComparison
-import com.deotime.dekotpiler.model.expressions.invoke.KtMemberInvoke
 import com.deotime.dekotpiler.model.expressions.invoke.KtMethodInvoke
 import com.deotime.dekotpiler.model.expressions.invoke.KtStaticInvoke
 import com.deotime.dekotpiler.model.structure.KtFunction

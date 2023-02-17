@@ -17,12 +17,13 @@ internal class CrawlerControllerImpl(
         }
     }
 
-    fun paths(thing: KtBlockStatement): List<List<KtBlockStatement>> = (listOf(listOf(thing)) + thing.statements.map { item ->
-        when (item) {
-            is KtMultiBodyStatement -> item.bodies.flatMap { paths(it) }.map { path ->
-                listOf(thing) + path
+    fun paths(thing: KtBlockStatement): List<List<KtBlockStatement>> =
+        (listOf(listOf(thing)) + thing.statements.map { item ->
+            when (item) {
+                is KtMultiBodyStatement -> item.bodies.flatMap { paths(it) }.map { path ->
+                    listOf(thing) + path
+                }
+                else -> emptyList()
             }
-            else -> emptyList()
-        }
-    }.flatten())
+        }.flatten())
 }

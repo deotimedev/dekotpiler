@@ -1,8 +1,7 @@
 package com.deotime.dekotpiler.model.statements
 
-import com.deotime.dekotpiler.model.KtStatement
-import com.deotime.dekotpiler.model.type.KtType
 import com.deotime.dekotpiler.coding.Code
+import com.deotime.dekotpiler.model.KtStatement
 import com.deotime.dekotpiler.model.type.KtNothingType
 
 interface KtLabelled : KtStatement {

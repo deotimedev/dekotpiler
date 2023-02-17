@@ -1,8 +1,5 @@
 package com.deotime.dekotpiler.model.expressions.invoke
 
-import com.deotime.dekotpiler.coding.Code
-import com.deotime.dekotpiler.coding.codeOf
-
 interface KtFieldFacadeInvoke : KtMemberInvoke {
     val actual: KtMemberInvoke
     val prefix: String

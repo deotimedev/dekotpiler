@@ -1,13 +1,12 @@
 package com.deotime.dekotpiler.metadata.impl
 
-import kotlinx.metadata.jvm.Metadata
 import com.deotime.dekotpiler.metadata.MetadataResolver
+import kotlinx.metadata.jvm.Metadata
 import org.objectweb.asm.AnnotationVisitor
 import org.objectweb.asm.ClassReader
 import org.objectweb.asm.ClassVisitor
 import org.objectweb.asm.Opcodes
 import org.springframework.stereotype.Component
-import java.io.File
 
 @Component
 internal class MetadataResolverImpl : MetadataResolver {

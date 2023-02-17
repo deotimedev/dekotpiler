@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component
 
 @Component
 class InstanceOfExpressionTranslator : Translator<InstanceOfExpression, KtInstanceOfExpression> {
-    
+
     override fun Translation.Session.translation(value: InstanceOfExpression) =
         KtInstanceOfExpression(
             translateExpression(value.lhs),

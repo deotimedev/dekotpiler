@@ -10,8 +10,10 @@ data class KtWhenExpression(
     val branches: MutableList<Branch>,
 ) : KtExpression {
     override val expressionView: KtExpressionView = views(::value)
+
     // TODO need a way to determine common types
     override val type: KtType get() = branches.first().expression.type
+
     data class Branch(
         var targets: MutableList<KtExpression>, // if empty then this branch is an `else`
         var expression: KtExpression

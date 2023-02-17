@@ -40,6 +40,7 @@ class Code(
         indent++
         if (apply) append("\t")
     }
+
     fun unindent(apply: Boolean = true) = apply {
         indent--
         if (apply) lines.update(lines.lastIndex) { if (it.lastOrNull() == '\t') it.dropLast(1) else it }
@@ -81,7 +82,7 @@ class Code(
     private fun append(value: Any?) {
         when (value) {
             is Codable -> append(value.code())
-            else ->  {
+            else -> {
                 val str = value.toString()
                 str.split("\n").fold(false) { new, line ->
                     if (new) newline()

@@ -1,12 +1,12 @@
 package com.deotime.dekotpiler.jar.impl
 
-import kotlinx.metadata.jvm.KotlinClassMetadata
 import com.deotime.dekotpiler.jar.KotlinJar
 import com.deotime.dekotpiler.jar.KotlinJarLoader
 import com.deotime.dekotpiler.jar.KotlinJarPool
 import com.deotime.dekotpiler.metadata.MetadataResolver
 import com.deotime.dekotpiler.model.type.KtReferenceType
 import com.deotime.dekotpiler.translation.Translation
+import kotlinx.metadata.jvm.KotlinClassMetadata
 import org.benf.cfr.reader.api.CfrDriver
 import org.benf.cfr.reader.util.getopt.OptionsImpl.ALLOW_CORRECTING
 import org.benf.cfr.reader.util.getopt.OptionsImpl.ANTI_OBF

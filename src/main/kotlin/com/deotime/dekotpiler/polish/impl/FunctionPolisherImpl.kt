@@ -1,12 +1,12 @@
 package com.deotime.dekotpiler.polish.impl
 
-import kotlinx.metadata.KmType
 import com.deotime.dekotpiler.jar.KotlinJarPool
 import com.deotime.dekotpiler.mapping.TypeMappings
 import com.deotime.dekotpiler.metadata.MetadataLocator
 import com.deotime.dekotpiler.model.structure.KtFunction
 import com.deotime.dekotpiler.model.type.KtReferenceType
 import com.deotime.dekotpiler.polish.FunctionPolisher
+import kotlinx.metadata.KmType
 import me.deotime.kpoetdsl.metadata.rawName
 import org.benf.cfr.reader.bytecode.analysis.types.JavaRefTypeInstance
 import org.springframework.stereotype.Component

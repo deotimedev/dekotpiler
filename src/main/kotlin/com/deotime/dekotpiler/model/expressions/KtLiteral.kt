@@ -29,6 +29,7 @@ sealed interface KtLiteral<T> : KtExpression {
         override val type: KtType
             get() = KtType.Int
     }
+
     @JvmInline
     value class Long(override val value: KtLong) : KtLiteral<KtLong> {
         override val type: KtType
@@ -36,6 +37,7 @@ sealed interface KtLiteral<T> : KtExpression {
         override val letter: kotlin.Char?
             get() = 'L'
     }
+
     @JvmInline
     value class Float(override val value: KtFloat) : KtLiteral<KtFloat> {
         override val type: KtType
@@ -43,15 +45,18 @@ sealed interface KtLiteral<T> : KtExpression {
         override val letter: kotlin.Char?
             get() = 'F'
     }
+
     @JvmInline
     value class Double(override val value: KtDouble) : KtLiteral<KtDouble> {
         override val type: KtType
             get() = KtType.Double
     }
+
     @JvmInline
     value class Char(override val value: KtChar) : KtLiteral<KtChar> {
         override val type: KtType
             get() = KtType.Char
+
         override fun code() = codeOf("'", value, "'")
     }
 
@@ -59,6 +64,7 @@ sealed interface KtLiteral<T> : KtExpression {
     value class String(override val value: KtString) : KtLiteral<KtString> {
         override val type: KtType
             get() = KtType.String
+
         override fun code() = codeOf("\"", value, "\"")
     }
 
@@ -66,6 +72,7 @@ sealed interface KtLiteral<T> : KtExpression {
     value class Class(override val value: KtType) : KtLiteral<KtType> {
         override val type: KtType
             get() = KtType.KClass.parameterize(value)
+
         override fun code() = codeOf(value.nullable(false).name, "::class")
     }
 
@@ -80,6 +87,7 @@ sealed interface KtLiteral<T> : KtExpression {
     ) : KtLiteral<KtBoolean> {
         override val type: KtType
             get() = KtType.Boolean
+
         companion object {
             operator fun invoke(value: KtBoolean) = if (value) True else False
         }

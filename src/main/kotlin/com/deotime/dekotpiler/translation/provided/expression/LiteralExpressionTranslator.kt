@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component
 
 @Component
 class LiteralExpressionTranslator : Translator<Literal, KtExpression> {
-    
+
     override fun Translation.Session.translation(value: Literal): KtExpression {
         val literal = value.value
         val raw = literal.inferredJavaType.rawType

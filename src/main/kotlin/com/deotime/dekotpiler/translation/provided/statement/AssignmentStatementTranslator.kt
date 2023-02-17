@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component
 
 @Component
 class AssignmentStatementTranslator : Translator<StructuredAssignment, KtVariableAssignmentStatement> {
-    
+
     override fun Translation.Session.translation(value: StructuredAssignment) = KtVariableAssignmentStatement(
         value.isCreator(value.lvalue),
         translateVariable(value.lvalue),

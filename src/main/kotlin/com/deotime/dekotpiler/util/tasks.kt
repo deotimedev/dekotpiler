@@ -5,10 +5,6 @@ import kotlinx.coroutines.async
 import java.io.File
 import java.nio.file.Files
 import java.nio.file.attribute.BasicFileAttributes
-import java.time.LocalDate
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
-import java.util.Date
 import java.util.concurrent.atomic.AtomicBoolean
 import kotlin.time.Duration
 import kotlin.time.ExperimentalTime
@@ -28,6 +24,7 @@ internal var debugTasks = false
 
 @PublishedApi
 internal const val MaxLogs = 25
+
 @PublishedApi
 internal var appliedShutdownHook = AtomicBoolean(false)
 

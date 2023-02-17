@@ -1,7 +1,7 @@
 package com.deotime.dekotpiler.jar
 
-import kotlinx.metadata.jvm.KotlinClassMetadata
 import com.deotime.dekotpiler.model.type.KtReferenceType
+import kotlinx.metadata.jvm.KotlinClassMetadata
 import org.benf.cfr.reader.entities.ClassFile
 
 interface KotlinJar {

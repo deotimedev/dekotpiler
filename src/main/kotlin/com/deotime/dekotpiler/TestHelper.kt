@@ -9,7 +9,9 @@ object TestHelper {
 
     var getterSetterValue
         get() = "Got"
-        set(value) { println("Sot") }
+        set(value) {
+            println("Sot")
+        }
 
     fun notInlinedClosure(closure: () -> Unit) {
         closure()
@@ -50,6 +52,7 @@ object TestHelper {
             val child: Parent = TestHelper.Child
         }
     }
+
     object Child : Parent
 
     object Opable {
