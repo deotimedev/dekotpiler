@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component
 import java.io.File
 
 @Component
-class MetadataResolverImpl : MetadataResolver {
+internal class MetadataResolverImpl : MetadataResolver {
     override fun resolve(clazz: ByteArray): Metadata {
         val reader = ClassReader(clazz)
         val visitor = MetadataClassVisitor()

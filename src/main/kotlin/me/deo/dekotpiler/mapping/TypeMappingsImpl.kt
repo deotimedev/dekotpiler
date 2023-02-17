@@ -8,7 +8,7 @@ import org.benf.cfr.reader.bytecode.analysis.types.TypeConstants
 import org.springframework.stereotype.Component
 
 @Component
-class TypeMappingsImpl : TypeMappings {
+internal class TypeMappingsImpl : TypeMappings {
 
     override fun mapping(java: JavaTypeInstance) = when (java) {
         TypeConstants.OBJECT -> KtType.Any

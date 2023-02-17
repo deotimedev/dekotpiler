@@ -12,6 +12,7 @@ import me.deo.dekotpiler.model.statements.KtBlockStatement.Companion.asBlock
 import me.deo.dekotpiler.model.type.KtReferenceType
 import me.deo.dekotpiler.model.variable.KtLocalVariable
 import me.deo.dekotpiler.model.variable.KtVariable
+import me.deo.dekotpiler.polish.FunctionPolisher
 import me.deo.dekotpiler.processing.Processing
 import me.deo.dekotpiler.processing.Processor
 import me.deo.dekotpiler.translation.Translation
@@ -37,7 +38,8 @@ import kotlin.reflect.KClass
 internal class TranslationImpl(
     translators: List<Translator<*, *>>,
     private val processing: Processing,
-    private val typeMappings: TypeMappings
+    private val typeMappings: TypeMappings,
+    private val functionPolishing: FunctionPolisher
 ) : Translation {
     private val translatorsByType = translators.groupBy { resolveTypeParameter(it::class, Translator::class, "J")!! }
     override fun session() = SessionImpl()
@@ -127,6 +129,6 @@ internal class TranslationImpl(
             translateType(function.returnType).nullable(kind != KtFunction.Kind.Constructor),
             translateType(function.classType).nullable(false) as KtReferenceType,
             kind
-        )
+        ).also(functionPolishing::polish)
     }
 }

@@ -12,7 +12,7 @@ import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 
 @Component
-class FileSelectorImpl : FileSelector {
+internal class FileSelectorImpl : FileSelector {
 
     override suspend fun selectFile(
         prompt: String,
