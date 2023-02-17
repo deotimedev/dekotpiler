@@ -9,7 +9,7 @@ plugins {
     application
 }
 
-group = "me.deo.dekotpiler"
+group = "com.deotime.dekotpiler"
 version = "1.0.0"
 
 repositories {
