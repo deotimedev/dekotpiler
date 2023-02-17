@@ -16,13 +16,13 @@ repositories {
     mavenCentral()
     mavenLocal()
 
-//    maven {
-//        name = "kotlin-poet-dsl"
-//        url = uri("https://repo.q64.io/deotime")
-//        content {
-//            includeGroup("me.deotime")
-//        }
-//    }
+    maven {
+        name = "kotlin-poet-dsl"
+        url = uri("https://repo.q64.io/deotime")
+        content {
+            includeGroup("me.deotime")
+        }
+    }
 }
 
 javafx {

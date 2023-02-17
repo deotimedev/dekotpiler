@@ -6,4 +6,5 @@ import me.deo.dekotpiler.model.KtExpressionView
 
 interface KtMemberInvoke : KtInvoke {
     val reference: KtExpression
+    val extension: Boolean
 }

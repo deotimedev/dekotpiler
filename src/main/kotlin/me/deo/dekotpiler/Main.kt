@@ -6,6 +6,7 @@ import kotlinx.metadata.jvm.KotlinClassMetadata
 import me.deo.dekotpiler.crawler.CrawlerController
 import me.deo.dekotpiler.crawler.provided.LocalVariableDeclarationCrawler
 import me.deo.dekotpiler.jar.KotlinJarLoader
+import me.deo.dekotpiler.jar.KotlinJarPool
 import me.deo.dekotpiler.metadata.MetadataResolver
 import me.deo.dekotpiler.model.statements.KtBlockStatement
 import me.deo.dekotpiler.model.type.KtType
@@ -30,7 +31,7 @@ class Main(
     private val engine: KotlinJarLoader,
     private val translation: Translation,
     private val crawlerController: CrawlerController,
-    private val testCrawler: LocalVariableDeclarationCrawler
+    private val testCrawler: LocalVariableDeclarationCrawler,
 ) : CommandLineRunner {
     // This will eventually be replaced by a CLI
     override fun run(vararg args: String): Unit = runBlocking(Dispatchers.Default) {

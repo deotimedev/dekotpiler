@@ -8,4 +8,5 @@ interface KotlinJar {
     val types: List<KtReferenceType>
     fun load(type: KtReferenceType): ClassFile?
     fun metadata(type: KtReferenceType): KotlinClassMetadata?
+    operator fun contains(type: KtReferenceType): Boolean
 }

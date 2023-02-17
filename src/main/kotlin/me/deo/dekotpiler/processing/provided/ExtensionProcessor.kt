@@ -1,38 +1,40 @@
 package me.deo.dekotpiler.processing.provided
 
+import kotlinx.metadata.jvm.KotlinClassMetadata
+import kotlinx.metadata.jvm.signature
+import me.deo.dekotpiler.jar.KotlinJarPool
+import me.deo.dekotpiler.model.KtExpression
+import me.deo.dekotpiler.model.expressions.invoke.KtMethodInvoke
 import me.deo.dekotpiler.model.expressions.invoke.KtStaticInvoke
 import me.deo.dekotpiler.processing.PreProcessor
 import org.springframework.stereotype.Component
 
 @Component
-class ExtensionProcessor :
+class ExtensionProcessor(
+    private val jarPool: KotlinJarPool
+) :
     PreProcessor<KtStaticInvoke> {
 
     override fun KtStaticInvoke.match() =
-        function.enclosing?.name in StandardLibraryExtensionFiles
+        // TODO function processing like this really needs to be moved to something like
+        // functionpostprocessor
+        function.enclosing?.let {
+            println("meta: ${jarPool.locate(it)}")
+            // TODO extensions dont have to be only in file facades to impl a way for others later
+            (jarPool.locate(it)?.metadata(it) as? KotlinClassMetadata.FileFacade)
+                ?.toKmPackage()?.functions?.any {
+                    it.signature?.name == function.name && it.signature?.desc == function.signature
+                }
+        } == true
 
-    // TODO resolve standard library
-//    override fun replace(value: KtStaticInvoke): KtExpression {
-//
-//        StandardTopLevelFunctions[value.name]?.let { vararg ->
-//            value.method.kind = KtFunction.Kind.TopLevel
-//            value.method.parameters.last().vararg = vararg
-//            return value
-//        }
-//
-//        return try {
-//            KtMethodInvoke(
-//                value.method,
-//                value.args.subList(1, value.args.size),
-//                value.args[0],
-//                extension = true
-//            )
-//        } catch (ex: Exception) {
-//            repeat(100) { ex.printStackTrace() }
-//            System.exit(1)
-//            error("")
-//        }
-//    }
+    override fun replace(value: KtStaticInvoke) =
+        KtMethodInvoke(
+            value.function,
+            value.args[0],
+            value.args.subList(1, value.args.size),
+            extension = true
+        )
+
 
 
     companion object {

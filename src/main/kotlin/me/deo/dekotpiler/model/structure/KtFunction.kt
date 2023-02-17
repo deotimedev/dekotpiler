@@ -5,6 +5,7 @@ import kotlinx.metadata.Flag
 import me.deo.dekotpiler.model.type.KtType
 import me.deo.dekotpiler.model.KtTypeParameter
 import me.deo.dekotpiler.model.expressions.invoke.KtMethodInvoke
+import me.deo.dekotpiler.model.type.KtReferenceType
 import me.deo.dekotpiler.model.type.KtTyped
 import kotlin.reflect.KFunction
 import kotlin.reflect.KParameter
@@ -21,7 +22,7 @@ data class KtFunction(
     val parameters: MutableList<Parameter>,
     val typeParameters: MutableList<KtTypeParameter>,
     var returns: KtType,
-    var enclosing: KtType?, // null if top level function
+    var enclosing: KtReferenceType?, // null if top level function
     var kind: Kind,
 ) {
 

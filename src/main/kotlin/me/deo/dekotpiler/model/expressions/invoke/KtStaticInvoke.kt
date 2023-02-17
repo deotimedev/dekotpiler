@@ -12,7 +12,6 @@ data class KtStaticInvoke(
     override var args: MutableList<KtExpression>,
 ) : KtInvoke {
     override val expressionView: KtExpressionView = views(::args)
-    override val extension = false
     override fun code() = buildCode {
         if (function.kind != KtFunction.Kind.TopLevel)
             write(function.enclosing?.name, ".")

@@ -6,7 +6,7 @@ import me.deo.dekotpiler.model.KtExpression
 import me.deo.dekotpiler.model.KtExpressionView
 import me.deo.dekotpiler.util.views
 
-class KtComparison(
+data class KtComparison(
     var reference: KtExpression,
     var comparing: KtExpression,
     var mode: Type

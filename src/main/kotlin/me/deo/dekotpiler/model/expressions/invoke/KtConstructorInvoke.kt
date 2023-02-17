@@ -11,7 +11,6 @@ data class KtConstructorInvoke(
     override var args: MutableList<KtExpression>,
 ) : KtInvoke {
     override val expressionView: KtExpressionView = views(::args)
-    override val extension = false
     override fun code() = buildCode {
         write(function.enclosing)
         writeInvoker(args)

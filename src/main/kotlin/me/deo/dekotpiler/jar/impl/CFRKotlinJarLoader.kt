@@ -3,6 +3,7 @@ package me.deo.dekotpiler.jar.impl
 import kotlinx.metadata.jvm.KotlinClassMetadata
 import me.deo.dekotpiler.jar.KotlinJar
 import me.deo.dekotpiler.jar.KotlinJarLoader
+import me.deo.dekotpiler.jar.KotlinJarPool
 import me.deo.dekotpiler.metadata.MetadataResolver
 import me.deo.dekotpiler.model.type.KtReferenceType
 import me.deo.dekotpiler.translation.Translation
@@ -19,7 +20,8 @@ import java.io.File
 @Component
 internal class CFRKotlinJarLoader(
     private val translation: Translation,
-    private val metadataResolver: MetadataResolver
+    private val metadataResolver: MetadataResolver,
+    private val jarPool: KotlinJarPool
 ) : KotlinJarLoader {
 
     private val config = cfrConfig {
@@ -57,7 +59,9 @@ internal class CFRKotlinJarLoader(
                     ?.let(metadataResolver::resolve)
                     ?.let(KotlinClassMetadata.Companion::read) // https://youtrack.jetbrains.com/issue/KT-56750
 //                    ?.let(KotlinMetadataReader::read)
-        }
+
+            override fun contains(type: KtReferenceType) = type.qualifiedName in typeMappings.keys
+        }.also { jarPool.register(it) }
     }
 
     private fun cfrConfig(closure: CFRConfig.() -> Unit) =
