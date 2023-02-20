@@ -1,5 +1,6 @@
 package com.deotime.dekotpiler.translation.provided.variable
 
+import com.deotime.dekotpiler.model.type.KtReferenceType
 import com.deotime.dekotpiler.model.variable.KtStaticField
 import com.deotime.dekotpiler.translation.Translation
 import com.deotime.dekotpiler.translation.Translator
@@ -11,7 +12,7 @@ class StaticFieldVariableTranslator : Translator<StaticVariable, KtStaticField> 
 
 
     override fun Translation.Session.translation(value: StaticVariable) = KtStaticField(
-        translateType(value.owningClassType).nullable(false),
+        translateType(value.owningClassType).nullable(false) as KtReferenceType,
         value.rawFieldName,
         value.isFinal,
         translateType(value.inferredJavaType),

@@ -2,7 +2,7 @@ package com.deotime.dekotpiler
 
 class Test {
     fun test() {
-        "hello".extensionValue = "Yes1"
+        println(TestHelper.maybe())
     }
 }
 
