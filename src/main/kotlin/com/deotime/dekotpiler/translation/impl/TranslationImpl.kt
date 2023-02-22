@@ -4,10 +4,10 @@ import com.deotime.dekotpiler.mapping.TypeMappings
 import com.deotime.dekotpiler.model.KtConditional
 import com.deotime.dekotpiler.model.KtExpression
 import com.deotime.dekotpiler.model.KtStatement
-import com.deotime.dekotpiler.model.KtTypeParameter
 import com.deotime.dekotpiler.model.KtUnknown
 import com.deotime.dekotpiler.model.statements.KtBlockStatement.Companion.asBlock
 import com.deotime.dekotpiler.model.structure.KtFunction
+import com.deotime.dekotpiler.model.structure.KtVisibility
 import com.deotime.dekotpiler.model.type.KtReferenceType
 import com.deotime.dekotpiler.model.type.KtType
 import com.deotime.dekotpiler.model.variable.KtLocalVariable
@@ -28,6 +28,8 @@ import org.benf.cfr.reader.bytecode.analysis.types.JavaArrayTypeInstance
 import org.benf.cfr.reader.bytecode.analysis.types.JavaGenericRefTypeInstance
 import org.benf.cfr.reader.bytecode.analysis.types.JavaTypeInstance
 import org.benf.cfr.reader.bytecode.analysis.types.MethodPrototype
+import org.benf.cfr.reader.entities.AccessFlag
+import org.benf.cfr.reader.entities.Method
 import org.springframework.stereotype.Component
 import java.util.concurrent.ConcurrentHashMap
 import kotlin.reflect.KClass
@@ -50,7 +52,10 @@ internal class TranslationImpl(
 
     inner class SessionImpl : Translation.Session {
 
+        private val computedRawFunctions = ConcurrentHashMap<MethodPrototype, KtFunction.Raw>()
+        private val computedFunctions = ConcurrentHashMap<Method, KtFunction>()
         private val computedVariables = ConcurrentHashMap<LValue, KtVariable>()
+
         private fun <K : Any> translate(value: Any) =
             translators<Any, K>(value::class)
                 .find { with(it) { value.match() } }
@@ -104,32 +109,17 @@ internal class TranslationImpl(
         override fun translateConditional(conditional: ConditionalExpression): KtConditional =
             translate(conditional) ?: KtConditional(KtUnknown(conditional))
 
-        // this eventually needs to be able to resolve a function from other
-        // class files if provided
-        override fun translateFunction(
-            function: MethodPrototype,
-            kind: KtFunction.Kind
-        ) = KtFunction(
-            function.name,
-            function.originalDescriptor,
-            null, // evaluate receiver in post processing
-            (if (function.parametersComputed())
-                function.parameterLValues.map {
-                    KtFunction.Parameter(
-                        it.localVariable.name.stringName,
-                        translateType(it.localVariable.inferredJavaType.javaTypeInstance),
-                    )
-                } else
-                function.args.map { KtFunction.Parameter(null, translateType(it)) }).toMutableList(),
-            function.formalParameterMap.map { (name, param) ->
-                KtTypeParameter(
-                    name,
-                    listOf(translateType(param.bound))
-                )
-            }.toMutableList(),
-            translateType(function.returnType).nullable(kind != KtFunction.Kind.Constructor),
-            translateType(function.classType).nullable(false) as KtReferenceType,
-            kind
-        ).also(functionPolishing::polish)
+        override fun translateRawFunction(
+            function: MethodPrototype
+        ) = computedRawFunctions.computeIfAbsent(function) {
+            KtFunction.Raw(
+                name = function.name,
+                descriptor = function.originalDescriptor,
+                enclosing = translateType(function.classType) as KtReferenceType,
+                returns = translateType(function.returnType),
+                parameters = function.args.map(::translateType)
+            )
+        }
+
     }
 }

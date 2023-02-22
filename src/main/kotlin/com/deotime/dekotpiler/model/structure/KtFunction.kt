@@ -1,6 +1,7 @@
 package com.deotime.dekotpiler.model.structure
 
 import com.deotime.dekotpiler.model.KtTypeParameter
+import com.deotime.dekotpiler.model.statements.KtBlockStatement
 import com.deotime.dekotpiler.model.type.KtReferenceType
 import com.deotime.dekotpiler.model.type.KtType
 import com.deotime.dekotpiler.model.type.KtTyped
@@ -20,37 +21,50 @@ import kotlin.reflect.jvm.javaMethod
 // polishers an processors can make adjustments to ktfunction (the frontend) to make it
 // look accurte since synthetics will never be dispalyed
 class KtFunction(
-    var name: String,
-    var descriptor: String,
-    var receiver: KtType?,
+    var raw: Raw,
     val parameters: MutableList<Parameter>,
-    val typeParameters: MutableList<KtTypeParameter>,
-    var returns: KtType,
-    var enclosing: KtReferenceType,
     var kind: Kind,
-    // will this technically not work with multiple vararg parameters? yes. is anyone making
-    // functions with multiple vararg parameters? no (unless you are kotlinpoet for some reason)
-    var vararg: Boolean = false
+    var code: KtBlockStatement?,
+    val typeParameters: MutableList<KtTypeParameter> = mutableListOf(),
+    var receiver: KtType? = null,
+    var returns: KtType = raw.returns,
+    var name: String = raw.name,
+    var enclosing: KtReferenceType? = raw.enclosing.takeUnless { kind == Kind.TopLevel },
+    var vararg: Boolean = false,
+    var visibility: KtVisibility = KtVisibility.Public,
+    val modifiers: MutableList<KtModifier> = mutableListOf()
 ) {
+
+    data class Raw(
+        val name: String,
+        val descriptor: String,
+        val returns: KtType,
+        val enclosing: KtReferenceType,
+        val parameters: List<KtType>
+    )
 
     var operator: Operator? = null
         get() = field ?: Operator.All.find { it.functionName == name }
 
     constructor(reflect: KFunction<*>) : this(
-        reflect.name,
-        reflect.signature,
-        reflect.extensionReceiverParameter?.type?.let { KtType(it) },
-        reflect.valueParameters.map { Parameter(it) }.toMutableList(),
-        reflect.typeParameters.map { KtTypeParameter(it) }.toMutableList(),
-        KtType(reflect.returnType),
-        reflect.instanceParameter?.type?.let {
-            KtType(it)
-        } ?: KtType.invoke(reflect.javaMethod!!.declaringClass.kotlin),
-        when {
+        Raw(
+            reflect.name,
+            reflect.signature,
+            KtType(reflect.returnType),
+            reflect.instanceParameter?.type?.let {
+                KtType(it)
+            } ?: KtType.invoke(reflect.javaMethod!!.declaringClass.kotlin),
+            reflect.valueParameters.map { KtType(it.type) }
+        ),
+        receiver = reflect.extensionReceiverParameter?.type?.let { KtType(it) },
+        parameters = reflect.valueParameters.map { Parameter(it) }.toMutableList(),
+        typeParameters = reflect.typeParameters.map { KtTypeParameter(it) }.toMutableList(),
+        kind = when {
             reflect.javaConstructor != null -> Kind.Constructor
             reflect.instanceParameter != null -> Kind.Instance
             else -> Kind.TopLevel
-        }
+        },
+        code = null
     )
 
     enum class Kind {
