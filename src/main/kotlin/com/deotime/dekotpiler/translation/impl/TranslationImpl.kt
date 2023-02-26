@@ -7,7 +7,6 @@ import com.deotime.dekotpiler.model.KtStatement
 import com.deotime.dekotpiler.model.KtUnknown
 import com.deotime.dekotpiler.model.statements.KtBlockStatement.Companion.asBlock
 import com.deotime.dekotpiler.model.structure.KtFunction
-import com.deotime.dekotpiler.model.structure.KtVisibility
 import com.deotime.dekotpiler.model.type.KtReferenceType
 import com.deotime.dekotpiler.model.type.KtType
 import com.deotime.dekotpiler.model.variable.KtLocalVariable
@@ -28,7 +27,6 @@ import org.benf.cfr.reader.bytecode.analysis.types.JavaArrayTypeInstance
 import org.benf.cfr.reader.bytecode.analysis.types.JavaGenericRefTypeInstance
 import org.benf.cfr.reader.bytecode.analysis.types.JavaTypeInstance
 import org.benf.cfr.reader.bytecode.analysis.types.MethodPrototype
-import org.benf.cfr.reader.entities.AccessFlag
 import org.benf.cfr.reader.entities.Method
 import org.springframework.stereotype.Component
 import java.util.concurrent.ConcurrentHashMap

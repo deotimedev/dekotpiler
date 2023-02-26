@@ -1,4 +1,4 @@
-package com.deotime.dekotpiler.model.structure
+package com.deotime.dekotpiler.model.attribute
 
 enum class KtVisibility {
     Public,

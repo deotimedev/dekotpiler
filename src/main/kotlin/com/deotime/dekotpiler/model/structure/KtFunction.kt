@@ -1,6 +1,9 @@
 package com.deotime.dekotpiler.model.structure
 
 import com.deotime.dekotpiler.model.KtTypeParameter
+import com.deotime.dekotpiler.model.attribute.KtModifier
+import com.deotime.dekotpiler.model.attribute.KtOperator
+import com.deotime.dekotpiler.model.attribute.KtVisibility
 import com.deotime.dekotpiler.model.statements.KtBlockStatement
 import com.deotime.dekotpiler.model.type.KtReferenceType
 import com.deotime.dekotpiler.model.type.KtType
@@ -32,7 +35,8 @@ class KtFunction(
     var enclosing: KtReferenceType? = raw.enclosing.takeUnless { kind == Kind.TopLevel },
     var vararg: Boolean = false,
     var visibility: KtVisibility = KtVisibility.Public,
-    val modifiers: MutableList<KtModifier> = mutableListOf()
+    val modifiers: MutableList<KtModifier> = mutableListOf(),
+    var operator: KtOperator? = null
 ) {
 
     data class Raw(
@@ -42,9 +46,6 @@ class KtFunction(
         val enclosing: KtReferenceType,
         val parameters: List<KtType>
     )
-
-    var operator: Operator? = null
-        get() = field ?: Operator.All.find { it.functionName == name }
 
     constructor(reflect: KFunction<*>) : this(
         Raw(
@@ -74,37 +75,7 @@ class KtFunction(
         JavaStatic
     }
 
-    enum class Operator(val format: String) {
-        UnaryPlus("+@"),
-        UnaryMinus("-@"),
-        Not("!@"),
-        Inc("@++"),
-        Dec("@--"),
-        Plus(arith('+')),
-        Minus(arith('-')),
-        Times(arith('*')),
-        Div(arith('/')),
-        Rem(arith('%')),
-        PlusAssign(augment('+')),
-        MinusAssign(augment('-')),
-        TimesAssign(augment('*')),
-        DivAssign(augment('/')),
-        RemAssign(augment('%')),
-        RangeTo("@..#1"),
-        Contains("#1 in @"),
-        Get("@[!MID!]"),
-        Set("@[!MID!] = !LAST!"),
-        Invoke("@(!MID!, !LAST!)"), // TODO lambda
-        Equals("@ == #1"),
-        // TODO: delegators and compareTo
-        ;
 
-        val functionName = name.replaceFirstChar { it.lowercase() }
-
-        companion object {
-            val All by lazy { values().toSet() }
-        }
-    }
 
 
     // TODO modifiers
@@ -123,13 +94,6 @@ class KtFunction(
     companion object {
 
         val Equals = KtFunction(Any::equals)
-
-        // kotlin enums initialize very strange
-        private fun arith(char: Char) = "@ $char #1"
-        private fun augment(char: Char) = "@ $char= #1"
-
-        @Suppress("NOTHING_TO_INLINE")
-        private inline fun <A> resolve(func: KFunction<A>) = func
 
         val KFunction<*>.signature get() = javaMethod?.toGenericString() as String
     }
