@@ -3,8 +3,6 @@ package com.deotime.dekotpiler.jar.impl
 import com.deotime.dekotpiler.jar.KotlinClassContainer
 import com.deotime.dekotpiler.jar.KotlinJarPool
 import com.deotime.dekotpiler.model.type.KtReferenceType
-import kotlinx.metadata.jvm.KotlinClassMetadata
-import org.benf.cfr.reader.entities.ClassFile
 import org.springframework.stereotype.Component
 
 @Component
