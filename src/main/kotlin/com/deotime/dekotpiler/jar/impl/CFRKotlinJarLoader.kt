@@ -1,6 +1,6 @@
 package com.deotime.dekotpiler.jar.impl
 
-import com.deotime.dekotpiler.jar.KotlinJar
+import com.deotime.dekotpiler.jar.KotlinClassContainer
 import com.deotime.dekotpiler.jar.KotlinJarLoader
 import com.deotime.dekotpiler.jar.KotlinJarPool
 import com.deotime.dekotpiler.metadata.MetadataResolver
@@ -30,7 +30,7 @@ internal class CFRKotlinJarLoader(
         TIDY_VARIABLE_NAMES set false
     }
 
-    override fun load(jar: File): KotlinJar {
+    override fun load(jar: File): KotlinClassContainer {
         val result = CfrDriver.Builder()
             .withOptions(config)
             .build()
@@ -45,7 +45,7 @@ internal class CFRKotlinJarLoader(
         val javaByName = jarTypes.associateBy { it.rawName }
         val byName = mappedTypes.associateBy { it.qualifiedName }
         val state = result.first
-        return object : KotlinJar {
+        return object : KotlinClassContainer {
             override val types = mappedTypes
             override fun load(type: KtReferenceType) =
                 javaByName[type.qualifiedName]

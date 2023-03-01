@@ -1,6 +1,6 @@
 package com.deotime.dekotpiler.jar.impl
 
-import com.deotime.dekotpiler.jar.KotlinJar
+import com.deotime.dekotpiler.jar.KotlinClassContainer
 import com.deotime.dekotpiler.jar.KotlinJarPool
 import com.deotime.dekotpiler.model.type.KtReferenceType
 import kotlinx.metadata.jvm.KotlinClassMetadata
@@ -10,12 +10,12 @@ import org.springframework.stereotype.Component
 @Component
 internal class KotlinJarPoolImpl : KotlinJarPool {
 
-    private val jars = mutableSetOf<KotlinJar>()
-    override fun standardLibrary(): KotlinJar {
+    private val jars = mutableSetOf<KotlinClassContainer>()
+    override fun standardLibrary(): KotlinClassContainer {
         TODO("Not yet implemented")
     }
 
-    override fun register(jar: KotlinJar) {
+    override fun register(jar: KotlinClassContainer) {
         jars += jar
     }
 

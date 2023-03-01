@@ -4,7 +4,7 @@ import com.deotime.dekotpiler.model.type.KtReferenceType
 import kotlinx.metadata.jvm.KotlinClassMetadata
 import org.benf.cfr.reader.entities.ClassFile
 
-interface KotlinJar {
+interface KotlinClassContainer {
     val types: List<KtReferenceType>
     fun type(name: String): KtReferenceType?
     fun load(type: KtReferenceType): ClassFile?
