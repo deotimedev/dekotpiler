@@ -11,7 +11,6 @@ import com.deotime.dekotpiler.model.type.KtReferenceType
 import com.deotime.dekotpiler.model.type.KtType
 import com.deotime.dekotpiler.model.variable.KtLocalVariable
 import com.deotime.dekotpiler.model.variable.KtVariable
-import com.deotime.dekotpiler.polish.FunctionPolisher
 import com.deotime.dekotpiler.processing.Processing
 import com.deotime.dekotpiler.processing.Processor
 import com.deotime.dekotpiler.translation.Translation
@@ -39,7 +38,6 @@ internal class TranslationImpl(
     translators: List<Translator<*, *>>,
     private val processing: Processing,
     private val typeMappings: TypeMappings,
-    private val functionPolishing: FunctionPolisher
 ) : Translation {
     private val translatorsByType = translators.groupBy { resolveTypeParameter(it::class, Translator::class, "J")!! }
     override fun session() = SessionImpl()

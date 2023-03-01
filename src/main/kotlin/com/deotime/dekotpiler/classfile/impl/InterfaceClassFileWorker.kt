@@ -13,8 +13,8 @@ class InterfaceClassFileWorker(
 ) : ClassFileWorker {
     override fun work(classFile: ClassFile): Map<Method, Op04StructuredStatement?> {
         val defaultImpls =
-            jarPool.locate("${classFile.classType.rawName}\$DefaultImpls")
-                ?.let(jarPool::load) ?: return emptyMap() // FIXME odsafsdaf
+            jarPool.type("${classFile.classType.rawName}\$DefaultImpls")
+                ?.let(jarPool::load) ?: return classFile.methods.associateWith { null }
         return classFile.methods.associateWith { method ->
             defaultImpls.methods.find { it.name == method.name }?.analysis
         }

@@ -16,7 +16,7 @@ class ObjectInstanceProcessor(
 
     // todo fixxers
     override fun KtStaticField.match() =
-        (name == "INSTANCE" || name == "Companion") && ((jarPool.locateJar(declaring)?.metadata(declaring) as? KotlinClassMetadata.Class)
+        (name == "INSTANCE" || name == "Companion") && ((jarPool.metadata(declaring) as? KotlinClassMetadata.Class)
             ?.toKmClass()?.flags?.let { flags ->
                 println(flags)
                 Flag.Class.IS_OBJECT(flags) || Flag.Class.IS_COMPANION_OBJECT(flags)

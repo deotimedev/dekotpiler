@@ -14,9 +14,9 @@ internal class MetadataLocatorimpl(
     private val jarPool: KotlinJarPool
 ) : MetadataLocator {
     private val classMetadata = cache<KtReferenceType, List<KmFunction>> {
-        jarPool.locateJar(it)?.metadata(it)
-            ?.let(::functions).orEmpty()
-
+        jarPool.metadata(it)
+            ?.let(::functions)
+            .orEmpty()
     }
 
     override fun function(type: KtReferenceType, name: String, descriptor: String) =
