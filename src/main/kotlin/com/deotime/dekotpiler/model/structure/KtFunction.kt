@@ -17,31 +17,26 @@ import kotlin.reflect.jvm.javaConstructor
 import kotlin.reflect.jvm.javaMethod
 
 data class KtFunction(
-    var raw: Raw,
-    val parameters: MutableList<Parameter>,
+    val description: KtFunctionDescriptor,
+    val fullParameters: MutableList<Parameter>,
     var kind: Kind,
     var code: KtBlockStatement?,
     val typeParameters: MutableList<KtTypeParameter> = mutableListOf(),
     var receiver: KtType? = null,
-    var returns: KtType = raw.returns,
-    var name: String = raw.name,
-    var enclosing: KtReferenceType? = raw.enclosing.takeUnless { kind == Kind.TopLevel },
+    override var returns: KtType = description.returns,
+    override var name: String = description.name,
+    var enclosingActual: KtReferenceType? = description.enclosing.takeUnless { kind == Kind.TopLevel },
     var vararg: Boolean = false,
     var visibility: KtVisibility = KtVisibility.Public,
     val modifiers: MutableList<KtModifier> = mutableListOf(),
     var operator: KtOperator? = null
-) {
+) : KtFunctionDescriptor by description {
 
-    data class Raw(
-        val name: String,
-        val descriptor: String,
-        val returns: KtType,
-        val enclosing: KtReferenceType,
-        val parameters: List<KtType>
-    )
+    override val parameters: List<KtType>
+        get() = fullParameters.map { it.type }
 
     constructor(reflect: KFunction<*>) : this(
-        Raw(
+        KtFunctionDescriptor.Raw(
             reflect.name,
             reflect.signature,
             KtType(reflect.returnType),
@@ -49,7 +44,7 @@ data class KtFunction(
             reflect.valueParameters.map { KtType(it.type) }
         ),
         receiver = reflect.extensionReceiverParameter?.type?.let { KtType(it) },
-        parameters = reflect.valueParameters.map { Parameter(it) }.toMutableList(),
+        fullParameters = reflect.valueParameters.map { Parameter(it) }.toMutableList(),
         typeParameters = reflect.typeParameters.map { KtTypeParameter(it) }.toMutableList(),
         kind = when {
             reflect.javaConstructor != null -> Kind.Constructor
