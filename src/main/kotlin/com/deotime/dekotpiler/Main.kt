@@ -92,7 +92,7 @@ class Main(
         @JvmStatic
         fun main(args: Array<String>) {
             task("Spring Initialization") {
-                SpringApplicationBuilder(com.deotime.dekotpiler.Main.Companion.App::class.java)
+                SpringApplicationBuilder(App::class.java)
                     .web(WebApplicationType.NONE)
                     .bannerMode(Banner.Mode.OFF)
                     .logStartupInfo(false)

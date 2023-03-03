@@ -11,7 +11,7 @@ import kotlin.reflect.KClass
 internal class ProcessingImpl(
     processors: List<Processor<*>>
 ) : Processing {
-    private val processorsBytype = processors.groupBy { resolveTypeParameter(it::class, PreProcessor::class, "T")!! }
+    private val processorsBytype = processors.groupBy { it.resolveTypeParameter<PreProcessor<*>>("T")!! }
 
     @Suppress("UNCHECKED_CAST")
     override fun <T : Any> processors(mode: Processor.Mode, type: KClass<T>) =

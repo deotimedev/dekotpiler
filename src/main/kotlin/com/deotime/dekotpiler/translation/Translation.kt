@@ -4,13 +4,13 @@ import com.deotime.dekotpiler.model.KtConditional
 import com.deotime.dekotpiler.model.KtExpression
 import com.deotime.dekotpiler.model.KtStatement
 import com.deotime.dekotpiler.model.statements.KtBlockStatement
-import com.deotime.dekotpiler.model.structure.KtFunction
+import com.deotime.dekotpiler.model.structure.KtFunctionDescriptor
 import com.deotime.dekotpiler.model.type.KtType
 import com.deotime.dekotpiler.model.variable.KtVariable
 import com.deotime.dekotpiler.util.CFRExpression
+import com.deotime.dekotpiler.util.CFRLValue
 import com.deotime.dekotpiler.util.CFRStatement
 import org.benf.cfr.reader.bytecode.analysis.opgraph.Op04StructuredStatement
-import org.benf.cfr.reader.bytecode.analysis.parse.LValue
 import org.benf.cfr.reader.bytecode.analysis.parse.expression.ConditionalExpression
 import org.benf.cfr.reader.bytecode.analysis.types.JavaTypeInstance
 import org.benf.cfr.reader.bytecode.analysis.types.MethodPrototype
@@ -29,13 +29,13 @@ interface Translation {
         fun translateStatement(statement: Op04StructuredStatement): KtStatement
         fun translateBlock(statement: CFRStatement): KtBlockStatement
         fun translateBlock(statement: Op04StructuredStatement): KtBlockStatement
-        fun <V : KtVariable> translateVariable(variable: LValue): V
+        fun <V : KtVariable> translateVariable(variable: CFRLValue): V
         fun translateType(type: JavaTypeInstance): KtType
         fun translateType(type: InferredJavaType) = translateType(type.javaTypeInstance)
         fun translateArrayType(type: JavaTypeInstance): KtType
         fun translateArrayType(type: InferredJavaType) = translateArrayType(type.javaTypeInstance)
         fun translateConditional(conditional: ConditionalExpression): KtConditional
-        fun translateRawFunction(function: MethodPrototype): KtFunction.Raw
+        fun translateFunction(function: MethodPrototype): KtFunctionDescriptor
 
     }
 

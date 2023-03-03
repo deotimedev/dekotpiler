@@ -7,6 +7,7 @@ import com.deotime.dekotpiler.model.KtStatement
 import com.deotime.dekotpiler.model.KtUnknown
 import com.deotime.dekotpiler.model.statements.KtBlockStatement.Companion.asBlock
 import com.deotime.dekotpiler.model.structure.KtFunction
+import com.deotime.dekotpiler.model.structure.KtFunctionDescriptor
 import com.deotime.dekotpiler.model.type.KtReferenceType
 import com.deotime.dekotpiler.model.type.KtType
 import com.deotime.dekotpiler.model.variable.KtLocalVariable
@@ -39,7 +40,7 @@ internal class TranslationImpl(
     private val processing: Processing,
     private val typeMappings: TypeMappings,
 ) : Translation {
-    private val translatorsByType = translators.groupBy { resolveTypeParameter(it::class, Translator::class, "J")!! }
+    private val translatorsByType = translators.groupBy { it.resolveTypeParameter<Translator<*, *>>("J")!! }
     override fun session() = SessionImpl()
     override fun <C : Any, K> translators(type: KClass<out C>) =
         translatorsByType[type].orEmpty() as List<Translator<C, K>>
@@ -48,7 +49,7 @@ internal class TranslationImpl(
 
     inner class SessionImpl : Translation.Session {
 
-        private val computedRawFunctions = ConcurrentHashMap<MethodPrototype, KtFunction.Raw>()
+        private val computedRawFunctions = ConcurrentHashMap<MethodPrototype, KtFunctionDescriptor.Raw>()
         private val computedFunctions = ConcurrentHashMap<Method, KtFunction>()
         private val computedVariables = ConcurrentHashMap<LValue, KtVariable>()
 
@@ -105,10 +106,10 @@ internal class TranslationImpl(
         override fun translateConditional(conditional: ConditionalExpression): KtConditional =
             translate(conditional) ?: KtConditional(KtUnknown(conditional))
 
-        override fun translateRawFunction(
+        override fun translateFunction(
             function: MethodPrototype
         ) = computedRawFunctions.computeIfAbsent(function) {
-            KtFunction.Raw(
+            KtFunctionDescriptor.Raw(
                 name = function.name,
                 descriptor = function.originalDescriptor,
                 enclosing = translateType(function.classType) as KtReferenceType,
