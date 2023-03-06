@@ -8,6 +8,10 @@ fun interface Matcher<T> {
     }
 
     companion object {
-        fun <T> Matcher<T>.match(value: T) = value.match()
+        fun value() {
+            // TODO
+        }
     }
 }
+
+fun <T> Matcher<T>.match(value: T) = value.match()

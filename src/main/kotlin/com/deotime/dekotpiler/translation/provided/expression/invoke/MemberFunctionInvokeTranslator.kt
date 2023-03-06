@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component
 class MemberFunctionInvokeTranslator : Translator<MemberFunctionInvokation, KtMethodInvoke> {
 
     override fun Translation.Session.translation(value: MemberFunctionInvokation) = KtMethodInvoke(
-        translateFunction(value.methodPrototype, KtFunction.Kind.Instance),
+        translateFunction(value.methodPrototype),
         translateExpression(value.`object`),
         value.args.map { translateExpression(it) }.toMutableList(),
     )

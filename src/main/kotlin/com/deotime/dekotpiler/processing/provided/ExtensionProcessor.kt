@@ -3,17 +3,17 @@ package com.deotime.dekotpiler.processing.provided
 import com.deotime.dekotpiler.jar.KotlinJarPool
 import com.deotime.dekotpiler.model.expressions.invoke.KtMethodInvoke
 import com.deotime.dekotpiler.model.expressions.invoke.KtStaticInvoke
+import com.deotime.dekotpiler.model.structure.KtFunction
 import com.deotime.dekotpiler.processing.PreProcessor
 import org.springframework.stereotype.Component
 
 @Component
 class ExtensionProcessor(
     private val jarPool: KotlinJarPool
-) :
-    PreProcessor<KtStaticInvoke> {
+) : PreProcessor<KtStaticInvoke> {
 
     override fun KtStaticInvoke.match() =
-        (function.receiver != null)
+        ((function as? KtFunction)?.receiver != null)
 
 
 

@@ -12,6 +12,6 @@ data class KtStaticField(
     override var synthetic: Boolean,
 ) : KtField {
     override fun code() = buildCode {
-        write(+declaring.name, ".", name)
+        write(declaring.name, ".", name)
     }
 }

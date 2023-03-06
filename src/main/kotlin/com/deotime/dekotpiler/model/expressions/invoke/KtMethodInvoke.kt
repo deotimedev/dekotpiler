@@ -4,17 +4,18 @@ import com.deotime.dekotpiler.coding.buildCode
 import com.deotime.dekotpiler.model.KtExpression
 import com.deotime.dekotpiler.model.KtExpressionView
 import com.deotime.dekotpiler.model.structure.KtFunction
+import com.deotime.dekotpiler.model.structure.KtFunctionDescriptor
 import com.deotime.dekotpiler.util.views
 
 data class KtMethodInvoke(
-    override var function: KtFunction,
+    override var function: KtFunctionDescriptor,
     override var reference: KtExpression,
     override var args: MutableList<KtExpression>,
     override var extension: Boolean = false,
 ) : KtMemberInvoke {
     override val expressionView: KtExpressionView = views(::args, ::reference)
     override fun code() = buildCode {
-        function.operator?.takeIf { !reference.type.nullable }?.let { op ->
+        (function as? KtFunction)?.operator?.takeIf { !reference.type.nullable }?.let { op ->
             +op.format
                 .replace("@", reference.code().toString())
                 .replace("!MID!", args.dropLast(1).joinToString { it.code().toString() })

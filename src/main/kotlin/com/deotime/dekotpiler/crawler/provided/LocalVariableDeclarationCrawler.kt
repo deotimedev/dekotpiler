@@ -1,7 +1,7 @@
 package com.deotime.dekotpiler.crawler.provided
 
 import com.deotime.dekotpiler.crawler.Crawler
-import com.deotime.dekotpiler.matching.Matcher.Companion.match
+import com.deotime.dekotpiler.matching.match
 import com.deotime.dekotpiler.model.expressions.KtLiteral
 import com.deotime.dekotpiler.model.expressions.KtNotNullAssertionExpression
 import com.deotime.dekotpiler.model.expressions.invoke.KtStaticInvoke
