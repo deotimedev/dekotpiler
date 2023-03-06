@@ -1,6 +1,7 @@
 package com.deotime.dekotpiler.processing.provided
 
 import com.deotime.dekotpiler.matching.Matcher
+import com.deotime.dekotpiler.matching.Matchers
 import com.deotime.dekotpiler.model.expressions.invoke.KtMethodInvoke
 import com.deotime.dekotpiler.model.expressions.invoke.KtStaticInvoke
 import com.deotime.dekotpiler.model.structure.KtFunction
@@ -21,6 +22,6 @@ class IntrinsicEqualityCheckProcessor :
         )
 
     companion object {
-        val IntrinsicEqualityCheckMatcher = KtStaticInvoke.Matcher<Intrinsics>("areEqual")
+        val IntrinsicEqualityCheckMatcher = Matchers.staticFunction<Intrinsics>("areEqual")
     }
 }

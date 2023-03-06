@@ -1,15 +1,14 @@
 package com.deotime.dekotpiler.crawler.provided
 
 import com.deotime.dekotpiler.crawler.Crawler
-import com.deotime.dekotpiler.matching.match
+import com.deotime.dekotpiler.matching.Matchers
+import com.deotime.dekotpiler.matching.Matchers.match
 import com.deotime.dekotpiler.model.expressions.KtLiteral
 import com.deotime.dekotpiler.model.expressions.KtNotNullAssertionExpression
 import com.deotime.dekotpiler.model.expressions.invoke.KtStaticInvoke
 import com.deotime.dekotpiler.model.statements.KtBlockStatement
 import com.deotime.dekotpiler.model.statements.KtVariableAssignmentStatement
 import com.deotime.dekotpiler.model.variable.KtLocalVariable
-import com.deotime.dekotpiler.util.View
-import com.deotime.dekotpiler.util.unwrap
 import org.springframework.stereotype.Component
 import kotlin.jvm.internal.Intrinsics
 
@@ -78,7 +77,7 @@ class LocalVariableDeclarationCrawler : Crawler {
     }
 
     companion object {
-        val NotNullCheckMatcher = KtStaticInvoke.Matcher<Intrinsics>(
+        val NotNullCheckMatcher = Matchers.staticFunction<Intrinsics>(
             "checkNotNull",
             "checkNotNullParameter"
         )

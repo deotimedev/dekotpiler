@@ -1,6 +1,7 @@
 package com.deotime.dekotpiler.processing.provided
 
 import com.deotime.dekotpiler.matching.Matcher
+import com.deotime.dekotpiler.matching.Matchers
 import com.deotime.dekotpiler.model.expressions.KtGetDynamicKClass
 import com.deotime.dekotpiler.model.expressions.KtJClassExpression
 import com.deotime.dekotpiler.model.expressions.invoke.KtGetterInvoke
@@ -23,6 +24,6 @@ class KClassProcessor :
 
     companion object {
         const val GetOrCreateKClassName = "getOrCreateKotlinClass"
-        val KClassMatcher = KtStaticInvoke.Matcher<Reflection>(GetOrCreateKClassName)
+        val KClassMatcher = Matchers.staticFunction<Reflection>(GetOrCreateKClassName)
     }
 }

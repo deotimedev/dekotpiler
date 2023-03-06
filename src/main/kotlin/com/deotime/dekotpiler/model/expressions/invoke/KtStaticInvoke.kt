@@ -6,6 +6,7 @@ import com.deotime.dekotpiler.model.KtExpressionView
 import com.deotime.dekotpiler.model.structure.KtFunction
 import com.deotime.dekotpiler.model.structure.KtFunctionDescriptor
 import com.deotime.dekotpiler.util.views
+import kotlin.jvm.internal.Intrinsics
 
 // Not to be confused with a companion object invoke
 data class KtStaticInvoke(
@@ -20,17 +21,4 @@ data class KtStaticInvoke(
         writeArgs()
     }
 
-    class Matcher(
-        val className: String,
-        val functionNames: List<String>
-    ) : com.deotime.dekotpiler.matching.Matcher<KtStaticInvoke> {
-
-        override fun KtStaticInvoke.match() =
-            function.enclosing?.qualifiedName == className && name in functionNames
-
-        companion object {
-            inline operator fun <reified T> invoke(vararg functionNames: String) =
-                Matcher(T::class.qualifiedName!!, functionNames.toList())
-        }
-    }
 }
