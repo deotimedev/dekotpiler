@@ -10,10 +10,13 @@ import org.springframework.stereotype.Component
 internal class CrawlerControllerImpl(
     override val crawlers: List<Crawler>
 ) : CrawlerController {
-    override fun deploy(crawler: Crawler, block: KtBlockStatement) {
+
+    override fun deploy(crawlers: List<Crawler>, block: KtBlockStatement) {
         val paths = paths(block)
-        paths.forEach {
-            crawler.crawl(it)
+        crawlers.forEach { crawler ->
+            paths.forEach {
+                crawler.crawl(it)
+            }
         }
     }
 

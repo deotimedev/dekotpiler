@@ -15,7 +15,6 @@ internal class ClassFileControllerImpl(
     private val interfaceWorker: InterfaceClassFileWorker,
     private val translation: Translation,
     private val crawlerController: CrawlerController,
-    private val localVariableCrawler: LocalVariableDeclarationCrawler // TODO REMOVE
 ) : ClassFileController {
     override fun analyze(classFile: ClassFile): Map<Method, KtBlockStatement?> {
         val worker = when {
@@ -25,7 +24,7 @@ internal class ClassFileControllerImpl(
 
         return worker.work(classFile).entries.associate { (method, statement) ->
             val block = statement?.let(translation.session()::translateBlock)
-                ?.also { crawlerController.deploy(localVariableCrawler, it) }
+                ?.also { crawlerController.deploy(crawlerController.crawlers, it) }
             method to block
         }
     }
