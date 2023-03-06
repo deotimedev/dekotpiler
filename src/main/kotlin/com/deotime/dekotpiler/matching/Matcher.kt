@@ -8,9 +8,9 @@ fun interface Matcher<T> {
     }
 
     companion object {
-        fun value() {
-            // TODO
-        }
+        fun <T : Any, V> value(reference: (T) -> V, value: V): Matcher<T> =
+            Matcher { reference(this) == value }
+
     }
 }
 
