@@ -4,8 +4,10 @@ import com.deotime.dekotpiler.model.expressions.invoke.KtStaticInvoke
 
 object Matchers {
 
-    fun <T : Any, V> value(reference: (T) -> V, value: V) =
-        Matcher<T> { reference(this) == value }
+    fun <T, V> value(reference: (T) -> V, vararg values: V) =
+        Matcher<T> { reference(this) in values }
+
+    fun <T, V> notNull(reference: (T) -> V) = !value(reference, null)
 
     inline fun <reified T> staticFunction(vararg names: String) =
         Matcher<KtStaticInvoke> {
