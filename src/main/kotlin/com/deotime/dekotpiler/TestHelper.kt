@@ -1,9 +1,11 @@
 package com.deotime.dekotpiler
 
+import com.deotime.javatest.JavaTestHelper
 import kotlin.random.Random
 
 object TestHelper {
 
+    fun javaHelper() = JavaTestHelper()
     fun obj() = Opp()
     fun maybe(): String? = if (Random.nextBoolean()) "Hello" else null
 

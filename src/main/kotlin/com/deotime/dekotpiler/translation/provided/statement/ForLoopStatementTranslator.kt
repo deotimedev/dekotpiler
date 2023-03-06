@@ -16,8 +16,7 @@ class ForLoopStatementTranslator : Translator<StructuredFor, KtForStatement> {
         translateVariable(value.initial.createdLValue),
         KtRangeExpression(
             translateExpression(value.initial.rValue),
-            ((translateConditional(value.condition) as KtComparison)
-                .comparing as KtLiteral.Int).let { KtLiteral.Int(it.value - 1) }, // to my knowledge kotlin only generates a for loop with ints but i may be wrong
+            (translateConditional(value.condition) as KtComparison).comparing, // to my knowledge kotlin only generates a for loop with ints but i may be wrong
         ),
         translateBlock(value.body)
     )

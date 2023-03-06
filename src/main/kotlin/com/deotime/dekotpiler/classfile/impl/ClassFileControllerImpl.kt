@@ -2,7 +2,6 @@ package com.deotime.dekotpiler.classfile.impl
 
 import com.deotime.dekotpiler.classfile.ClassFileController
 import com.deotime.dekotpiler.crawler.CrawlerController
-import com.deotime.dekotpiler.crawler.provided.LocalVariableDeclarationCrawler
 import com.deotime.dekotpiler.model.statements.KtBlockStatement
 import com.deotime.dekotpiler.translation.Translation
 import org.benf.cfr.reader.entities.ClassFile

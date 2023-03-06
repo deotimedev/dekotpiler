@@ -1,8 +1,18 @@
 package com.deotime.dekotpiler
 
+import com.deotime.javatest.JavaTestHelper
+import kotlin.streams.toList
+
 class Test {
-    fun test() {
-        println(TestHelper.maybe())
+    fun testa() {
+        println("Hello")
+        otherFun(5555)
+        println("done")
+        println(5 * 5)
+    }
+
+    inline fun otherFun(param: Int) {
+        println("param: ${param * param}")
     }
 }
 
