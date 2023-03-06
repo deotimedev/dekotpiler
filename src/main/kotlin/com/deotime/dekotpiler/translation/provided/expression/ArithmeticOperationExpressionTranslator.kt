@@ -1,5 +1,6 @@
 package com.deotime.dekotpiler.translation.provided.expression
 
+import com.deotime.dekotpiler.model.attribute.KtModifier
 import com.deotime.dekotpiler.model.attribute.KtOperator
 import com.deotime.dekotpiler.model.expressions.invoke.KtMethodInvoke
 import com.deotime.dekotpiler.model.structure.KtFunction
@@ -31,10 +32,10 @@ class ArithmeticOperationExpressionTranslator :
 
     companion object {
 
-        private val ArithOp.operatorName
+        private val ArithOp.operatorInfo
             get() = when (this) {
-                ArithOp.MULTIPLY -> "times"
-                else -> name.lowercase()
+                ArithOp.MULTIPLY -> "times" to false
+                else -> name.lowercase() to false
             }
 
         private val ArithmeticMap = ConcurrentHashMap<String, KtFunction>()
@@ -44,7 +45,7 @@ class ArithmeticOperationExpressionTranslator :
             ArithmeticMap.computeIfAbsent("${value.lhs.inferredJavaType.rawType}|${value.rhs.inferredJavaType.rawType}") {
                 val lhsType = translateType(value.lhs.inferredJavaType).nullable(false)
                 val rhsType = translateType(value.rhs.inferredJavaType).nullable(false)
-                val opName = value.op.operatorName
+                val (opName, useInfix) = value.op.operatorInfo
                 KtFunction(
                     KtFunctionDescriptor.Raw(
                         opName,
@@ -61,7 +62,8 @@ class ArithmeticOperationExpressionTranslator :
                     ),
                     KtFunction.Kind.Instance,
                     null,
-                    operator = KtOperator.entries.find { it.functionName == opName }
+                    operator = KtOperator.entries.find { it.functionName == opName },
+                    modifiers = if (useInfix) mutableListOf(KtModifier.Infix) else mutableListOf()
                 )
             }
     }
