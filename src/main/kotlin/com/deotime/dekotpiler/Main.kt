@@ -5,6 +5,7 @@ import com.deotime.dekotpiler.jar.KotlinJarLoader
 import com.deotime.dekotpiler.metadata.MetadataResolver
 import com.deotime.dekotpiler.model.type.KtType
 import com.deotime.dekotpiler.ui.FileSelector
+import com.deotime.dekotpiler.util.context
 import com.deotime.dekotpiler.util.task
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
@@ -91,7 +92,7 @@ class Main(
 
         @JvmStatic
         fun main(args: Array<String>) {
-            task("Spring Initialization") {
+            val app = task("Spring Initialization") {
                 SpringApplicationBuilder(App::class.java)
                     .web(WebApplicationType.NONE)
                     .bannerMode(Banner.Mode.OFF)
@@ -99,6 +100,7 @@ class Main(
                     .headless(false)
                     .application()
             }.run()
+            context = app
 //            exportTasks()
         }
 

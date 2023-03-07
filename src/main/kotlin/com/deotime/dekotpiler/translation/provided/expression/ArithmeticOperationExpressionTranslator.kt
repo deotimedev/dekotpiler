@@ -32,10 +32,16 @@ class ArithmeticOperationExpressionTranslator :
 
     companion object {
 
-        private val ArithOp.operatorInfo
+        private val ArithOp.operatorName
             get() = when (this) {
-                ArithOp.MULTIPLY -> "times" to false
-                else -> name.lowercase() to false
+                ArithOp.MULTIPLY -> "times"
+                else -> name.lowercase()
+            }
+
+        // todo make infix render right
+        private val ArithOp.useInfix
+            get() = when (this) {
+                else -> false
             }
 
         private val ArithmeticMap = ConcurrentHashMap<String, KtFunction>()
@@ -45,7 +51,7 @@ class ArithmeticOperationExpressionTranslator :
             ArithmeticMap.computeIfAbsent("${value.lhs.inferredJavaType.rawType}|${value.rhs.inferredJavaType.rawType}") {
                 val lhsType = translateType(value.lhs.inferredJavaType).nullable(false)
                 val rhsType = translateType(value.rhs.inferredJavaType).nullable(false)
-                val (opName, useInfix) = value.op.operatorInfo
+                val opName = value.op.operatorName
                 KtFunction(
                     KtFunctionDescriptor.Raw(
                         opName,
@@ -63,7 +69,7 @@ class ArithmeticOperationExpressionTranslator :
                     KtFunction.Kind.Instance,
                     null,
                     operator = KtOperator.entries.find { it.functionName == opName },
-                    modifiers = if (useInfix) mutableListOf(KtModifier.Infix) else mutableListOf()
+                    modifiers = if (value.op.useInfix) mutableListOf(KtModifier.Infix) else mutableListOf()
                 )
             }
     }

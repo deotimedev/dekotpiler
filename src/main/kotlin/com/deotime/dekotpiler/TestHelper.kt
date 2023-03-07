@@ -9,6 +9,7 @@ object TestHelper {
     fun obj() = Opp()
     fun maybe(): String? = if (Random.nextBoolean()) "Hello" else null
 
+    fun randInt() = Random.nextInt()
     var getterSetterValue
         get() = "Got"
         set(value) {
