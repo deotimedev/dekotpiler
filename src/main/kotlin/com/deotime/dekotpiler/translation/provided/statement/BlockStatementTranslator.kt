@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component
 class BlockStatementTranslator : Translator<Block, KtBlockStatement> {
 
     context(Translation.Session)
-            override fun translation(value: Block) =
+    override fun translation(value: Block) =
         // todo fix comments being weird
         KtBlockStatement(value.blockStatements.filter { it.statement !is StructuredComment }.map { stmt ->
             // todo remove this only for testing

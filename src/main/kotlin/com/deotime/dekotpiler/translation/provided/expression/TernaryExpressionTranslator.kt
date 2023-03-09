@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component
 class TernaryExpressionTranslator : Translator<TernaryExpression, KtIfElseExpression> {
 
     context (Translation.Session)
-override fun translation(value: TernaryExpression) =
+    override fun translation(value: TernaryExpression) =
         KtIfElseExpression(
             translateConditional(value.condition),
             translateExpression(value.lhs),

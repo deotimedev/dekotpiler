@@ -10,6 +10,6 @@ import org.springframework.stereotype.Component
 class NotOperationTranslator : Translator<NotOperation, KtConditional> {
 
     context (Translation.Session)
-override fun translation(value: NotOperation) =
+    override fun translation(value: NotOperation) =
         translateConditional(value.inner).apply { inverse = true }
 }

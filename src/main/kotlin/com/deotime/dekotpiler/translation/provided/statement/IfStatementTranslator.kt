@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component
 class IfStatementTranslator : Translator<StructuredIf, KtIfStatement> {
 
     context (Translation.Session)
-override fun translation(value: StructuredIf) = KtIfStatement(
+    override fun translation(value: StructuredIf) = KtIfStatement(
         translateConditional(value.conditionalExpression),
         translateBlock(value.ifTaken),
         value.elseBlock?.let { translateBlock(it) }

@@ -10,6 +10,6 @@ import org.springframework.stereotype.Component
 class CommentStatementTranslator : Translator<StructuredComment, KtCommentStatement> {
 
     context (Translation.Session)
-override fun translation(value: StructuredComment) =
+    override fun translation(value: StructuredComment) =
         KtCommentStatement(translateExpression(value.expression).toString()) // todo fix whatevers going on here (cant get comment value from structured for some reason)
 }

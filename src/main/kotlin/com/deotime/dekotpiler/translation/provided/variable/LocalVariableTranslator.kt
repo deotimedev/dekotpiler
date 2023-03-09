@@ -12,7 +12,7 @@ class LocalVariableTranslator : Translator<LocalVariable, KtLocalVariable> {
 
     // needs to be linked somehow...
     context (Translation.Session)
-            override fun translation(value: LocalVariable): KtLocalVariable = KtLocalVariable(
+    override fun translation(value: LocalVariable): KtLocalVariable = KtLocalVariable(
         value.name.stringName,
         true,
         translateType(value.inferredJavaType.javaTypeInstance).nullable(false),

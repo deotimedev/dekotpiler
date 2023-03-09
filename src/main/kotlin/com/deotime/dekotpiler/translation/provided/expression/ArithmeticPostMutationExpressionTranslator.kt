@@ -11,7 +11,7 @@ class ArithmeticPostMutationExpressionTranslator :
     Translator<ArithmeticPostMutationOperation, KtArithmeticPostMutationExpression> {
 
     context (Translation.Session)
-override fun translation(value: ArithmeticPostMutationOperation) =
+    override fun translation(value: ArithmeticPostMutationOperation) =
         KtArithmeticPostMutationExpression(
             translateVariable(value.updatedLValue),
             value.op

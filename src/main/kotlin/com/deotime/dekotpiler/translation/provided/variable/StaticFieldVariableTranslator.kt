@@ -12,7 +12,7 @@ class StaticFieldVariableTranslator : Translator<StaticVariable, KtStaticField> 
 
 
     context (Translation.Session)
-override fun translation(value: StaticVariable) = KtStaticField(
+    override fun translation(value: StaticVariable) = KtStaticField(
         translateType(value.owningClassType).nullable(false) as KtReferenceType,
         value.rawFieldName,
         value.isFinal,

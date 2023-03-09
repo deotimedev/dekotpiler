@@ -10,6 +10,6 @@ import org.springframework.stereotype.Component
 class BooleanExpressionTranslator : Translator<BooleanExpression, KtConditional> {
 
     context (Translation.Session)
-override fun translation(value: BooleanExpression) =
+    override fun translation(value: BooleanExpression) =
         KtConditional(translateExpression(value.inner))
 }

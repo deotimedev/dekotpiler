@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component
 class WhileLoopStatementTranslator : Translator<StructuredWhile, KtWhileStatement> {
 
     context (Translation.Session)
-override fun translation(value: StructuredWhile) = KtWhileStatement(
+    override fun translation(value: StructuredWhile) = KtWhileStatement(
         translateConditional(value.condition),
         translateStatement(value.body).asBlock()
     )

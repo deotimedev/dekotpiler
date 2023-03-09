@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component
 class CastExpressionTranslator : Translator<CastExpression, KtCastExpression> {
 
     context (Translation.Session)
-override fun translation(value: CastExpression) =
+    override fun translation(value: CastExpression) =
         KtCastExpression(
             translateExpression(value.child),
             translateType(value.inferredJavaType.javaTypeInstance)

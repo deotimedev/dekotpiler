@@ -11,7 +11,7 @@ class FieldVariableTranslator : Translator<FieldVariable, KtMemberField> {
 
 
     context (Translation.Session)
-override fun translation(value: FieldVariable) = KtMemberField(
+    override fun translation(value: FieldVariable) = KtMemberField(
         translateExpression(value.`object`),
         value.rawFieldName,
         value.isFinal,

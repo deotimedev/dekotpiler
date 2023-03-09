@@ -20,7 +20,7 @@ class StringConcatTranslator : Translator<ArithmeticOperation, KtStringExpressio
         op == ArithOp.PLUS && (isStringLiteral(lhs) || isStringLiteral(rhs))
 
     context (Translation.Session)
-override fun translation(value: ArithmeticOperation) =
+    override fun translation(value: ArithmeticOperation) =
         KtStringExpression(listOf(value.lhs, value.rhs).map {
             if (isStringLiteral(it))
                 KtLiteral.String(

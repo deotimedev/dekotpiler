@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component
 class ForeachStatementTranslator : Translator<StructuredIter, KtForStatement> {
 
     context (Translation.Session)
-override fun translation(value: StructuredIter) = KtForStatement(
+    override fun translation(value: StructuredIter) = KtForStatement(
         translateVariable(value.iterator),
         translateExpression(value.list),
         translateBlock(value.body)

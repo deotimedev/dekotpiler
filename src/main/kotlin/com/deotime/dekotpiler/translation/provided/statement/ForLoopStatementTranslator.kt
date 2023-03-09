@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component
 class ForLoopStatementTranslator : Translator<StructuredFor, KtForStatement> {
 
     context (Translation.Session)
-override fun translation(value: StructuredFor) = KtForStatement(
+    override fun translation(value: StructuredFor) = KtForStatement(
         translateVariable(value.initial.createdLValue),
         KtRangeExpression(
             translateExpression(value.initial.rValue),

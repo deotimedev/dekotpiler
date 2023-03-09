@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component
 class ComparisonOperationTranslator : Translator<ComparisonOperation, KtComparison> {
 
     context (Translation.Session)
-override fun translation(value: ComparisonOperation) =
+    override fun translation(value: ComparisonOperation) =
         KtComparison(
             translateExpression(value.lhs),
             translateExpression(value.rhs),
