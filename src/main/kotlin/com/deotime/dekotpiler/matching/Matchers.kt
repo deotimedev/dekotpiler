@@ -4,6 +4,9 @@ import com.deotime.dekotpiler.model.expressions.invoke.KtStaticInvoke
 
 object Matchers {
 
+    fun <T> everything() = Matcher<T> { true }
+    fun <T> nothing() = Matcher<T> { false }
+
     fun <T, V> value(reference: (T) -> V, vararg values: V) =
         Matcher<T> { reference(this) in values }
 
