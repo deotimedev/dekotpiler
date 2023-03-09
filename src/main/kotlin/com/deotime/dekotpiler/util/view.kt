@@ -5,42 +5,36 @@ package com.deotime.dekotpiler.util
 import kotlin.reflect.KClass
 import kotlin.reflect.KMutableProperty0
 import kotlin.reflect.KProperty0
+import kotlin.reflect.KType
+import kotlin.reflect.typeOf
 
-typealias ViewableList<T, F> = List<Either<View<T, out F>, View<T, MutableList<out F>>>>
+interface View<out T> {
+    fun get(): T
+    fun <Key> unlock(type: KType, closure: (Unlocked<Key>) -> Unit)
 
-class View<T, F>(
-    val holder: T,
-    val get: () -> F,
-    val set: (F) -> Unit
-)
+    operator fun <Key> Unlocked.Companion.invoke(set: (Key) -> Unit): Unlocked<Key> =
+        object : View<Key> by (this@View as View<Key>), Unlocked<Key> {
+            override fun set(value: @UnsafeVariance Key) = set(value)
+        }
 
-fun <T, F> T.view(focus: KProperty0<F>) = View(
-    this, focus.getter,
-    ((focus as? KMutableProperty0<out F>)?.setter ?: { error("Setted the unsettable") }) as (F) -> Unit
-)
-
-fun <T, F> T.views(vararg focuses: KProperty0<*>): ViewableList<T, F> =
-    focuses.map { field ->
-        if ((MutableList::class.java.isAssignableFrom((field.returnType.classifier as KClass<*>).java))) right(
-            view(
-                field
-            )
-        )
-        else left(view(field))
-    } as ViewableList<T, F>
-
-inline fun <T, reified L, reified R, S> T.viewEither(prop: KMutableProperty0<Either<L, R>>) = View<T, S>(
-    this,
-    {
-        prop.get().unsafeUnwrap()
-    },
-    {
-        prop.set(
-            when (it) {
-                is L -> left(it)
-                is R -> right(it)
-                else -> error("Bad either type")
-            }
-        )
+    companion object {
+        inline fun <reified Key> View<*>.unlock(noinline closure: (Unlocked<Key>) -> Unit) =
+            unlock(typeOf<Key>(), closure)
     }
-)
+
+    interface Unlocked<out T> : View<T> {
+        fun set(value: @UnsafeVariance T)
+
+        companion object
+    }
+
+    class Simple<T>(
+        private val prop: KMutableProperty0<@UnsafeVariance T>
+    ) : View<T> {
+        override fun get() = prop.get()
+        override fun <Key> unlock(type: KType, closure: (Unlocked<Key>) -> Unit) {
+            if (type >= prop.returnType)
+                closure(Unlocked((prop as KMutableProperty0<Key>)::set))
+        }
+    }
+}
