@@ -15,4 +15,15 @@ object Matchers {
         }
 
     fun <T> Matcher<T>.match(value: T) = value.match()
+
+    private fun <T> Matcher<T>.transform(other: Matcher<T>, boolOp: (Boolean, Boolean) -> Boolean) =
+        Matcher<T> { boolOp(match(), other.match(this)) }
+    private fun <T> Matcher<T>.transform(boolOp: (Boolean) -> Boolean) =
+        Matcher<T> { boolOp(match()) }
+
+    infix fun <T> Matcher<T>.and(other: Matcher<T>) = transform(other) { a, b -> a && b }
+    infix fun <T> Matcher<T>.or(other: Matcher<T>) = transform(other) { a, b -> a || b }
+
+    infix fun <T> Matcher<T>.xor(other: Matcher<T>) = transform(other, Boolean::xor)
+    operator fun <T> Matcher<T>.not() = transform(Boolean::not)
 }
