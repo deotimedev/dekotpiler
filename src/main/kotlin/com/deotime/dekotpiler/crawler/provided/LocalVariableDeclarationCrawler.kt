@@ -19,12 +19,6 @@ class LocalVariableDeclarationCrawler : Crawler {
     override fun crawl(path: List<KtBlockStatement>) {
         val declared = mutableMapOf<String, KtVariableAssignmentStatement>()
         fun declaration(variable: KtLocalVariable) = declared[variable.name]
-        path.flatMap {
-            it.flatten().flatMap { it.expressionView }
-        }.forEach { expr ->
-//            println("Expr: ${expr.unwrap<View<*, *>>().get()}")
-//            expr
-        }
         path.forEach { block ->
             block.statements.removeIf { stmt ->
                 if (stmt is KtVariableAssignmentStatement) {

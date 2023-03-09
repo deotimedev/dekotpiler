@@ -1,15 +1,15 @@
 package com.deotime.dekotpiler.model.statements
 
 import com.deotime.dekotpiler.coding.buildCode
+import com.deotime.dekotpiler.conig.Config
 import com.deotime.dekotpiler.model.KtExpression
 import com.deotime.dekotpiler.model.KtExpressionView
 import com.deotime.dekotpiler.model.KtStatement
 import com.deotime.dekotpiler.model.variable.KtVariable
+import com.deotime.dekotpiler.util.resolve
 import com.deotime.dekotpiler.util.views
 
-// for testing but might be made config option
-private const val ExplicitType = true
-
+private val config: Config by resolve()
 class KtVariableAssignmentStatement(
     var declaring: Boolean,
     var variable: KtVariable,
@@ -20,7 +20,7 @@ class KtVariableAssignmentStatement(
     override fun code() = buildCode {
         if (declaring) write(if (variable.final) "val" else "var", " ")
         +variable.name
-        if (declaring && ExplicitType) write(": ", variable.type)
+        if (declaring && config.explicitVariableDeclarationType) write(": ", variable.type)
         expression?.let {
             write(" = ", it) // TODO delegation could instead happen here
         }
