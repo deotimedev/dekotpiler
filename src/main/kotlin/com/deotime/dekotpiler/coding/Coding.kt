@@ -75,14 +75,14 @@ class Code(
     }
 
     fun writeInvoker(args: Iterable<Codable>) {
-        braced { +args.joinToString { it.code().toString() } }
+        braced { +args.joinToString { it.buildCode().toString() } }
     }
 
     // warning: majorly cursed alert
     // i will maybe fix sometime
     private fun append(value: Any?) {
         when (value) {
-            is Codable -> append(value.code())
+            is Codable -> append(value.buildCode())
             else -> {
                 val str = value.toString()
                 str.split("\n").fold(false) { new, line ->
@@ -96,6 +96,9 @@ class Code(
             }
         }
     }
+
+    private fun Codable.buildCode() =
+        code().apply { postfix() }
 
     override fun toString() = if (lines.size == 1) lines.first() else lines.joinToString("\n")
 
