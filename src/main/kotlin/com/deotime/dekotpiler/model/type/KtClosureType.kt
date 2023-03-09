@@ -7,12 +7,17 @@ data class KtClosureType internal constructor(
     val returns: KtType,
     val suspending: Boolean = false,
     val receiver: KtType? = null,
+    val context: List<KtType> = emptyList(),
     override val nullable: Boolean = false
 ) : KtType {
 
     override val name = buildCode {
         fun closure() {
             if (suspending) +"suspend "
+            if (context.isNotEmpty()) {
+                +"context "
+                writeInvoker(context)
+            }
             receiver?.let { write(it, ".") }
             writeInvoker(parameters)
             write(" -> ", returns)
