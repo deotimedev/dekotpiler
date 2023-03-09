@@ -30,7 +30,7 @@ data class KtMethodInvoke(
                 }
         } ?: run {
             write(reference, reference.nullCheckedChain(), name)
-            writeArgs()
+            writeInvoker(args)
         }
     }
 

@@ -9,6 +9,7 @@ inline fun buildCode(closure: Code.() -> Unit) =
 fun emptyCode() = Code()
 fun codeOf(vararg values: Any?) = buildCode { values.forEach { +it } }
 
+typealias CodeBuilder = Code
 class Code(
     private val lines: MutableList<String> = mutableListOf(""),
 ) {
@@ -87,7 +88,7 @@ class Code(
                 str.split("\n").fold(false) { new, line ->
                     if (new) newline()
                     lines.update(lines.lastIndex) {
-                        it + line.toString()
+                        it + line
                     }
                     true
                 }

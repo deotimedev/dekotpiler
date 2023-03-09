@@ -77,7 +77,8 @@ tasks.withType<KotlinCompile> {
         "-Xskip-prerelease-check",
         "-Xuse-k2",
         "-Xuse-experimental",
-        "-XXLanguage:+EnumEntries"
+        "-XXLanguage:+EnumEntries",
+        "-Xcontext-receivers"
     )
 }
 

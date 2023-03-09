@@ -18,7 +18,7 @@ data class KtStaticInvoke(
         if ((function as? KtFunction)?.kind != KtFunction.Kind.TopLevel)
             write(function.enclosing.name, ".")
         +function.name
-        writeArgs()
+        writeInvoker(args)
     }
 
 }
