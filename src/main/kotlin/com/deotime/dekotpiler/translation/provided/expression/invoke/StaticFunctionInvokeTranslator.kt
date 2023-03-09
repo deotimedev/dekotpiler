@@ -10,7 +10,8 @@ import org.springframework.stereotype.Component
 @Component
 class StaticFunctionInvokeTranslator : Translator<StaticFunctionInvokation, KtStaticInvoke> {
 
-    override fun Translation.Session.translation(value: StaticFunctionInvokation) = KtStaticInvoke(
+    context (Translation.Session)
+override fun translation(value: StaticFunctionInvokation) = KtStaticInvoke(
         translateFunction(value.methodPrototype),
         value.args.map { translateExpression(it) }.toMutableList(),
     )

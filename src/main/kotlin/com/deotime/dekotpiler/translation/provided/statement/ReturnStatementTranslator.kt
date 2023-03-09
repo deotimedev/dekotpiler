@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component
 @Component
 class ReturnStatementTranslator : Translator<StructuredReturn, KtReturnStatement> {
 
-    override fun Translation.Session.translation(value: StructuredReturn) =
+    context (Translation.Session)
+override fun translation(value: StructuredReturn) =
         KtReturnStatement(translateExpression(value.value), null)
 }

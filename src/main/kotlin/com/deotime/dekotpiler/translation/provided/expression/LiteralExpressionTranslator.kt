@@ -14,7 +14,8 @@ import org.springframework.stereotype.Component
 @Component
 class LiteralExpressionTranslator : Translator<Literal, KtExpression> {
 
-    override fun Translation.Session.translation(value: Literal): KtExpression {
+    context (Translation.Session)
+override fun translation(value: Literal): KtExpression {
         val literal = value.value
         val raw = literal.inferredJavaType.rawType
         if (raw == RawJavaType.BOOLEAN) return KtLiteral.Boolean(literal.boolValue)

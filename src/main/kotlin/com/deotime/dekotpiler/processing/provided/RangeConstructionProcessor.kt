@@ -4,7 +4,7 @@ import com.deotime.dekotpiler.matching.Matcher
 import com.deotime.dekotpiler.model.expressions.invoke.KtConstructorInvoke
 import com.deotime.dekotpiler.model.type.KtType
 import com.deotime.dekotpiler.processing.PreProcessor
-import com.deotime.dekotpiler.translation.provided.expression.KtRangeExpression
+import com.deotime.dekotpiler.model.expressions.KtRangeExpression
 import org.springframework.stereotype.Component
 
 @Component

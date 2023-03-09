@@ -19,7 +19,8 @@ class StringConcatTranslator : Translator<ArithmeticOperation, KtStringExpressio
     override fun ArithmeticOperation.match() =
         op == ArithOp.PLUS && (isStringLiteral(lhs) || isStringLiteral(rhs))
 
-    override fun Translation.Session.translation(value: ArithmeticOperation) =
+    context (Translation.Session)
+override fun translation(value: ArithmeticOperation) =
         KtStringExpression(listOf(value.lhs, value.rhs).map {
             if (isStringLiteral(it))
                 KtLiteral.String(

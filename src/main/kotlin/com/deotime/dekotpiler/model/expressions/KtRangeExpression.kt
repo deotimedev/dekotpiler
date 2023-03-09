@@ -1,4 +1,4 @@
-package com.deotime.dekotpiler.translation.provided.expression
+package com.deotime.dekotpiler.model.expressions
 
 import com.deotime.dekotpiler.coding.codeOf
 import com.deotime.dekotpiler.model.KtExpression

@@ -9,7 +9,8 @@ import org.springframework.stereotype.Component
 @Component
 class DefinitionStatementTranslator : Translator<StructuredDefinition, KtVariableAssignmentStatement> {
 
-    override fun Translation.Session.translation(value: StructuredDefinition) = KtVariableAssignmentStatement(
+    context (Translation.Session)
+override fun translation(value: StructuredDefinition) = KtVariableAssignmentStatement(
         true,
         translateVariable(value.lvalue),
         null

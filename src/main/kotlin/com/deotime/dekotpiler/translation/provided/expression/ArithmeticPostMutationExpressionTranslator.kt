@@ -10,7 +10,8 @@ import org.springframework.stereotype.Component
 class ArithmeticPostMutationExpressionTranslator :
     Translator<ArithmeticPostMutationOperation, KtArithmeticPostMutationExpression> {
 
-    override fun Translation.Session.translation(value: ArithmeticPostMutationOperation) =
+    context (Translation.Session)
+override fun translation(value: ArithmeticPostMutationOperation) =
         KtArithmeticPostMutationExpression(
             translateVariable(value.updatedLValue),
             value.op

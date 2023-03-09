@@ -9,7 +9,8 @@ import org.springframework.stereotype.Component
 @Component
 class PrimitiveArrayCreationTranslator : Translator<NewPrimitiveArray, KtArrayCreation> {
 
-    override fun Translation.Session.translation(value: NewPrimitiveArray) = KtArrayCreation(
+    context (Translation.Session)
+override fun translation(value: NewPrimitiveArray) = KtArrayCreation(
         translateArrayType(value.inferredJavaType),
         translateExpression(value.getDimSize(0))
     )

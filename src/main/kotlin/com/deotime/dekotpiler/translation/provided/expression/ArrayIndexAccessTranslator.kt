@@ -9,7 +9,8 @@ import org.springframework.stereotype.Component
 @Component
 class ArrayIndexAccessTranslator : Translator<ArrayIndex, KtArrayIndexAccess> {
 
-    override fun Translation.Session.translation(value: ArrayIndex) = KtArrayIndexAccess(
+    context (Translation.Session)
+override fun translation(value: ArrayIndex) = KtArrayIndexAccess(
         translateExpression(value.array),
         translateExpression(value.index)
     )

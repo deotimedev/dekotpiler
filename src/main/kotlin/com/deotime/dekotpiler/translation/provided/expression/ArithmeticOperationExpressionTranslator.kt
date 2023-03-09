@@ -21,7 +21,8 @@ class ArithmeticOperationExpressionTranslator :
 
     override fun ArithmeticOperation.match() = !lhs.isStringLiteral()
 
-    override fun Translation.Session.translation(value: ArithmeticOperation) =
+    context (Translation.Session)
+override fun translation(value: ArithmeticOperation) =
         KtMethodInvoke(
             translateArithmeticFunction(value),
             translateExpression(value.lhs),

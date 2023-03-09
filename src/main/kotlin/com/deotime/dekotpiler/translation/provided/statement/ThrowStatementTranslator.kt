@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component
 @Component
 class ThrowStatementTranslator : Translator<StructuredThrow, KtThrowExpression> {
 
-    override fun Translation.Session.translation(value: StructuredThrow) =
+    context (Translation.Session)
+override fun translation(value: StructuredThrow) =
         KtThrowExpression(translateExpression(value.value))
 }

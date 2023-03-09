@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component
 @Component
 class AnonymousArrayCreationTranslator : Translator<NewAnonymousArray, KtArrayCreation> {
 
-    override fun Translation.Session.translation(value: NewAnonymousArray) = KtArrayCreation(
+    context(Translation.Session) override fun translation(value: NewAnonymousArray) = KtArrayCreation(
         translateArrayType(value.inferredJavaType),
         KtLiteral.Int(value.values.size),
         value.values.map(::translateExpression).toMutableList()
