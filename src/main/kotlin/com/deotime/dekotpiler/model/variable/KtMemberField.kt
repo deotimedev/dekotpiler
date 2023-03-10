@@ -4,7 +4,7 @@ import com.deotime.dekotpiler.coding.buildCode
 import com.deotime.dekotpiler.model.KtExpression
 import com.deotime.dekotpiler.model.KtExpressionView
 import com.deotime.dekotpiler.model.type.KtType
-import com.deotime.dekotpiler.util.views
+import com.deotime.dekotpiler.util.vision
 
 data class KtMemberField(
     var member: KtExpression,
@@ -13,7 +13,7 @@ data class KtMemberField(
     override val type: KtType,
     override var synthetic: Boolean
 ) : KtField {
-    override val expressionView: KtExpressionView = views(::member)
+    override val expressionView: KtExpressionView = vision(::member)
     override fun code() = buildCode {
         write(member, member.nullCheckedChain(), name)
     }

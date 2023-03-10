@@ -5,7 +5,7 @@ import com.deotime.dekotpiler.model.KtExpression
 import com.deotime.dekotpiler.model.KtExpressionView
 import com.deotime.dekotpiler.model.structure.KtFunction
 import com.deotime.dekotpiler.model.structure.KtFunctionDescriptor
-import com.deotime.dekotpiler.util.views
+import com.deotime.dekotpiler.util.vision
 
 data class KtMethodInvoke(
     override var function: KtFunctionDescriptor,
@@ -13,7 +13,7 @@ data class KtMethodInvoke(
     override var args: MutableList<KtExpression>,
     override var extension: Boolean = false,
 ) : KtMemberInvoke {
-    override val expressionView: KtExpressionView = views(::args, ::reference)
+    override val expressionView: KtExpressionView = vision(::args, ::reference)
     override fun code() = buildCode {
         (function as? KtFunction)?.operator?.takeIf { !reference.type.nullable }?.let { op ->
             +op.format

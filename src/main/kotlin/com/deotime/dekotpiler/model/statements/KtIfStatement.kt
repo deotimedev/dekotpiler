@@ -4,14 +4,14 @@ import com.deotime.dekotpiler.coding.buildCode
 import com.deotime.dekotpiler.model.KtConditional
 import com.deotime.dekotpiler.model.KtExpressionView
 import com.deotime.dekotpiler.model.statements.KtBlockStatement.Companion.asBlock
-import com.deotime.dekotpiler.util.views
+import com.deotime.dekotpiler.util.vision
 
 data class KtIfStatement(
     var condition: KtConditional,
     var then: KtBlockStatement,
     var orElse: KtBlockStatement?
 ) : KtMultiBodyStatement {
-    override val expressionView: KtExpressionView = views(::condition)
+    override val expressionView: KtExpressionView = vision(::condition)
     override val bodies: List<KtBlockStatement>
         get() = listOfNotNull(then.asBlock(), orElse?.asBlock())
 

@@ -61,6 +61,8 @@ dependencies {
 
     implementation("org.jetbrains.kotlin:kotlin-reflect:1.8.20-Beta")
 
+    implementation("com.deotime:vision:1.0-SNAPSHOT")
+
     val kotlinPoetDslVersion = "2.0.6"
     implementation("me.deotime:kotlin-poet-dsl-dsl:$kotlinPoetDslVersion")
     implementation("me.deotime:kotlin-poet-dsl-metadata:$kotlinPoetDslVersion")

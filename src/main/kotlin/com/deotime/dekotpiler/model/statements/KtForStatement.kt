@@ -4,7 +4,7 @@ import com.deotime.dekotpiler.coding.buildCode
 import com.deotime.dekotpiler.model.KtExpression
 import com.deotime.dekotpiler.model.KtExpressionView
 import com.deotime.dekotpiler.model.variable.KtLocalVariable
-import com.deotime.dekotpiler.util.views
+import com.deotime.dekotpiler.util.vision
 
 data class KtForStatement(
     var item: KtLocalVariable,
@@ -12,7 +12,7 @@ data class KtForStatement(
     override var body: KtBlockStatement
 ) : KtSingleBodyStatement {
 
-    override val expressionView: KtExpressionView = views(::item, ::iterable)
+    override val expressionView: KtExpressionView = vision(::item, ::iterable)
 
     override fun code() = buildCode {
         +"for "

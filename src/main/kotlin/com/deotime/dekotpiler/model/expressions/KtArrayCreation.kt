@@ -5,14 +5,14 @@ import com.deotime.dekotpiler.model.KtExpression
 import com.deotime.dekotpiler.model.KtExpressionView
 import com.deotime.dekotpiler.model.type.KtType
 import com.deotime.dekotpiler.model.type.KtType.Companion.isPrimitive
-import com.deotime.dekotpiler.util.views
+import com.deotime.dekotpiler.util.vision
 
 data class KtArrayCreation(
     var componentType: KtType,
     var size: KtExpression,
     var initializers: MutableList<KtExpression>? = null
 ) : KtExpression {
-    override val expressionView: KtExpressionView = views(::size, ::initializers)
+    override val expressionView: KtExpressionView = vision(::size, ::initializers)
     override val type get() = KtType.array(componentType)
     override fun code() = buildCode {
         if (componentType.isPrimitive) {

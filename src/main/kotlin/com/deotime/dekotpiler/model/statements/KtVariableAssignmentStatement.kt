@@ -7,7 +7,7 @@ import com.deotime.dekotpiler.model.KtExpressionView
 import com.deotime.dekotpiler.model.KtStatement
 import com.deotime.dekotpiler.model.variable.KtVariable
 import com.deotime.dekotpiler.util.resolve
-import com.deotime.dekotpiler.util.views
+import com.deotime.dekotpiler.util.vision
 
 private val config: Config by resolve()
 class KtVariableAssignmentStatement(
@@ -16,7 +16,7 @@ class KtVariableAssignmentStatement(
     var expression: KtExpression?
 ) : KtStatement {
 
-    override val expressionView: KtExpressionView = views(::variable, ::expression)
+    override val expressionView: KtExpressionView = vision(::variable, ::expression)
     override fun code() = buildCode {
         if (declaring) write(if (variable.final) "val" else "var", " ")
         +variable.name

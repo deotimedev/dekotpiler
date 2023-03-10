@@ -5,14 +5,14 @@ import com.deotime.dekotpiler.model.KtExpression
 import com.deotime.dekotpiler.model.KtExpressionView
 import com.deotime.dekotpiler.model.type.KtType
 import com.deotime.dekotpiler.util.singleOf
-import com.deotime.dekotpiler.util.views
+import com.deotime.dekotpiler.util.vision
 
 data class KtStringExpression(
     val elements: MutableList<KtExpression>
 ) : KtExpression {
     override val type = KtType.String
 
-    override val expressionView: KtExpressionView = views(::elements)
+    override val expressionView: KtExpressionView = vision(::elements)
     override fun code() = buildCode {
         +"\""
         for (element in compress()) {
