@@ -2,10 +2,12 @@ package com.deotime.dekotpiler.model.expressions.invoke
 
 import com.deotime.dekotpiler.coding.buildCode
 import com.deotime.dekotpiler.model.KtExpression
-import com.deotime.dekotpiler.model.KtExpressionView
+
 import com.deotime.dekotpiler.model.structure.KtFunction
 import com.deotime.dekotpiler.model.structure.KtFunctionDescriptor
-import com.deotime.dekotpiler.util.vision
+import com.deotime.vision.Vision.Companion.plus
+import com.deotime.vision.vision
+import com.deotime.vision.visions
 
 data class KtMethodInvoke(
     override var function: KtFunctionDescriptor,
@@ -13,7 +15,7 @@ data class KtMethodInvoke(
     override var args: MutableList<KtExpression>,
     override var extension: Boolean = false,
 ) : KtMemberInvoke {
-    override val expressionView: KtExpressionView = vision(::args, ::reference)
+    override val sight = vision(::reference) + visions(::args)
     override fun code() = buildCode {
         (function as? KtFunction)?.operator?.takeIf { !reference.type.nullable }?.let { op ->
             +op.format

@@ -98,7 +98,7 @@ class Code(
     }
 
     private fun Codable.buildCode() =
-        code().apply { postfix() }
+        code().apply { /*postfix()*/ }
 
     override fun toString() = if (lines.size == 1) lines.first() else lines.joinToString("\n")
 
