@@ -1,9 +1,11 @@
 package com.deotime.dekotpiler.model
 
+import com.deotime.dekotpiler.coding.CodeBuilder
 import com.deotime.dekotpiler.coding.buildCode
 import com.deotime.dekotpiler.model.type.KtType
 import com.deotime.dekotpiler.util.gather
-import com.deotime.dekotpiler.util.views
+import com.deotime.vision.blurred
+import com.deotime.vision.vision
 
 // todo this should really be an interface
 open class KtConditional(
@@ -14,7 +16,9 @@ open class KtConditional(
 
     final override val type = KtType.Boolean
 
-    override val expressionView: KtExpressionView = views(::underlying, ::joined)
+    // todo rework without joined
+    override val sight = vision(::underlying) + blurred(::joined)
+
     override fun code() = buildCode {
         if (inverse) +"!"
         +underlying
@@ -32,6 +36,7 @@ open class KtConditional(
         val with = this@KtConditional
         override val type: KtType
             get() = conditional.type
+
     }
 
     enum class Operation(val symbol: String) {

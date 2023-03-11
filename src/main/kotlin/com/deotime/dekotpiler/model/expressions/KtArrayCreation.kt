@@ -2,27 +2,29 @@ package com.deotime.dekotpiler.model.expressions
 
 import com.deotime.dekotpiler.coding.buildCode
 import com.deotime.dekotpiler.model.KtExpression
-import com.deotime.dekotpiler.model.KtExpressionView
+
 import com.deotime.dekotpiler.model.type.KtType
 import com.deotime.dekotpiler.model.type.KtType.Companion.isPrimitive
-import com.deotime.dekotpiler.util.views
+import com.deotime.vision.vision
+import com.deotime.vision.visions
 
 data class KtArrayCreation(
     var componentType: KtType,
     var size: KtExpression,
-    var initializers: MutableList<KtExpression>? = null
+    val initializers: MutableList<KtExpression> = mutableListOf(),
+    val nullDefault: Boolean = false
 ) : KtExpression {
-    override val expressionView: KtExpressionView = views(::size, ::initializers)
+    override val sight = vision(::size) + visions(::initializers)
     override val type get() = KtType.array(componentType)
     override fun code() = buildCode {
         if (componentType.isPrimitive) {
             write(componentType.name.lowercase(), "ArrayOf")
-            writeInvoker(initializers.orEmpty())
+            writeInvoker(initializers)
         } else {
-            initializers?.let {
+            if (!nullDefault) {
                 +"arrayOf"
-                if (it.isEmpty()) writeGeneric(componentType) else writeInvoker(it)
-            } ?: run {
+                if (initializers.isEmpty()) writeGeneric(componentType) else writeInvoker(initializers)
+            } else {
                 +"arrayOfNulls"
                 writeGeneric(componentType)
                 charArrayOf()

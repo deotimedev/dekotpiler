@@ -61,6 +61,8 @@ dependencies {
 
     implementation("org.jetbrains.kotlin:kotlin-reflect:1.8.20-Beta")
 
+    implementation("com.deotime:vision:1.0.3")
+
     val kotlinPoetDslVersion = "2.0.6"
     implementation("me.deotime:kotlin-poet-dsl-dsl:$kotlinPoetDslVersion")
     implementation("me.deotime:kotlin-poet-dsl-metadata:$kotlinPoetDslVersion")
@@ -75,7 +77,7 @@ tasks.withType<KotlinCompile> {
     kotlinOptions.languageVersion = "1.9"
     kotlinOptions.freeCompilerArgs = listOf(
         "-Xskip-prerelease-check",
-        "-Xuse-k2",
+//        "-Xuse-k2", BROKEN
         "-Xuse-experimental",
         "-XXLanguage:+EnumEntries",
         "-Xcontext-receivers"

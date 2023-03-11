@@ -1,12 +1,12 @@
 package com.deotime.dekotpiler.model.type
 
 import com.deotime.dekotpiler.coding.codeOf
-import com.deotime.dekotpiler.conig.Config
+import com.deotime.dekotpiler.config.impl.TestingConfig
 
 data class KtReferenceType(
     override val qualifiedName: String,
     val simpleName: String = qualifiedName.split(".").last().replace("$", "."), // TODO
-    override val nullable: Boolean = Config.typesDefaultNullable,
+    override val nullable: Boolean = TestingConfig.typesDefaultNullable,
     val generics: List<KtType> = emptyList(),
 ) : KtType {
 

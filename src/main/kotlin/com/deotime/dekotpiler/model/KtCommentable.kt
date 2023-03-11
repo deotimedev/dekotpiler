@@ -6,10 +6,10 @@ import com.deotime.dekotpiler.util.backing.backing
 
 interface KtCommentable : Codable {
 
-    context(CodeBuilder)
-    override fun postfix() {
-        writeComments(this)
-    }
+//    context(CodeBuilder)
+//    override fun postfix() {
+//        writeComments(this)
+//    }
 
     companion object {
 
