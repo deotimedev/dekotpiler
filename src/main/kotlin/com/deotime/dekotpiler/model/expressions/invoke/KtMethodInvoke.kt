@@ -5,7 +5,6 @@ import com.deotime.dekotpiler.model.KtExpression
 
 import com.deotime.dekotpiler.model.structure.KtFunction
 import com.deotime.dekotpiler.model.structure.KtFunctionDescriptor
-import com.deotime.vision.Vision.Companion.plus
 import com.deotime.vision.vision
 import com.deotime.vision.visions
 

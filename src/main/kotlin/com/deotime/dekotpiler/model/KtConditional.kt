@@ -4,7 +4,6 @@ import com.deotime.dekotpiler.coding.CodeBuilder
 import com.deotime.dekotpiler.coding.buildCode
 import com.deotime.dekotpiler.model.type.KtType
 import com.deotime.dekotpiler.util.gather
-import com.deotime.vision.Vision.Companion.plus
 import com.deotime.vision.blurred
 import com.deotime.vision.vision
 
