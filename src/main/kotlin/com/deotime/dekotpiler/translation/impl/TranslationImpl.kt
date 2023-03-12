@@ -1,7 +1,7 @@
 package com.deotime.dekotpiler.translation.impl
 
 import com.deotime.dekotpiler.mapping.TypeMappings
-import com.deotime.dekotpiler.model.KtConditional
+import com.deotime.dekotpiler.model.expressions.conditional.KtConditional
 import com.deotime.dekotpiler.model.KtExpression
 import com.deotime.dekotpiler.model.KtStatement
 import com.deotime.dekotpiler.model.KtUnknown
@@ -101,10 +101,9 @@ internal class TranslationImpl(
             )
 
         override fun translateArrayType(type: JavaTypeInstance) =
-            translateType(type.arrayStrippedType).nullable(false)
+            translateType(type.arrayStrippedType).nullable(false) // todo should this be nullable?
 
-        override fun translateConditional(conditional: ConditionalExpression): KtConditional =
-            translate(conditional) ?: KtConditional(KtUnknown(conditional))
+        override fun translateConditional(conditional: ConditionalExpression): KtConditional = translate(conditional)!!
 
         override fun translateFunction(
             function: MethodPrototype

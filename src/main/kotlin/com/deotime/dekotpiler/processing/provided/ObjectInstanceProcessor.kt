@@ -20,7 +20,6 @@ class ObjectInstanceProcessor(
     Matcher<KtStaticField> by (Matchers.value(KtStaticField::name, "INSTANCE", "Companion") and Matcher {
         ((jarPool.metadata(declaring) as? KotlinClassMetadata.Class)
             ?.toKmClass()?.flags?.let { flags ->
-                println(flags)
                 Flag.Class.IS_OBJECT(flags) || Flag.Class.IS_COMPANION_OBJECT(flags)
             } == true)
     }) {

@@ -1,7 +1,7 @@
 package com.deotime.dekotpiler.model.statements
 
 import com.deotime.dekotpiler.coding.buildCode
-import com.deotime.dekotpiler.model.KtConditional
+import com.deotime.dekotpiler.model.expressions.conditional.KtConditional
 
 import com.deotime.dekotpiler.model.statements.KtBlockStatement.Companion.asBlock
 import com.deotime.vision.vision

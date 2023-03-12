@@ -11,6 +11,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
 import kotlinx.metadata.jvm.KotlinClassMetadata
 import me.deotime.kpoetdsl.FunctionBuilder.Initializer.invoke
+import me.deotime.kpoetdsl.TypeKind.Scope.Companion.Interface
 import me.deotime.kpoetdsl.kotlin
 import me.deotime.kpoetdsl.metadata.toSpec
 import org.springframework.boot.Banner

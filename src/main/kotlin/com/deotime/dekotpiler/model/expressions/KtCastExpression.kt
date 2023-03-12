@@ -10,9 +10,6 @@ data class KtCastExpression(
     var expression: KtExpression,
     var cast: KtType
 ) : KtExpression {
-    init {
-        println()
-    }
     override val sight = vision(::expression)
     override val type get() = cast
     override fun code() = buildCode {

@@ -1,6 +1,7 @@
 package com.deotime.dekotpiler.translation.provided.expression
 
-import com.deotime.dekotpiler.model.KtConditional
+import com.deotime.dekotpiler.model.expressions.conditional.KtConditional
+import com.deotime.dekotpiler.model.expressions.conditional.KtJoinedConditional
 import com.deotime.dekotpiler.translation.Translation
 import com.deotime.dekotpiler.translation.Translator
 import org.benf.cfr.reader.bytecode.analysis.parse.expression.BoolOp
@@ -12,12 +13,14 @@ class BooleanOperationTranslator : Translator<BooleanOperation, KtConditional> {
 
     context (Translation.Session)
     override fun translation(value: BooleanOperation) =
-        translateConditional(value.lhs).apply {
-            joined = Joined(translateOp(value.op), translateConditional(value.rhs))
-        }
+        KtJoinedConditional(
+            translateConditional(value.lhs),
+            translateConditional(value.rhs),
+            translateOp(value.op),
+        )
 
     private fun translateOp(op: BoolOp) = when (op) {
-        BoolOp.OR -> KtConditional.Operation.Or
-        BoolOp.AND -> KtConditional.Operation.And
+        BoolOp.OR -> KtJoinedConditional.Operation.Or
+        BoolOp.AND -> KtJoinedConditional.Operation.And
     }
 }

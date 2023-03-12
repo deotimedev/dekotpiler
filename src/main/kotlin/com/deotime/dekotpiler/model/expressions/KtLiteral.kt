@@ -3,8 +3,10 @@ package com.deotime.dekotpiler.model.expressions
 import com.deotime.dekotpiler.coding.buildCode
 import com.deotime.dekotpiler.coding.codeOf
 import com.deotime.dekotpiler.model.KtExpression
+import com.deotime.dekotpiler.model.expressions.conditional.KtConditional
 import com.deotime.dekotpiler.model.type.KtNothingType
 import com.deotime.dekotpiler.model.type.KtType
+import kotlin.Boolean
 import kotlin.Boolean as KtBoolean
 import kotlin.Char as KtChar
 import kotlin.Double as KtDouble
@@ -15,7 +17,6 @@ import kotlin.String as KtString
 
 sealed interface KtLiteral<T> : KtExpression {
 
-    override val type: KtType
     val letter: KtChar? get() = null
     val value: T
 
@@ -84,9 +85,8 @@ sealed interface KtLiteral<T> : KtExpression {
     @JvmInline
     value class Boolean internal constructor(
         override val value: KtBoolean
-    ) : KtLiteral<KtBoolean> {
-        override val type: KtType
-            get() = KtType.Boolean
+    ) : KtLiteral<KtBoolean>, KtConditional {
+        override val inverse get() = false
 
         companion object {
             operator fun invoke(value: KtBoolean) = if (value) True else False

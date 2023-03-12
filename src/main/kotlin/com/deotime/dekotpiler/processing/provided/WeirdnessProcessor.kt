@@ -1,7 +1,7 @@
 package com.deotime.dekotpiler.processing.provided
 
 import com.deotime.dekotpiler.model.expressions.KtLiteral
-import com.deotime.dekotpiler.model.expressions.invoke.KtComparison
+import com.deotime.dekotpiler.model.expressions.conditional.KtComparison
 import com.deotime.dekotpiler.model.variable.KtLocalVariable
 import com.deotime.dekotpiler.processing.PreProcessor
 import org.springframework.stereotype.Component

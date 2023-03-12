@@ -1,6 +1,6 @@
 package com.deotime.dekotpiler.translation.provided.statement
 
-import com.deotime.dekotpiler.model.expressions.invoke.KtComparison
+import com.deotime.dekotpiler.model.expressions.conditional.KtComparison
 import com.deotime.dekotpiler.model.statements.KtForStatement
 import com.deotime.dekotpiler.translation.Translation
 import com.deotime.dekotpiler.translation.Translator
