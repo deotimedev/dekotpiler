@@ -46,7 +46,7 @@ class Main(
 //        jar.types.forEach {
 //            println("type: ${it.qualifiedName}")
 //        }
-        val target = KtType<com.deotime.dekotpiler.Test>()
+        val target = KtType<Test>()
         println("qualified: ${target.qualifiedName}")
         val metadata = jar.metadata(target) as KotlinClassMetadata.Class
         val clazz = jar.load(target) ?: return@runBlocking

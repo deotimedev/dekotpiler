@@ -1,6 +1,7 @@
 package com.deotime.dekotpiler.translation.impl
 
 import com.deotime.dekotpiler.mapping.TypeMappings
+import com.deotime.dekotpiler.metadata.MetadataLocator
 import com.deotime.dekotpiler.model.expressions.conditional.KtConditional
 import com.deotime.dekotpiler.model.KtExpression
 import com.deotime.dekotpiler.model.KtStatement
@@ -39,6 +40,7 @@ internal class TranslationImpl(
     translators: List<Translator<*, *>>,
     private val processing: Processing,
     private val typeMappings: TypeMappings,
+    private val metadata: MetadataLocator
 ) : Translation {
     private val translatorsByType = translators.groupBy { it.resolveTypeParameter<Translator<*, *>>("J")!! }
     override fun session() = SessionImpl()

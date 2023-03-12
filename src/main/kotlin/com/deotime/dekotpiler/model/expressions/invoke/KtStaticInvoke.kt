@@ -6,11 +6,14 @@ import com.deotime.dekotpiler.model.structure.KtFunction
 import com.deotime.dekotpiler.model.structure.KtFunctionDescriptor
 import com.deotime.vision.visions
 
-// Not to be confused with a companion object invoke
+// JVM Static invoke
 data class KtStaticInvoke(
     override var function: KtFunctionDescriptor,
     override var args: MutableList<KtExpression>,
 ) : KtInvoke {
+    init {
+        println()
+    }
     override val sight = visions(::args)
     override fun code() = buildCode {
         if ((function as? KtFunction)?.kind != KtFunction.Kind.TopLevel)

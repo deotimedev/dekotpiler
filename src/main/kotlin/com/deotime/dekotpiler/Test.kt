@@ -1,6 +1,7 @@
 package com.deotime.dekotpiler
 
 import com.deotime.javatest.JavaTestHelper
+import kotlin.properties.Delegates
 import kotlin.random.Random
 import kotlin.random.nextInt
 import kotlin.reflect.typeOf
@@ -10,10 +11,10 @@ class Test {
 
     @OptIn(ExperimentalStdlibApi::class)
     fun test() {
-        val num1 = Random.nextInt()
-        val num2 = Random.nextInt()
-        println("$num1 hello $num2")
-        println(!!!!!!!(num1 > num2))
+
+        var test by Delegates.notNull<Int>()
+        test = 55
+        println("Test is ${test}")
 //        "Yes!".stringExtension()
 //        println(TestHelper.SomeEnum.entries)
 //        println(1..10)
