@@ -2,6 +2,7 @@ package com.deotime.dekotpiler.jar.impl
 
 import com.deotime.dekotpiler.jar.KotlinClassContainer
 import com.deotime.dekotpiler.jar.KotlinJarPool
+import com.deotime.dekotpiler.jar.storage.KotlinJarFileLocator
 import com.deotime.dekotpiler.model.type.KtReferenceType
 import org.springframework.stereotype.Component
 
@@ -9,12 +10,9 @@ import org.springframework.stereotype.Component
 internal class KotlinJarPoolImpl : KotlinJarPool {
 
     private val jars = mutableSetOf<KotlinClassContainer>()
-    override fun standardLibrary(): KotlinClassContainer {
-        TODO("Not yet implemented")
-    }
 
-    override fun register(jar: KotlinClassContainer) {
-        jars += jar
+    override fun register(vararg jars: KotlinClassContainer) {
+        this.jars += jars
     }
 
     override val types: List<KtReferenceType>

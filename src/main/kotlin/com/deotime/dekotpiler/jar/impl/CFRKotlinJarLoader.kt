@@ -3,6 +3,8 @@ package com.deotime.dekotpiler.jar.impl
 import com.deotime.dekotpiler.jar.KotlinClassContainer
 import com.deotime.dekotpiler.jar.KotlinJarLoader
 import com.deotime.dekotpiler.jar.KotlinJarPool
+import com.deotime.dekotpiler.jar.storage.KotlinJarFileLocator
+import com.deotime.dekotpiler.jar.storage.KotlinLibraryProvider
 import com.deotime.dekotpiler.metadata.MetadataResolver
 import com.deotime.dekotpiler.model.type.KtReferenceType
 import com.deotime.dekotpiler.translation.Translation
@@ -20,8 +22,18 @@ import java.io.File
 internal class CFRKotlinJarLoader(
     private val translation: Translation,
     private val metadataResolver: MetadataResolver,
-    private val jarPool: KotlinJarPool
+    private val jarPool: KotlinJarPool,
+    private val jarLocator: KotlinJarFileLocator,
+    libraries: List<KotlinLibraryProvider>
 ) : KotlinJarLoader {
+
+    init {
+        libraries
+            .flatMap { it.provide() }
+            .mapNotNull(jarLocator::locate)
+            .map(::load)
+            .forEach(jarPool::register)
+    }
 
     private val config = cfrConfig {
         DECOMPILER_COMMENTS set false
