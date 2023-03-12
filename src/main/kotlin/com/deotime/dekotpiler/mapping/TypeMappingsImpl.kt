@@ -28,5 +28,5 @@ internal class TypeMappingsImpl : TypeMappings {
             "kotlin.reflect.KClass" -> KtType.KClass
             else -> null
         }
-    }?.nullable()
+    }
 }

@@ -17,7 +17,7 @@ class KClassProcessor :
     Matcher<KtStaticInvoke> by KClassMatcher {
 
     override fun replace(value: KtStaticInvoke): Any? = when (val arg = value.args[0]) {
-        is KtJClassExpression -> arg.clazz.unwrap()
+        is KtJClassExpression -> arg.clazz
         is KtGetterInvoke -> KtGetDynamicKClass(arg.reference)
         else -> value
     }

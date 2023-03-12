@@ -16,9 +16,16 @@ interface KtType : KtTyped, Codable {
         if (nullable) +"?"
     }
 
+
     override val type: KtType get() = this
 
     companion object {
+
+        infix fun KtType.similar(other: KtType) = qualifiedName == other.qualifiedName
+
+        // TODO CHECK INHERITANCE
+        infix fun KtType.usableAs(other: KtType) =
+            other similar Any || (similar(other) && (!nullable || nullable == other.nullable))
 
         val Any = KtType<Any>()
         val Unit = KtType<Unit>()

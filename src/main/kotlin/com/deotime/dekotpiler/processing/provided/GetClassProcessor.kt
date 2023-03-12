@@ -13,6 +13,6 @@ class GetClassProcessor :
 
     override fun KtGetterInvoke.match() = name == "class"
     override fun replace(value: KtGetterInvoke) =
-        KtJClassExpression(right(KtGetDynamicKClass(value.reference)))
+        KtJClassExpression.Dynamic(KtGetDynamicKClass(value.reference))
 
 }

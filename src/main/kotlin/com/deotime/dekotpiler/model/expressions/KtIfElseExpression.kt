@@ -16,8 +16,10 @@ data class KtIfElseExpression(
     // TODO need a way to find a common type
     override val type get() = then.type
     override fun code() = buildCode {
-        write("if ")
-        braced { +condition }
-        write(" ", then, " else ", orElse)
+        braced {
+            write("if ")
+            braced { +condition }
+            write(" ", then, " else ", orElse)
+        }
     }
 }

@@ -1,20 +1,19 @@
 package com.deotime.dekotpiler.model.expressions
 
-import com.deotime.dekotpiler.coding.buildCode
+import com.deotime.dekotpiler.coding.codeOf
 import com.deotime.dekotpiler.model.KtExpression
-
 import com.deotime.dekotpiler.model.type.KtType
-import com.deotime.dekotpiler.util.Either
-import com.deotime.dekotpiler.util.left
-import com.deotime.dekotpiler.util.unwrap
-import com.deotime.vision.Vision
+import com.deotime.vision.vision
 
-data class KtJClassExpression(
-    var clazz: Either<KtLiteral.Class, KtGetDynamicKClass>
-) : KtExpression {
-    override val sight: Vision<KtExpression> = TODO("this class needs to be changed")
+sealed interface KtJClassExpression : KtExpression {
+    val clazz: KtExpression
     override val type get() = KtType.JClass
-    override fun code() = buildCode {
-        write(clazz.unwrap<KtExpression>(), ".java")
+    override fun code() = codeOf(clazz, ".java")
+
+    data class Literal(override var clazz: KtLiteral.Class) : KtJClassExpression {
+        override val sight = vision(::clazz)
+    }
+    data class Dynamic(override var clazz: KtGetDynamicKClass) : KtJClassExpression {
+        override val sight = vision(::clazz)
     }
 }

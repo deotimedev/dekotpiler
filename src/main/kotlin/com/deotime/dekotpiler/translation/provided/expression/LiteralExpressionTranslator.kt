@@ -26,7 +26,7 @@ class LiteralExpressionTranslator : Translator<Literal, KtExpression> {
             TypedLiteral.LiteralType.Float -> KtLiteral.Float(literal.floatValue)
             TypedLiteral.LiteralType.Double -> KtLiteral.Double(literal.doubleValue)
             TypedLiteral.LiteralType.String -> KtLiteral.String(literal.toString().drop(1).dropLast(1))
-            TypedLiteral.LiteralType.Class -> KtJClassExpression(left(KtLiteral.Class(translateType(literal.classValue))))
+            TypedLiteral.LiteralType.Class -> KtJClassExpression.Literal(KtLiteral.Class(translateType(literal.classValue)))
             TypedLiteral.LiteralType.NullObject -> KtLiteral.Null
             else -> throw UnsupportedOperationException("${literal.type} is not supported as a literal.")
         }
