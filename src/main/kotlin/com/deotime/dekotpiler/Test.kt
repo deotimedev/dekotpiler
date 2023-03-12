@@ -9,12 +9,10 @@ import kotlin.streams.toList
 
 class Test {
 
-    @OptIn(ExperimentalStdlibApi::class)
+
     fun test() {
 
-        var test by Delegates.notNull<Int>()
-        test = 55
-        println("Test is ${test}")
+
 //        "Yes!".stringExtension()
 //        println(TestHelper.SomeEnum.entries)
 //        println(1..10)

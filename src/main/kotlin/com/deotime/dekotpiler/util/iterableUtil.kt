@@ -16,3 +16,12 @@ fun <T> MutableList<T>.updateLast(closure: (T) -> T) =
         set(lastIndex, new)
         old to new
     }
+
+inline fun <T, R> Iterable<T>.partitionNotNull(closure: (T) -> R?): Pair<List<R>, List<T>> {
+    val a = mutableListOf<R>()
+    val b = mutableListOf<T>()
+    for (item in this) {
+        closure(item)?.let { a += it } ?: run { b += item }
+    }
+    return a to b
+}

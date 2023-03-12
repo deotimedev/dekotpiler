@@ -6,14 +6,18 @@ import com.deotime.dekotpiler.metadata.MetadataResolver
 import com.deotime.dekotpiler.model.type.KtType
 import com.deotime.dekotpiler.ui.FileSelector
 import com.deotime.dekotpiler.util.context
+import com.deotime.dekotpiler.util.partitionNotNull
 import com.deotime.dekotpiler.util.task
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
 import kotlinx.metadata.jvm.KotlinClassMetadata
+import me.deotime.kpoetdsl.Cozy.Initializer.Simple.Companion.invoke
+import me.deotime.kpoetdsl.FunctionBuilder
 import me.deotime.kpoetdsl.FunctionBuilder.Initializer.invoke
 import me.deotime.kpoetdsl.TypeKind.Scope.Companion.Interface
 import me.deotime.kpoetdsl.kotlin
 import me.deotime.kpoetdsl.metadata.toSpec
+import org.benf.cfr.reader.util.output.ToStringDumper
 import org.springframework.boot.Banner
 import org.springframework.boot.CommandLineRunner
 import org.springframework.boot.WebApplicationType
@@ -54,7 +58,7 @@ class Main(
             val metaClass = metadata.toKmClass()
             val methods = classFileController.analyze(clazz)
 
-            val specMethods = methods.mapNotNull { (cfr, block) ->
+            val (specMethods, synthetic) = methods.entries.partitionNotNull { (cfr, block) ->
                 metaClass.functions.find { it.name == cfr.name }?.toSpec()?.invoke {
                     code {
                         block?.code()?.let { +it.toString() }
@@ -66,10 +70,18 @@ class Main(
             val spec = metaClass.toSpec {
                 source.funSpecs.clear()
                 source.funSpecs.addAll(specMethods)
+
             }
             val output = kotlin {
                 name("test") packaged "testing"
                 +spec
+                synthetic.forEach { (cfr, code) ->
+                    comment("")
+                    comment("<SYNTHETIC> ${cfr.methodPrototype}")
+                    comment("----------------")
+                    code?.code()?.let { comment(it.toString()) }
+                    comment("----------------")
+                }
             }
             println(output.properFormatting().withoutPublic())
         }

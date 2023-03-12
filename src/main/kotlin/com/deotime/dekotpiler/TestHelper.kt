@@ -5,6 +5,7 @@ import kotlin.random.Random
 
 object TestHelper {
 
+    val someProp = 534
     fun javaHelper() = JavaTestHelper()
     fun obj() = Opp()
     fun maybe(): String? = if (Random.nextBoolean()) "Hello" else null
