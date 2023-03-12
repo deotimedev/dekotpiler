@@ -2,6 +2,8 @@ package com.deotime.dekotpiler
 
 import com.deotime.dekotpiler.classfile.ClassFileController
 import com.deotime.dekotpiler.jar.KotlinJarLoader
+import com.deotime.dekotpiler.jar.storage.KotlinJarFileLocator
+import com.deotime.dekotpiler.jar.storage.KotlinJarRepository
 import com.deotime.dekotpiler.metadata.MetadataResolver
 import com.deotime.dekotpiler.model.type.KtType
 import com.deotime.dekotpiler.ui.FileSelector
@@ -25,17 +27,21 @@ import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.builder.SpringApplicationBuilder
 import org.springframework.stereotype.Component
 import java.io.File
+import java.net.URL
 
 @Component
 class Main(
     private val metadataResolver: MetadataResolver,
     private val fileSelector: FileSelector,
     private val engine: KotlinJarLoader,
-    private val classFileController: ClassFileController
+    private val classFileController: ClassFileController,
+    private val locator: KotlinJarFileLocator
 ) : CommandLineRunner {
     // This will eventually be replaced by a CLI
     override fun run(vararg args: String): Unit = runBlocking(Dispatchers.Default) {
 
+        println(locator.locate("org.jetbrains.kotlin", "kotlin-stdlib-common", "2.0.10"))
+        return@runBlocking
         // testing
         val file = File(File("").absolutePath, "/build/libs/dekotpiler-1.0.0-plain.jar")
 
