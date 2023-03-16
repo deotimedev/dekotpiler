@@ -6,7 +6,7 @@ import org.benf.cfr.reader.bytecode.analysis.parse.expression.ArithmeticOperatio
 import org.benf.cfr.reader.bytecode.analysis.parse.expression.Literal
 import org.benf.cfr.reader.bytecode.analysis.parse.literal.TypedLiteral
 
-fun Expression.isStringLiteralish(): Boolean {
-    if (this is ArithmeticOperation) return op == ArithOp.PLUS && (lhs.isStringLiteralish() || rhs.isStringLiteralish())
+fun Expression.isStringy(): Boolean {
+    if (this is ArithmeticOperation) return op == ArithOp.PLUS && (lhs.isStringy() || rhs.isStringy())
     return this is Literal && value.type == TypedLiteral.LiteralType.String
 }

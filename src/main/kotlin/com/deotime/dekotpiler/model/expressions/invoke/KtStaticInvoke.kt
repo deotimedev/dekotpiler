@@ -14,6 +14,7 @@ data class KtStaticInvoke(
     init {
         println()
     }
+
     override val sight = visions(::args)
     override fun code() = buildCode {
         if ((function as? KtFunction)?.kind != KtFunction.Kind.TopLevel)

@@ -9,7 +9,7 @@ import kotlin.reflect.KClass
 
 @Component
 internal class ProcessingImpl(
-    processors: List<Processor<*>>
+    processors: List<Processor<*>>,
 ) : Processing {
     private val processorsBytype = processors.groupBy { it.resolveTypeParameter<PreProcessor<*>>("T")!! }
 

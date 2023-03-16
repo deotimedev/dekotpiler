@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component
 
 @Component
 class InterfaceClassFileWorker(
-    private val jarPool: KotlinJarPool
+    private val jarPool: KotlinJarPool,
 ) : ClassFileWorker {
     override fun work(classFile: ClassFile): Map<Method, Op04StructuredStatement?> {
         val defaultImpls =

@@ -17,7 +17,7 @@ internal class FileSelectorImpl : FileSelector {
     override suspend fun selectFile(
         prompt: String,
         description: String,
-        vararg allowed: String
+        vararg allowed: String,
     ): File? {
         val selector = FileChooser().apply {
             title = prompt

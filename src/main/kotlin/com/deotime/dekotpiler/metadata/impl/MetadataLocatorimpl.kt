@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component
 
 @Component
 internal class MetadataLocatorimpl(
-    private val jarPool: KotlinJarPool
+    private val jarPool: KotlinJarPool,
 ) : MetadataLocator {
     private val classMetadata = cache<KtReferenceType, List<KmFunction>> {
         jarPool.metadata(it)

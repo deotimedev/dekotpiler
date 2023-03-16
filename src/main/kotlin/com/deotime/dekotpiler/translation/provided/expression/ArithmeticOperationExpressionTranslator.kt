@@ -8,7 +8,7 @@ import com.deotime.dekotpiler.model.structure.KtFunctionDescriptor
 import com.deotime.dekotpiler.model.type.KtReferenceType
 import com.deotime.dekotpiler.translation.Translation
 import com.deotime.dekotpiler.translation.Translator
-import com.deotime.dekotpiler.util.isStringLiteralish
+import com.deotime.dekotpiler.util.isStringy
 import org.benf.cfr.reader.bytecode.analysis.parse.expression.ArithOp
 import org.benf.cfr.reader.bytecode.analysis.parse.expression.ArithmeticOperation
 import org.springframework.stereotype.Component
@@ -18,7 +18,7 @@ import java.util.concurrent.ConcurrentHashMap
 class ArithmeticOperationExpressionTranslator :
     Translator<ArithmeticOperation, KtMethodInvoke> {
 
-    override fun ArithmeticOperation.match() = !isStringLiteralish()
+    override fun ArithmeticOperation.match() = !isStringy()
 
     context (Translation.Session)
     override fun translation(value: ArithmeticOperation) =

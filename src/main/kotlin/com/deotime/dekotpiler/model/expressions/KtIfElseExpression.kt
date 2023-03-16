@@ -1,15 +1,14 @@
 package com.deotime.dekotpiler.model.expressions
 
 import com.deotime.dekotpiler.coding.buildCode
-import com.deotime.dekotpiler.model.expressions.conditional.KtConditional
 import com.deotime.dekotpiler.model.KtExpression
-
+import com.deotime.dekotpiler.model.expressions.conditional.KtConditional
 import com.deotime.vision.vision
 
 data class KtIfElseExpression(
     var condition: KtConditional,
     var then: KtExpression,
-    var orElse: KtExpression
+    var orElse: KtExpression,
 ) : KtExpression {
     override val sight = vision(::condition, ::then, ::orElse)
 

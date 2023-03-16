@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component
 
 @Component
 internal class CrawlerControllerImpl(
-    override val crawlers: List<Crawler>
+    override val crawlers: List<Crawler>,
 ) : CrawlerController {
 
     override fun deploy(crawlers: List<Crawler>, block: KtBlockStatement) {
@@ -26,6 +26,7 @@ internal class CrawlerControllerImpl(
                 is KtMultiBodyStatement -> item.bodies.flatMap { paths(it) }.map { path ->
                     listOf(thing) + path
                 }
+
                 else -> emptyList()
             }
         }.flatten())

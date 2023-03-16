@@ -8,7 +8,7 @@ data class KtClosureType internal constructor(
     val suspending: Boolean = false,
     val receiver: KtType? = null,
     val context: List<KtType> = emptyList(),
-    override val nullable: Boolean = false
+    override val nullable: Boolean = false,
 ) : KtType {
 
     override val name = buildCode {

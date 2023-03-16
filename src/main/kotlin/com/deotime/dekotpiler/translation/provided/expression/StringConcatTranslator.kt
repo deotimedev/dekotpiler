@@ -4,9 +4,8 @@ import com.deotime.dekotpiler.model.expressions.KtLiteral
 import com.deotime.dekotpiler.model.expressions.KtStringExpression
 import com.deotime.dekotpiler.translation.Translation
 import com.deotime.dekotpiler.translation.Translator
-import com.deotime.dekotpiler.util.isStringLiteralish
+import com.deotime.dekotpiler.util.isStringy
 import org.benf.cfr.reader.bytecode.analysis.parse.Expression
-import org.benf.cfr.reader.bytecode.analysis.parse.expression.ArithOp
 import org.benf.cfr.reader.bytecode.analysis.parse.expression.ArithmeticOperation
 import org.benf.cfr.reader.bytecode.analysis.parse.expression.Literal
 import org.benf.cfr.reader.bytecode.analysis.parse.literal.TypedLiteral
@@ -17,7 +16,7 @@ import kotlin.contracts.contract
 @Component
 class StringConcatTranslator : Translator<ArithmeticOperation, KtStringExpression> {
 
-    override fun ArithmeticOperation.match() = isStringLiteralish()
+    override fun ArithmeticOperation.match() = isStringy()
 
     context (Translation.Session)
     override fun translation(value: ArithmeticOperation) =

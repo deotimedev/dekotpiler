@@ -29,7 +29,7 @@ data class KtFunction(
     var vararg: Boolean = false,
     var visibility: KtVisibility = KtVisibility.Public,
     val modifiers: MutableList<KtModifier> = mutableListOf(),
-    var operator: KtOperator? = null
+    var operator: KtOperator? = null,
 ) : KtFunctionDescriptor by description {
 
     override val parameters: List<KtType>
@@ -40,7 +40,8 @@ data class KtFunction(
             reflect.name,
             reflect.signature,
             KtType(reflect.returnType),
-            reflect.instanceParameter?.type?.let { KtType(it) } ?: KtType.invoke(reflect.javaMethod!!.declaringClass.kotlin),
+            reflect.instanceParameter?.type?.let { KtType(it) }
+                ?: KtType.invoke(reflect.javaMethod!!.declaringClass.kotlin),
             reflect.valueParameters.map { KtType(it.type) }
         ),
         receiver = reflect.extensionReceiverParameter?.type?.let { KtType(it) },
@@ -62,13 +63,11 @@ data class KtFunction(
     }
 
 
-
-
     // TODO modifiers
     data class Parameter(
         var name: String?,
         override var type: KtType,
-        var vararg: Boolean = false
+        var vararg: Boolean = false,
     ) : KtTyped {
         constructor(reflect: KParameter) : this(
             reflect.name!!,

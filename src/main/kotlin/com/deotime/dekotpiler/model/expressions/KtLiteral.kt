@@ -6,7 +6,6 @@ import com.deotime.dekotpiler.model.KtExpression
 import com.deotime.dekotpiler.model.expressions.conditional.KtConditional
 import com.deotime.dekotpiler.model.type.KtNothingType
 import com.deotime.dekotpiler.model.type.KtType
-import kotlin.Boolean
 import kotlin.Boolean as KtBoolean
 import kotlin.Char as KtChar
 import kotlin.Double as KtDouble
@@ -35,7 +34,7 @@ sealed interface KtLiteral<T> : KtExpression {
     value class Long(override val value: KtLong) : KtLiteral<KtLong> {
         override val type: KtType
             get() = KtType.Long
-        override val letter: kotlin.Char?
+        override val letter: kotlin.Char
             get() = 'L'
     }
 
@@ -43,7 +42,7 @@ sealed interface KtLiteral<T> : KtExpression {
     value class Float(override val value: KtFloat) : KtLiteral<KtFloat> {
         override val type: KtType
             get() = KtType.Float
-        override val letter: kotlin.Char?
+        override val letter: kotlin.Char
             get() = 'F'
     }
 
@@ -84,7 +83,7 @@ sealed interface KtLiteral<T> : KtExpression {
 
     @JvmInline
     value class Boolean internal constructor(
-        override val value: KtBoolean
+        override val value: KtBoolean,
     ) : KtLiteral<KtBoolean>, KtConditional {
         override val inverse get() = false
 

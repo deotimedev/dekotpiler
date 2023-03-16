@@ -3,8 +3,6 @@ package com.deotime.dekotpiler.crawler.provided
 import com.deotime.dekotpiler.crawler.Crawler
 import com.deotime.dekotpiler.matching.Matchers
 import com.deotime.dekotpiler.matching.Matchers.match
-import com.deotime.dekotpiler.model.KtCommentable.Companion.comment
-import com.deotime.dekotpiler.model.KtCommentable.Companion.comments
 import com.deotime.dekotpiler.model.expressions.KtLiteral
 import com.deotime.dekotpiler.model.expressions.KtNotNullAssertionExpression
 import com.deotime.dekotpiler.model.expressions.invoke.KtStaticInvoke

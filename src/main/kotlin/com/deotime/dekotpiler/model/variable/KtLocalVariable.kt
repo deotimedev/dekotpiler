@@ -23,6 +23,6 @@ data class KtLocalVariable(
 
     override fun code() =
         codeOf(if (inlined) inlineValue.also {
-        println("inlined ${it?.code().toString()}")
-    } else if (thisRef) "this" else name) // todo this should encapsulate all synthetic references
+            println("inlined ${it?.code().toString()}")
+        } else if (thisRef) "this" else name) // todo this should encapsulate all synthetic references
 }

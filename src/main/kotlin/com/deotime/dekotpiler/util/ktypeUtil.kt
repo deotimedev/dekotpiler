@@ -7,6 +7,7 @@ import kotlin.reflect.full.starProjectedType
 
 operator fun KClass<*>.compareTo(other: KClass<*>) =
     starProjectedType.compareTo(other.starProjectedType)
+
 operator fun KType.compareTo(other: KType) =
     when {
         isSubtypeOf(other) -> 1

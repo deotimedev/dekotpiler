@@ -9,7 +9,7 @@ import com.deotime.vision.vision
 data class KtIfStatement(
     var condition: KtConditional,
     var then: KtBlockStatement,
-    var orElse: KtBlockStatement?
+    var orElse: KtBlockStatement?,
 ) : KtMultiBodyStatement {
     override val sight = vision(::condition)
 

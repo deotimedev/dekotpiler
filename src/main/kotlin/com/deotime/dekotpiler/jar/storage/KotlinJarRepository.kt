@@ -1,6 +1,5 @@
 package com.deotime.dekotpiler.jar.storage
 
-import java.io.File
 import java.net.URI
 
 interface KotlinJarRepository {

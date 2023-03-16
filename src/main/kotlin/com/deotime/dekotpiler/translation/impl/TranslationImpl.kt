@@ -2,10 +2,10 @@ package com.deotime.dekotpiler.translation.impl
 
 import com.deotime.dekotpiler.mapping.TypeMappings
 import com.deotime.dekotpiler.metadata.MetadataLocator
-import com.deotime.dekotpiler.model.expressions.conditional.KtConditional
 import com.deotime.dekotpiler.model.KtExpression
 import com.deotime.dekotpiler.model.KtStatement
 import com.deotime.dekotpiler.model.KtUnknown
+import com.deotime.dekotpiler.model.expressions.conditional.KtConditional
 import com.deotime.dekotpiler.model.statements.KtBlockStatement.Companion.asBlock
 import com.deotime.dekotpiler.model.structure.KtFunction
 import com.deotime.dekotpiler.model.structure.KtFunctionDescriptor
@@ -40,7 +40,7 @@ internal class TranslationImpl(
     translators: List<Translator<*, *>>,
     private val processing: Processing,
     private val typeMappings: TypeMappings,
-    private val metadata: MetadataLocator
+    private val metadata: MetadataLocator,
 ) : Translation {
     private val translatorsByType = translators.groupBy { it.resolveTypeParameter<Translator<*, *>>("J")!! }
     override fun session() = SessionImpl()
@@ -108,7 +108,7 @@ internal class TranslationImpl(
         override fun translateConditional(conditional: ConditionalExpression): KtConditional = translate(conditional)!!
 
         override fun translateFunction(
-            function: MethodPrototype
+            function: MethodPrototype,
         ) = computedRawFunctions.computeIfAbsent(function) {
             KtFunctionDescriptor.Raw(
                 name = function.name,

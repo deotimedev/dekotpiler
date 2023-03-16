@@ -11,7 +11,7 @@ data class KtMemberField(
     override var name: String,
     override var final: Boolean,
     override val type: KtType,
-    override var synthetic: Boolean
+    override var synthetic: Boolean,
 ) : KtField {
     override val sight = vision(::member)
     override fun code() = buildCode {

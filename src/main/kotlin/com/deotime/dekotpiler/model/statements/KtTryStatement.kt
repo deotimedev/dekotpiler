@@ -8,7 +8,7 @@ import com.deotime.dekotpiler.util.singleOf
 data class KtTryStatement(
     var statement: KtBlockStatement,
     val catches: MutableList<Catch>,
-    var finally: KtBlockStatement?
+    var finally: KtBlockStatement?,
 ) : KtMultiBodyStatement {
 
     override val type get() = statement.type
@@ -35,7 +35,7 @@ data class KtTryStatement(
 
     data class Catch(
         var throwable: KtLocalVariable, // it would not make sense for this to have an expression view
-        var statement: KtBlockStatement
+        var statement: KtBlockStatement,
     ) : KtStatement {
         override fun code() = buildCode {
             write("catch ")

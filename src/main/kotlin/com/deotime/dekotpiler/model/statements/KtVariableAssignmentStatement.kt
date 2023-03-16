@@ -11,7 +11,7 @@ import com.deotime.vision.vision
 data class KtVariableAssignmentStatement(
     var declaring: Boolean,
     var variable: KtVariable,
-    var expression: KtExpression?
+    var expression: KtExpression?,
 ) : KtStatement {
 
     override val sight = blurred(::expression) + vision(::variable)

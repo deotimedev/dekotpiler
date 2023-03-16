@@ -16,6 +16,6 @@ data class KtWhenExpression(
 
     data class Branch(
         var targets: MutableList<KtExpression>, // if empty then this branch is an `else`
-        var expression: KtExpression
+        var expression: KtExpression,
     )
 }

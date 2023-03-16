@@ -13,6 +13,7 @@ sealed interface KtJClassExpression : KtExpression {
     data class Literal(override var clazz: KtLiteral.Class) : KtJClassExpression {
         override val sight = vision(::clazz)
     }
+
     data class Dynamic(override var clazz: KtGetDynamicKClass) : KtJClassExpression {
         override val sight = vision(::clazz)
     }

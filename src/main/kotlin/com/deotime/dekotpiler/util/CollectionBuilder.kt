@@ -11,7 +11,7 @@ interface CollectionBuilder<T> {
 @PublishedApi
 internal class CollectionBuilderImpl<A, T>(
     private val collection: MutableCollection<A>,
-    private val transform: (T) -> A
+    private val transform: (T) -> A,
 ) : CollectionBuilder<T> {
     override fun T.unaryPlus() {
         collection += transform(this)
@@ -33,7 +33,7 @@ inline fun <T, C : MutableCollection<T>> buildCollectionTo(col: C, assembler: Co
 inline fun <A, T, C : MutableCollection<A>> buildCollectionTo(
     col: C,
     noinline transform: (T) -> A,
-    assembler: CollectionAssembler<T>
+    assembler: CollectionAssembler<T>,
 ) {
     CollectionBuilderImpl(col, transform).assembler()
 }

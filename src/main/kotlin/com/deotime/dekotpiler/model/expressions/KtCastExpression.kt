@@ -8,7 +8,7 @@ import com.deotime.vision.vision
 
 data class KtCastExpression(
     var expression: KtExpression,
-    var cast: KtType
+    var cast: KtType,
 ) : KtExpression {
     override val sight = vision(::expression)
     override val type get() = cast

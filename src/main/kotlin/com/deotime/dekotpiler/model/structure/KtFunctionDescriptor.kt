@@ -16,7 +16,7 @@ interface KtFunctionDescriptor {
         override val descriptor: String,
         override val returns: KtType,
         override val enclosing: KtReferenceType,
-        override val parameters: List<KtType>
+        override val parameters: List<KtType>,
     ) : KtFunctionDescriptor
 
 }

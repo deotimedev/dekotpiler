@@ -9,7 +9,7 @@ import org.benf.cfr.reader.bytecode.analysis.parse.expression.ArithOp
 
 data class KtArithmeticPostMutationExpression(
     var mutating: KtVariable,
-    var operation: ArithOp // i will maybe make a kotlin wrapper when not lazy
+    var operation: ArithOp, // i will maybe make a kotlin wrapper when not lazy
 ) : KtExpression {
     override val sight = vision(::mutating)
     override val type get() = mutating.type

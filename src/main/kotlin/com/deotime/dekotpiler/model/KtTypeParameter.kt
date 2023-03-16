@@ -6,7 +6,7 @@ import kotlin.reflect.KTypeParameter
 data class KtTypeParameter(
     val name: String,
     val upperbounds: List<KtType> = listOf(),
-    val reified: Boolean = false
+    val reified: Boolean = false,
 ) {
     constructor(reflect: KTypeParameter) : this(
         reflect.name,

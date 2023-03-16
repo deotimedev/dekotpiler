@@ -2,18 +2,17 @@ package com.deotime.dekotpiler.model
 
 import com.deotime.dekotpiler.coding.Codable
 import com.deotime.dekotpiler.coding.CodeBuilder
-import com.deotime.dekotpiler.util.backing.backing
+import com.deotime.dekotpiler.util.backing
 
 interface KtCommentable : Codable {
 
-//    context(CodeBuilder)
-//    override fun postfix() {
-//        writeComments(this)
-//    }
 
     companion object {
 
-        fun CodeBuilder.writeComments(commentable: KtCommentable /*temp until ctx receivers are fixed*/, fullLine: Boolean = false) {
+        fun CodeBuilder.writeComments(
+            commentable: KtCommentable, /*temp until ctx receivers are fixed*/
+            fullLine: Boolean = false,
+        ) {
             commentable.comments.forEach {
                 if (fullLine) +"// $it"
                 else +" /*$it*/"
@@ -24,6 +23,7 @@ interface KtCommentable : Codable {
         fun KtCommentable.comment(comment: String) {
             comments += comment
         }
+
         val KtCommentable.comments by backing { mutableListOf<String>() }
     }
 }

@@ -5,7 +5,6 @@ import com.deotime.dekotpiler.model.expressions.KtJClassExpression
 import com.deotime.dekotpiler.model.expressions.KtLiteral
 import com.deotime.dekotpiler.translation.Translation
 import com.deotime.dekotpiler.translation.Translator
-import com.deotime.dekotpiler.util.left
 import org.benf.cfr.reader.bytecode.analysis.parse.expression.Literal
 import org.benf.cfr.reader.bytecode.analysis.parse.literal.TypedLiteral
 import org.benf.cfr.reader.bytecode.analysis.types.RawJavaType

@@ -24,7 +24,7 @@ internal class CFRKotlinJarLoader(
     private val metadataResolver: MetadataResolver,
     private val jarPool: KotlinJarPool,
     private val jarLocator: KotlinJarFileLocator,
-    libraries: List<KotlinLibraryProvider>
+    libraries: List<KotlinLibraryProvider>,
 ) : KotlinJarLoader {
 
     init {

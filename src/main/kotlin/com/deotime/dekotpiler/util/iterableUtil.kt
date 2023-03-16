@@ -11,11 +11,7 @@ fun <T> MutableList<T>.update(index: Int, closure: (T) -> T) =
     }
 
 fun <T> MutableList<T>.updateLast(closure: (T) -> T) =
-    getOrNull(lastIndex)?.let { old ->
-        val new = closure(old)
-        set(lastIndex, new)
-        old to new
-    }
+    update(lastIndex, closure)
 
 inline fun <T, R> Iterable<T>.partitionNotNull(closure: (T) -> R?): Pair<List<R>, List<T>> {
     val a = mutableListOf<R>()

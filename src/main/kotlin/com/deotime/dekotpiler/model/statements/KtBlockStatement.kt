@@ -6,7 +6,7 @@ import com.deotime.dekotpiler.model.type.KtType
 import com.deotime.dekotpiler.util.flatMapInclusive
 
 data class KtBlockStatement(
-    val statements: MutableList<KtStatement>
+    val statements: MutableList<KtStatement>,
 ) : KtSingleBodyStatement {
 
     override val body = this

@@ -8,7 +8,7 @@ import com.deotime.vision.vision
 
 data class KtArrayIndexAccess(
     var array: KtExpression,
-    var index: KtExpression
+    var index: KtExpression,
 ) : KtExpression {
     override val sight = vision(::array, ::index)
     override val type get() = (array.type as KtArrayType).componentType.nullable(true)

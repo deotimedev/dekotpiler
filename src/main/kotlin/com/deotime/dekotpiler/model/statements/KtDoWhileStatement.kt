@@ -7,7 +7,7 @@ import com.deotime.vision.vision
 
 data class KtDoWhileStatement(
     var condition: KtExpression,
-    override var body: KtBlockStatement
+    override var body: KtBlockStatement,
 ) : KtSingleBodyStatement {
     override val sight = vision(::condition)
 

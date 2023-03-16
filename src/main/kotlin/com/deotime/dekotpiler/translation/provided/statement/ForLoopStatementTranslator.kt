@@ -1,10 +1,10 @@
 package com.deotime.dekotpiler.translation.provided.statement
 
+import com.deotime.dekotpiler.model.expressions.KtRangeExpression
 import com.deotime.dekotpiler.model.expressions.conditional.KtComparison
 import com.deotime.dekotpiler.model.statements.KtForStatement
 import com.deotime.dekotpiler.translation.Translation
 import com.deotime.dekotpiler.translation.Translator
-import com.deotime.dekotpiler.model.expressions.KtRangeExpression
 import org.benf.cfr.reader.bytecode.analysis.structured.statement.StructuredFor
 import org.springframework.stereotype.Component
 

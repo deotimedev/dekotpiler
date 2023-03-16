@@ -1,7 +1,7 @@
 package com.deotime.dekotpiler.coding
 
 import com.deotime.dekotpiler.model.type.KtType
-import com.deotime.dekotpiler.util.update
+import com.deotime.dekotpiler.util.updateLast
 
 inline fun buildCode(closure: Code.() -> Unit) =
     Code().apply(closure)
@@ -10,6 +10,7 @@ fun emptyCode() = Code()
 fun codeOf(vararg values: Any?) = buildCode { values.forEach { +it } }
 
 typealias CodeBuilder = Code
+
 class Code(
     private val lines: MutableList<String> = mutableListOf(""),
 ) {
@@ -44,7 +45,7 @@ class Code(
 
     fun unindent(apply: Boolean = true) = apply {
         indent--
-        if (apply) lines.update(lines.lastIndex) { if (it.lastOrNull() == '\t') it.dropLast(1) else it }
+        if (apply) lines.updateLast { if (it.lastOrNull() == '\t') it.dropLast(1) else it }
     }
 
     fun dropNewlines() {
@@ -78,19 +79,14 @@ class Code(
         braced { +args.joinToString { it.buildCode().toString() } }
     }
 
-    // warning: majorly cursed alert
-    // i will maybe fix sometime
     private fun append(value: Any?) {
         when (value) {
             is Codable -> append(value.buildCode())
             else -> {
                 val str = value.toString()
-                str.split("\n").fold(false) { new, line ->
-                    if (new) newline()
-                    lines.update(lines.lastIndex) {
-                        it + line
-                    }
-                    true
+                str.split("\n").forEachIndexed { i, line ->
+                    if (i != 0) newline()
+                    lines.updateLast { it + line }
                 }
 
             }

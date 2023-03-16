@@ -9,7 +9,7 @@ import com.deotime.vision.vision
 data class KtForStatement(
     var item: KtLocalVariable,
     var iterable: KtExpression,
-    override var body: KtBlockStatement
+    override var body: KtBlockStatement,
 ) : KtSingleBodyStatement {
 
     override val sight = vision(::item, ::iterable)

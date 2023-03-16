@@ -12,7 +12,7 @@ class WeirdnessProcessor :
 
     override fun KtComparison.match() =
         mode == KtComparison.Type.NotReferenceEquality
-                && reference is KtLocalVariable && comparing is KtLiteral.Int
+            && reference is KtLocalVariable && comparing is KtLiteral.Int
 
     override fun replace(value: KtComparison) =
         value.reference

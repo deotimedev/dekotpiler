@@ -7,7 +7,7 @@ import com.deotime.dekotpiler.model.type.KtType
 import com.deotime.vision.vision
 
 data class KtGetDynamicKClass(
-    var reference: KtExpression
+    var reference: KtExpression,
 ) : KtExpression {
     override val sight = vision(::reference)
     override val type get() = KtType.KClass

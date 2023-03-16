@@ -12,7 +12,7 @@ data class KtArrayCreation(
     var componentType: KtType,
     var size: KtExpression,
     val initializers: MutableList<KtExpression> = mutableListOf(),
-    val nullDefault: Boolean = false
+    val nullDefault: Boolean = false,
 ) : KtExpression {
     override val sight = vision(::size) + visions(::initializers)
     override val type get() = KtType.array(componentType)

@@ -2,7 +2,6 @@ package com.deotime.dekotpiler.jar.impl
 
 import com.deotime.dekotpiler.jar.KotlinClassContainer
 import com.deotime.dekotpiler.jar.KotlinJarPool
-import com.deotime.dekotpiler.jar.storage.KotlinJarFileLocator
 import com.deotime.dekotpiler.model.type.KtReferenceType
 import org.springframework.stereotype.Component
 

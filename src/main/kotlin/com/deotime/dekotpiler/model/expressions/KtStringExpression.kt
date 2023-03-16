@@ -2,14 +2,12 @@ package com.deotime.dekotpiler.model.expressions
 
 import com.deotime.dekotpiler.coding.buildCode
 import com.deotime.dekotpiler.model.KtExpression
-
 import com.deotime.dekotpiler.model.type.KtType
 import com.deotime.dekotpiler.util.singleOf
-import com.deotime.vision.vision
 import com.deotime.vision.visions
 
 data class KtStringExpression(
-    val elements: MutableList<KtExpression>
+    val elements: MutableList<KtExpression>,
 ) : KtExpression {
     override val type = KtType.String
 

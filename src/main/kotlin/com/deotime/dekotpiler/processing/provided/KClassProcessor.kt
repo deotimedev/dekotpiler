@@ -7,7 +7,6 @@ import com.deotime.dekotpiler.model.expressions.KtJClassExpression
 import com.deotime.dekotpiler.model.expressions.invoke.KtGetterInvoke
 import com.deotime.dekotpiler.model.expressions.invoke.KtStaticInvoke
 import com.deotime.dekotpiler.processing.PreProcessor
-import com.deotime.dekotpiler.util.unwrap
 import org.springframework.stereotype.Component
 import kotlin.jvm.internal.Reflection
 

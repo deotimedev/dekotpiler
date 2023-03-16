@@ -53,7 +53,7 @@ object TestHelper {
 
     interface Parent {
         companion object {
-            val child: Parent = TestHelper.Child
+            val child: Parent = Child
         }
     }
 

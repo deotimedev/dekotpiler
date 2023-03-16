@@ -67,7 +67,7 @@ interface KtType : KtTyped, Codable {
         operator fun invoke(
             type: KClass<*>,
             nullable: Boolean = false,
-            generics: List<KtType> = emptyList()
+            generics: List<KtType> = emptyList(),
         ) =
             KtReferenceType(
                 type.java.canonicalName!!,

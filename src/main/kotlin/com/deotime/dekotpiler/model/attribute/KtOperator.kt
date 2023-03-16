@@ -1,7 +1,5 @@
 package com.deotime.dekotpiler.model.attribute
 
-import com.deotime.dekotpiler.model.structure.KtFunction
-
 
 private fun arith(char: Char) = "@ $char #1"
 private fun augment(char: Char) = "@ $char= #1"

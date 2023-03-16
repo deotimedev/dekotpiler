@@ -9,7 +9,7 @@ import com.deotime.vision.vision
 
 data class KtIsExpression(
     var expression: KtExpression,
-    var typeCheck: KtType
+    var typeCheck: KtType,
 ) : KtConditional {
     override var inverse = false
     override val sight = vision(::expression)

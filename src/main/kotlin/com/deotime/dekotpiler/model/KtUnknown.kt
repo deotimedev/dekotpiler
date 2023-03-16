@@ -5,7 +5,7 @@ import com.deotime.dekotpiler.model.type.KtNothingType
 
 // This is only used for testing and will be removed before release
 internal data class KtUnknown(
-    val value: Any?
+    val value: Any?,
 ) : KtStatement, KtExpression {
     init {
         println("Unknown instance made of ${value?.javaClass?.simpleName}")

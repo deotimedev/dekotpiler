@@ -21,6 +21,7 @@ object Matchers {
 
     private fun <T> Matcher<T>.transform(other: Matcher<T>, boolOp: (Boolean, Boolean) -> Boolean) =
         Matcher<T> { boolOp(match(), other.match(this)) }
+
     private fun <T> Matcher<T>.transform(boolOp: (Boolean) -> Boolean) =
         Matcher<T> { boolOp(match()) }
 
