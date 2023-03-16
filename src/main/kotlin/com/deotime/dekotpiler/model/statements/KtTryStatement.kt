@@ -1,9 +1,12 @@
 package com.deotime.dekotpiler.model.statements
 
 import com.deotime.dekotpiler.coding.buildCode
+import com.deotime.dekotpiler.model.KtExpression
 import com.deotime.dekotpiler.model.KtStatement
 import com.deotime.dekotpiler.model.variable.KtLocalVariable
 import com.deotime.dekotpiler.util.singleOf
+import com.deotime.vision.Vision
+import com.deotime.vision.vision
 
 data class KtTryStatement(
     var statement: KtBlockStatement,
@@ -34,9 +37,10 @@ data class KtTryStatement(
     }
 
     data class Catch(
-        var throwable: KtLocalVariable, // it would not make sense for this to have an expression view
+        var throwable: KtLocalVariable,
         var statement: KtBlockStatement,
     ) : KtStatement {
+        override val sight = vision(::throwable)
         override fun code() = buildCode {
             write("catch ")
             braced { write("${throwable.name}: ", throwable.type) }

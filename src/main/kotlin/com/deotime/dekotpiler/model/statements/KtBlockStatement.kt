@@ -15,11 +15,9 @@ data class KtBlockStatement(
         get() = statements.lastOrNull()?.type ?: KtType.Unit
 
     override fun code() = buildCode {
-        // weird
-        statements.fold(false) { prev, value ->
-            if (prev) newline()
+        statements.forEachIndexed { i, value ->
+            if (i != 0) newline()
             write(value)
-            true
         }
     }
 
