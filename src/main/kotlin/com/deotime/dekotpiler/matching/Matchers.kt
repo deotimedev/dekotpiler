@@ -25,8 +25,8 @@ object Matchers {
     private fun <T> Matcher<T>.transform(boolOp: (Boolean) -> Boolean) =
         Matcher<T> { boolOp(match()) }
 
-    infix fun <T> Matcher<T>.and(other: Matcher<T>) = transform(other) { a, b -> a && b }
-    infix fun <T> Matcher<T>.or(other: Matcher<T>) = transform(other) { a, b -> a || b }
+    infix fun <T> Matcher<T>.and(other: Matcher<T>) = Matcher<T> { match() && other.match(this) }
+    infix fun <T> Matcher<T>.or(other: Matcher<T>) = Matcher<T> { match() || other.match(this) }
 
     infix fun <T> Matcher<T>.xor(other: Matcher<T>) = transform(other, Boolean::xor)
     operator fun <T> Matcher<T>.not() = transform(Boolean::not)
