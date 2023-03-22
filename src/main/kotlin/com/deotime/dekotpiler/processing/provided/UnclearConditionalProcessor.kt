@@ -1,7 +1,6 @@
 package com.deotime.dekotpiler.processing.provided
 
-// todo this is broken
-// or maybe conditionals are just broken?
+// fixme
 //@Component
 //class UnclearConditionalProcessor :
 //    PreProcessor<KtConditional>,

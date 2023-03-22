@@ -12,6 +12,8 @@ import com.deotime.dekotpiler.model.variable.KtLocalVariable
 import org.springframework.stereotype.Component
 import kotlin.jvm.internal.Intrinsics
 
+// This is most likely just a temporary class, and should
+// be reworked.
 @Component
 class LocalVariableDeclarationCrawler : Crawler {
     override fun crawl(path: List<KtBlockStatement>) {
@@ -26,17 +28,6 @@ class LocalVariableDeclarationCrawler : Crawler {
                         declared[variable.name] = stmt
                         declaration = stmt
                     } else {
-                        val expr = stmt.expression
-//                        if (
-//                            expr is KtIfElseExpression &&
-//                            expr.then == KtLiteral.One && expr.orElse == KtLiteral.Zero
-//                        ) {
-//                            variable.inlineValues.push(
-//                                expr.condition
-//                            )
-//                            variable.forceNextInline = true
-//                            return@removeIf true
-//                        }
                         declared[variable.name]?.let {
                             declaration = it
                             variable.final = false
@@ -54,8 +45,8 @@ class LocalVariableDeclarationCrawler : Crawler {
                     }
 
                 } else if (stmt is KtStaticInvoke) {
-                    // holding off on this check as there could potentially be useful
-                    // information in the intrinsic message
+                    // This will likely be removed as useful information can be obtained
+                    // through the intrinsic exception message
                     if (NotNullCheckMatcher.match(stmt)) {
                         declaration((stmt.args[0] as KtLocalVariable))?.let { declaration ->
                             declaration.expression?.let {

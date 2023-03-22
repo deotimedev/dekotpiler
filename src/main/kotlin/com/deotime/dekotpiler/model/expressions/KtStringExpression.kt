@@ -4,14 +4,14 @@ import com.deotime.dekotpiler.coding.buildCode
 import com.deotime.dekotpiler.model.KtExpression
 import com.deotime.dekotpiler.model.type.KtType
 import com.deotime.dekotpiler.util.singleOf
-import com.deotime.vision.visions
+import com.deotime.vision.vision
 
 data class KtStringExpression(
     val elements: MutableList<KtExpression>,
 ) : KtExpression {
     override val type = KtType.String
 
-    override val sight = visions(::elements)
+    override val sight = vision(::elements)
     override fun code() = buildCode {
         +"\""
         for (element in compress()) {
@@ -23,7 +23,7 @@ data class KtStringExpression(
         +"\""
     }
 
-    fun compress(): List<KtExpression> = elements.flatMap {
+    private fun compress(): List<KtExpression> = elements.flatMap {
         (it as? KtStringExpression)?.elements ?: singleOf(it)
     }
 }

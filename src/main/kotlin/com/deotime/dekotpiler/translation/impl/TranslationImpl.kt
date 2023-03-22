@@ -63,6 +63,7 @@ internal class TranslationImpl(
                     fun processors(obj: Any) =
                         processing.processors(Processor.Mode.Pre, obj::class) as? List<Processor<Any>>
 
+                    // TODO: This process is weird and needs to be changed
                     var result: Any = translated
                     processors(translated).gather { list ->
                         list.find {

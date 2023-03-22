@@ -76,7 +76,11 @@ class Code(
     }
 
     fun writeInvoker(args: Iterable<Codable>) {
-        braced { +args.joinToString { it.buildCode().toString() } }
+        braced { writeJoined(args) }
+    }
+
+    fun writeJoined(values: Iterable<Codable>) {
+        +values.joinToString { it.buildCode().toString() }
     }
 
     private fun append(value: Any?) {

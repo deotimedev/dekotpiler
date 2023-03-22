@@ -50,19 +50,19 @@ dependencies {
     // metadata
     implementation("org.jetbrains.kotlinx:kotlinx-metadata-jvm:0.6.0")
 
-    // teting
-    testImplementation(kotlin("test"))
-
-    // ui (temp)
+    // ui (temp??)
     implementation("org.openjfx:javafx-base:19")
 
-    // code
+    // kpoet
     implementation("com.squareup:kotlinpoet:1.12.0")
 
+    // reflection
     implementation("org.jetbrains.kotlin:kotlin-reflect:1.8.20-Beta")
 
-    implementation("com.deotime:vision:1.0.3")
+    // vision
+    implementation("com.deotime:vision:1.0.5")
 
+    // kpoetdsl
     val kotlinPoetDslVersion = "2.0.6"
     implementation("me.deotime:kotlin-poet-dsl-dsl:$kotlinPoetDslVersion")
     implementation("me.deotime:kotlin-poet-dsl-metadata:$kotlinPoetDslVersion")
@@ -77,7 +77,7 @@ tasks.withType<KotlinCompile> {
     kotlinOptions.languageVersion = "1.9"
     kotlinOptions.freeCompilerArgs = listOf(
         "-Xskip-prerelease-check",
-//        "-Xuse-k2", BROKEN
+        "-Xuse-k2",
         "-Xuse-experimental",
         "-XXLanguage:+EnumEntries",
         "-Xcontext-receivers"

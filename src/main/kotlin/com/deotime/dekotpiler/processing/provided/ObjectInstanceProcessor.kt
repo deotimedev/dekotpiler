@@ -22,7 +22,7 @@ class ObjectInstanceProcessor(
             } == true)
     }) {
 
-    // this is broken and needs to be a postprocessor.
+    // TODO: This is currently implemented incorrectly and needs to be a postprocessor
     override fun replace(value: KtStaticField): KtObjectInstance {
         value.type = value.type.nullable(false)
         return KtObjectInstance(value)

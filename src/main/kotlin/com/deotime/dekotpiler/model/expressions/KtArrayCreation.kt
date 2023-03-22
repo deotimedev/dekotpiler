@@ -2,11 +2,10 @@ package com.deotime.dekotpiler.model.expressions
 
 import com.deotime.dekotpiler.coding.buildCode
 import com.deotime.dekotpiler.model.KtExpression
-
 import com.deotime.dekotpiler.model.type.KtType
 import com.deotime.dekotpiler.model.type.KtType.Companion.isPrimitive
+import com.deotime.vision.Vision.Companion.plus
 import com.deotime.vision.vision
-import com.deotime.vision.visions
 
 data class KtArrayCreation(
     var componentType: KtType,
@@ -14,7 +13,7 @@ data class KtArrayCreation(
     val initializers: MutableList<KtExpression> = mutableListOf(),
     val nullDefault: Boolean = false,
 ) : KtExpression {
-    override val sight = vision(::size) + visions(::initializers)
+    override val sight = vision(::size) + vision(::initializers)
     override val type get() = KtType.array(componentType)
     override fun code() = buildCode {
         if (componentType.isPrimitive) {

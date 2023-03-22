@@ -2,11 +2,8 @@ package com.deotime.dekotpiler
 
 import com.deotime.dekotpiler.classfile.ClassFileController
 import com.deotime.dekotpiler.jar.KotlinJarLoader
-import com.deotime.dekotpiler.jar.storage.KotlinJarFileLocator
-import com.deotime.dekotpiler.metadata.MetadataResolver
 import com.deotime.dekotpiler.model.type.KtType
 import com.deotime.dekotpiler.ui.FileSelector
-import com.deotime.dekotpiler.util.context
 import com.deotime.dekotpiler.util.partitionNotNull
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
@@ -24,27 +21,26 @@ import java.io.File
 
 @Component
 class Main(
-    private val metadataResolver: MetadataResolver,
     private val fileSelector: FileSelector,
     private val engine: KotlinJarLoader,
     private val classFileController: ClassFileController,
-    private val locator: KotlinJarFileLocator,
 ) : CommandLineRunner {
-    // This will eventually be replaced by a CLI
+    // TODO: Command line interface for this
     override fun run(vararg args: String): Unit = runBlocking(Dispatchers.Default) {
 
         // for testing
-        val file = File(File("").absolutePath, "/build/libs/dekotpiler-1.0.0-plain.jar")
+        val file =
+            if (args.getOrNull(0) == "customfile")
+                fileSelector.selectFile(
+                    "Select jar",
+                    description = "Files",
+                    "*.jar"
+                ) ?: return@runBlocking
+            else File(File("").absolutePath, "/build/libs/dekotpiler-1.0.0-plain.jar")
 
-//        val file = fileSelector.selectFile(
-//            "Select jar",
-//            description = "Files",
-//            "*.jar"
-//        ) ?: return@runBlocking
         val jar = engine.load(file)
 
         val target = KtType<Test>()
-        println("qualified: ${target.qualifiedName}")
         val metadata = jar.metadata(target) as KotlinClassMetadata.Class
         val clazz = jar.load(target) ?: return@runBlocking
         val metaClass = metadata.toKmClass()
@@ -58,12 +54,11 @@ class Main(
             }
         }
 
-        // todo wont work with objects and some other stuff because of synthetic constructors
         val spec = metaClass.toSpec {
             source.funSpecs.clear()
             source.funSpecs.addAll(specMethods)
-
         }
+
         val output = kotlin {
             name("test") packaged "testing"
             +spec
@@ -83,17 +78,18 @@ class Main(
 
         @JvmStatic
         fun main(args: Array<String>) {
-            val app = SpringApplicationBuilder(App::class.java)
+            SpringApplicationBuilder(App::class.java)
                 .web(WebApplicationType.NONE)
                 .bannerMode(Banner.Mode.OFF)
                 .logStartupInfo(false)
                 .headless(false)
-                .application().run()
-            context = app
+                .application()
+                .run()
         }
 
+        @Suppress("RedundantModalityModifier") // don't have the allopen plugin for k2 currently
         @SpringBootApplication
-        class App
+        open class App
 
     }
 }

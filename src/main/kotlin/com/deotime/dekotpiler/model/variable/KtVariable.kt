@@ -9,13 +9,3 @@ interface KtVariable : KtExpression {
     val synthetic: Boolean
 
 }
-
-//override fun code() = buildCode {
-//    if (delegate is AbstractFieldVariable) {
-//        write(
-//            (delegate.owningClassType as? JavaRefTypeInstance)?.rawShortName
-//            , ".", name)
-//    } else {
-//        write(name)
-//    }
-//}

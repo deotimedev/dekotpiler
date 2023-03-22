@@ -1,12 +1,15 @@
 package com.deotime.dekotpiler.util
 
-class Single<T>(val value: T) : AbstractList<T>() {
+@JvmInline
+value class Single<T>(val value: T) : Collection<T> {
 
-    override val size = 1
+    override val size get() = 1
+    override fun isEmpty() = false
 
-    override fun get(index: Int) =
-        if (index == 0) value else throw IndexOutOfBoundsException(index)
+    override fun containsAll(elements: Collection<T>) =
+        elements.isEmpty() || (elements.size == 1 && elements.first() == value)
 
+    override fun contains(element: T) = element == value
     override fun iterator() = object : AbstractIterator<T>() {
         private var used = false
         override fun computeNext() {

@@ -24,7 +24,7 @@ class StringConcatTranslator : Translator<ArithmeticOperation, KtStringExpressio
             if (isLiteralStringLiteral(it))
                 KtLiteral.String(
                     it.value.value.toString()
-                        // drop quotes (could probably do this better)
+                        // drop quotes
                         .drop(1)
                         .dropLast(1)
                 )

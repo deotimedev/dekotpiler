@@ -24,9 +24,9 @@ enum class KtOperator(val format: String) {
     Contains("#1 in @"),
     Get("@[!MID!]"),
     Set("@[!MID!] = !LAST!"),
-    Invoke("@(!MID!, !LAST!)"), // TODO lambda
+    Invoke("@(!MID!, !LAST!)"), // TODO: This should be changed when lambdas are added
     Equals("@ == #1"),
-    // TODO: delegators and compareTo
+    // TODO: getValue, setValue, provideDelegate, and compareTo still need to be implemented
     ;
 
     inline val functionName get() = name.replaceFirstChar { it.lowercase() }

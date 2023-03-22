@@ -15,7 +15,7 @@ class IntrinsicProvidedCrawler : Crawler {
                 .filterIsInstance<KtStaticInvoke>()
                 .filter(IntrinsicProvidedMatcher)
                 .forEach {
-                    println(it)
+                    println("Intrinsic marker: ${it.code()}")
                 }
         }
     }

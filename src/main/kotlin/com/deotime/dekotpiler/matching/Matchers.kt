@@ -1,4 +1,5 @@
 @file:Suppress("NOTHING_TO_INLINE")
+
 package com.deotime.dekotpiler.matching
 
 import com.deotime.dekotpiler.model.expressions.invoke.KtStaticInvoke

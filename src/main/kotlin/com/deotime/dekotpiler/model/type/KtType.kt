@@ -9,6 +9,9 @@ import kotlin.reflect.typeOf
 interface KtType : KtTyped, Codable {
     val name: String
     val qualifiedName: String get() = name
+
+    // TODO: Config option on whether types to be nullable or non-nullable by
+    // default when nullness can't be inferred
     val nullable: Boolean
     fun nullable(nullable: Boolean = true): KtType
     override fun code() = buildCode {
@@ -23,7 +26,7 @@ interface KtType : KtTyped, Codable {
 
         infix fun KtType.similar(other: KtType) = qualifiedName == other.qualifiedName
 
-        // TODO CHECK INHERITANCE
+        // TODO: Needs to check inheritance
         infix fun KtType.usableAs(other: KtType) =
             other similar Any || (similar(other) && (!nullable || nullable == other.nullable))
 
@@ -59,7 +62,6 @@ interface KtType : KtTyped, Codable {
             Char to KtType<CharArray>()
         )
 
-        // efficiency at its finest
         val Primitives = PrimitiveToArray.keys.toList()
 
         val KtType.isPrimitive get() = this in Primitives

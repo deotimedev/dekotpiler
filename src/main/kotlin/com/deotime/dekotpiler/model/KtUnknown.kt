@@ -3,7 +3,7 @@ package com.deotime.dekotpiler.model
 import com.deotime.dekotpiler.coding.codeOf
 import com.deotime.dekotpiler.model.type.KtNothingType
 
-// This is only used for testing and will be removed before release
+// The fallback for unsupported types
 internal data class KtUnknown(
     val value: Any?,
 ) : KtStatement, KtExpression {
