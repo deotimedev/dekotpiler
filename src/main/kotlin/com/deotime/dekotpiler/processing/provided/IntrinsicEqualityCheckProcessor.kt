@@ -4,6 +4,7 @@ import com.deotime.dekotpiler.matching.Matcher
 import com.deotime.dekotpiler.matching.Matchers
 import com.deotime.dekotpiler.model.expressions.invoke.KtMethodInvoke
 import com.deotime.dekotpiler.model.expressions.invoke.KtStaticInvoke
+import com.deotime.dekotpiler.model.expressions.invoke.KtStaticInvoke.Companion.staticInvoke
 import com.deotime.dekotpiler.model.structure.KtFunction
 import com.deotime.dekotpiler.processing.PreProcessor
 import org.springframework.stereotype.Component
@@ -22,6 +23,6 @@ class IntrinsicEqualityCheckProcessor :
         )
 
     companion object {
-        val IntrinsicEqualityCheckMatcher = Matchers.staticFunction<Intrinsics>("areEqual")
+        val IntrinsicEqualityCheckMatcher = Matchers.staticInvoke<Intrinsics>("areEqual")
     }
 }

@@ -6,6 +6,7 @@ import com.deotime.dekotpiler.matching.Matchers.match
 import com.deotime.dekotpiler.model.expressions.KtLiteral
 import com.deotime.dekotpiler.model.expressions.KtNotNullAssertionExpression
 import com.deotime.dekotpiler.model.expressions.invoke.KtStaticInvoke
+import com.deotime.dekotpiler.model.expressions.invoke.KtStaticInvoke.Companion.staticInvoke
 import com.deotime.dekotpiler.model.statements.KtBlockStatement
 import com.deotime.dekotpiler.model.statements.KtVariableAssignmentStatement
 import com.deotime.dekotpiler.model.variable.KtLocalVariable
@@ -62,7 +63,7 @@ class LocalVariableDeclarationCrawler : Crawler {
     }
 
     companion object {
-        val NotNullCheckMatcher = Matchers.staticFunction<Intrinsics>(
+        val NotNullCheckMatcher = Matchers.staticInvoke<Intrinsics>(
             "checkNotNull",
             "checkNotNullParameter"
         )
