@@ -36,10 +36,10 @@ internal class CFRKotlinJarLoader(
     }
 
     private val config = cfrConfig {
-        DECOMPILER_COMMENTS set false
-        ANTI_OBF set false
-        ALLOW_CORRECTING set false
-        TIDY_VARIABLE_NAMES set false
+        -DECOMPILER_COMMENTS
+        -ANTI_OBF
+        -ALLOW_CORRECTING
+        -TIDY_VARIABLE_NAMES
     }
 
     override fun load(jar: File): KotlinClassContainer {
@@ -85,5 +85,8 @@ internal class CFRKotlinJarLoader(
         infix fun <T> PermittedOptionProvider.ArgumentParam<T, *>.set(value: T) {
             options[name] = value.toString()
         }
+
+        operator fun PermittedOptionProvider.ArgumentParam<Boolean, *>.unaryPlus() = set(true)
+        operator fun PermittedOptionProvider.ArgumentParam<Boolean, *>.unaryMinus() = set(false)
     }
 }
