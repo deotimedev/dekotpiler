@@ -15,11 +15,6 @@ object Matchers {
     inline fun <T, V> notNull(crossinline reference: (T) -> V) =
         !value(reference, null)
 
-    inline fun <reified T> staticFunction(vararg names: String) =
-        Matcher<KtStaticInvoke> {
-            function.enclosing.qualifiedName == T::class.qualifiedName && name in names
-        }
-
     inline fun <T> Matcher<T>.match(value: T) = value.match()
 
     private fun <T> Matcher<T>.transform(other: Matcher<T>, boolOp: (Boolean, Boolean) -> Boolean) =

@@ -6,6 +6,7 @@ import com.deotime.dekotpiler.model.expressions.KtGetDynamicKClass
 import com.deotime.dekotpiler.model.expressions.KtJClassExpression
 import com.deotime.dekotpiler.model.expressions.invoke.KtGetterInvoke
 import com.deotime.dekotpiler.model.expressions.invoke.KtStaticInvoke
+import com.deotime.dekotpiler.model.expressions.invoke.KtStaticInvoke.Companion.staticInvoke
 import com.deotime.dekotpiler.processing.PreProcessor
 import org.springframework.stereotype.Component
 import kotlin.jvm.internal.Reflection
@@ -23,6 +24,6 @@ class KClassProcessor :
 
     companion object {
         const val GetOrCreateKClassName = "getOrCreateKotlinClass"
-        val KClassMatcher = Matchers.staticFunction<Reflection>(GetOrCreateKClassName)
+        val KClassMatcher = Matchers.staticInvoke<Reflection>(GetOrCreateKClassName)
     }
 }
