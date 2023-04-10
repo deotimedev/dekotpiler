@@ -4,9 +4,9 @@ import com.deotime.dekotpiler.model.statements.KtCommentStatement
 import com.deotime.dekotpiler.translation.Translation
 import com.deotime.dekotpiler.translation.Translator
 import org.benf.cfr.reader.bytecode.analysis.structured.statement.StructuredComment
-import org.springframework.stereotype.Component
+import org.koin.core.annotation.Single
 
-@Component
+@Single
 class CommentStatementTranslator : Translator<StructuredComment, KtCommentStatement> {
 
     context (Translation.Session)

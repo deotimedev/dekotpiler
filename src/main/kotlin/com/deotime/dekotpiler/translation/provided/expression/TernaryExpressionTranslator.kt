@@ -4,9 +4,9 @@ import com.deotime.dekotpiler.model.expressions.KtIfElseExpression
 import com.deotime.dekotpiler.translation.Translation
 import com.deotime.dekotpiler.translation.Translator
 import org.benf.cfr.reader.bytecode.analysis.parse.expression.TernaryExpression
-import org.springframework.stereotype.Component
+import org.koin.core.annotation.Single
 
-@Component
+@Single
 class TernaryExpressionTranslator : Translator<TernaryExpression, KtIfElseExpression> {
 
     context (Translation.Session)

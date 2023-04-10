@@ -4,9 +4,9 @@ import com.deotime.dekotpiler.crawler.Crawler
 import com.deotime.dekotpiler.crawler.CrawlerController
 import com.deotime.dekotpiler.model.statements.KtBlockStatement
 import com.deotime.dekotpiler.model.statements.KtMultiBodyStatement
-import org.springframework.stereotype.Component
+import org.koin.core.annotation.Single
 
-@Component
+@Single
 internal class CrawlerControllerImpl(
     override val crawlers: List<Crawler>,
 ) : CrawlerController {

@@ -4,9 +4,9 @@ import com.deotime.dekotpiler.model.statements.KtDoWhileStatement
 import com.deotime.dekotpiler.translation.Translation
 import com.deotime.dekotpiler.translation.Translator
 import org.benf.cfr.reader.bytecode.analysis.structured.statement.StructuredDo
-import org.springframework.stereotype.Component
+import org.koin.core.annotation.Single
 
-@Component
+@Single
 class DoWhileLoopStatementTranslator : Translator<StructuredDo, KtDoWhileStatement> {
 
     context (Translation.Session)

@@ -7,9 +7,9 @@ import com.deotime.dekotpiler.util.cache
 import kotlinx.metadata.KmFunction
 import kotlinx.metadata.jvm.KotlinClassMetadata
 import kotlinx.metadata.jvm.signature
-import org.springframework.stereotype.Component
+import org.koin.core.annotation.Single
 
-@Component
+@Single
 internal class MetadataLocatorimpl(
     private val jarPool: KotlinJarPool,
 ) : MetadataLocator {

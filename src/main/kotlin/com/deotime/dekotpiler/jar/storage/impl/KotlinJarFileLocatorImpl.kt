@@ -3,11 +3,11 @@ package com.deotime.dekotpiler.jar.storage.impl
 import com.deotime.dekotpiler.jar.storage.KotlinJarFileLocator
 import com.deotime.dekotpiler.jar.storage.KotlinJarRepository
 import com.deotime.dekotpiler.jar.storage.KotlinLibrary
-import org.springframework.stereotype.Component
+import org.koin.core.annotation.Single
 import java.io.File
 import kotlin.io.path.toPath
 
-@Component
+@Single
 internal class KotlinJarFileLocatorImpl(
     private val repos: List<KotlinJarRepository>,
 ) : KotlinJarFileLocator {

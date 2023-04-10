@@ -4,10 +4,10 @@ import com.deotime.dekotpiler.processing.PreProcessor
 import com.deotime.dekotpiler.processing.Processing
 import com.deotime.dekotpiler.processing.Processor
 import com.deotime.dekotpiler.util.resolveTypeParameter
-import org.springframework.stereotype.Component
+import org.koin.core.annotation.Single
 import kotlin.reflect.KClass
 
-@Component
+@Single
 internal class ProcessingImpl(
     processors: List<Processor<*>>,
 ) : Processing {

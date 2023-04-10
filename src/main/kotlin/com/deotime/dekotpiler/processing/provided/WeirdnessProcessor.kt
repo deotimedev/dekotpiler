@@ -4,9 +4,9 @@ import com.deotime.dekotpiler.model.expressions.KtLiteral
 import com.deotime.dekotpiler.model.expressions.conditional.KtComparison
 import com.deotime.dekotpiler.model.variable.KtLocalVariable
 import com.deotime.dekotpiler.processing.PreProcessor
-import org.springframework.stereotype.Component
+import org.koin.core.annotation.Single
 
-@Component
+@Single
 class WeirdnessProcessor :
     PreProcessor<KtComparison> {
 

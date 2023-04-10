@@ -5,9 +5,9 @@ import com.deotime.dekotpiler.translation.Translation
 import com.deotime.dekotpiler.translation.Translator
 import org.benf.cfr.reader.bytecode.analysis.parse.expression.CompOp
 import org.benf.cfr.reader.bytecode.analysis.parse.expression.ComparisonOperation
-import org.springframework.stereotype.Component
+import org.koin.core.annotation.Single
 
-@Component
+@Single
 class ComparisonOperationTranslator : Translator<ComparisonOperation, KtComparison> {
 
     context (Translation.Session)

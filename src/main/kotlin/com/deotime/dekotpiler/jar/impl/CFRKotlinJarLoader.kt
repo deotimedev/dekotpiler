@@ -15,10 +15,10 @@ import org.benf.cfr.reader.util.getopt.OptionsImpl.ANTI_OBF
 import org.benf.cfr.reader.util.getopt.OptionsImpl.DECOMPILER_COMMENTS
 import org.benf.cfr.reader.util.getopt.OptionsImpl.TIDY_VARIABLE_NAMES
 import org.benf.cfr.reader.util.getopt.PermittedOptionProvider
-import org.springframework.stereotype.Component
+import org.koin.core.annotation.Single
 import java.io.File
 
-@Component
+@Single
 internal class CFRKotlinJarLoader(
     private val translation: Translation,
     private val metadataResolver: MetadataResolver,

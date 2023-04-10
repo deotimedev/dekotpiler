@@ -6,9 +6,9 @@ import com.deotime.dekotpiler.translation.Translation
 import com.deotime.dekotpiler.translation.Translator
 import org.benf.cfr.reader.bytecode.analysis.structured.statement.Block
 import org.benf.cfr.reader.bytecode.analysis.structured.statement.StructuredComment
-import org.springframework.stereotype.Component
+import org.koin.core.annotation.Single
 
-@Component
+@Single
 class BlockStatementTranslator : Translator<Block, KtBlockStatement> {
 
     context(Translation.Session)

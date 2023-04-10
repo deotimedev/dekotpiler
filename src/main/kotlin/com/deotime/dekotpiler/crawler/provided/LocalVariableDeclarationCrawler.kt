@@ -10,12 +10,12 @@ import com.deotime.dekotpiler.model.expressions.invoke.KtStaticInvoke.Companion.
 import com.deotime.dekotpiler.model.statements.KtBlockStatement
 import com.deotime.dekotpiler.model.statements.KtVariableAssignmentStatement
 import com.deotime.dekotpiler.model.variable.KtLocalVariable
-import org.springframework.stereotype.Component
+import org.koin.core.annotation.Single
 import kotlin.jvm.internal.Intrinsics
 
 // This is most likely just a temporary class, and should
 // be reworked.
-@Component
+@Single
 class LocalVariableDeclarationCrawler : Crawler {
     override fun crawl(path: List<KtBlockStatement>) {
         val declared = mutableMapOf<String, KtVariableAssignmentStatement>()

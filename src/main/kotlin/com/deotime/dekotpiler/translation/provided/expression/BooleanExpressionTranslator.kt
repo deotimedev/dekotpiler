@@ -5,9 +5,9 @@ import com.deotime.dekotpiler.model.expressions.conditional.KtConditionalLike
 import com.deotime.dekotpiler.translation.Translation
 import com.deotime.dekotpiler.translation.Translator
 import org.benf.cfr.reader.bytecode.analysis.parse.expression.BooleanExpression
-import org.springframework.stereotype.Component
+import org.koin.core.annotation.Single
 
-@Component
+@Single
 class BooleanExpressionTranslator : Translator<BooleanExpression, KtConditional> {
 
     context (Translation.Session)

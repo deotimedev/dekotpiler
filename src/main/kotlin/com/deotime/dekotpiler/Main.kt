@@ -3,30 +3,35 @@ package com.deotime.dekotpiler
 import com.deotime.dekotpiler.classfile.ClassFileController
 import com.deotime.dekotpiler.jar.KotlinJarLoader
 import com.deotime.dekotpiler.model.type.KtType
+import com.deotime.dekotpiler.processing.PreProcessor
+import com.deotime.dekotpiler.processing.Processor
 import com.deotime.dekotpiler.ui.FileSelector
 import com.deotime.dekotpiler.util.partitionNotNull
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
 import kotlinx.metadata.jvm.KotlinClassMetadata
 import me.deotime.kpoetdsl.FunctionBuilder.Initializer.invoke
 import me.deotime.kpoetdsl.kotlin
 import me.deotime.kpoetdsl.metadata.toSpec
-import org.springframework.boot.Banner
-import org.springframework.boot.CommandLineRunner
-import org.springframework.boot.WebApplicationType
-import org.springframework.boot.autoconfigure.SpringBootApplication
-import org.springframework.boot.builder.SpringApplicationBuilder
-import org.springframework.stereotype.Component
+import org.koin.core.annotation.ComponentScan
+import org.koin.core.annotation.KoinInternalApi
+import org.koin.core.annotation.Module
+import org.koin.core.annotation.Single
+import org.koin.core.context.startKoin
+import org.koin.core.module.dsl.bind
+import org.koin.core.module.dsl.binds
+import org.koin.dsl.module
+import org.koin.ksp.generated.module
 import java.io.File
+import kotlin.reflect.full.allSuperclasses
 
-@Component
+@Single
 class Main(
     private val fileSelector: FileSelector,
     private val engine: KotlinJarLoader,
     private val classFileController: ClassFileController,
-) : CommandLineRunner {
+) {
     // TODO: Command line interface for this
-    override fun run(vararg args: String): Unit = runBlocking(Dispatchers.Default) {
+    fun run(args: List<String>): Unit = runBlocking {
 
         // for testing
         val file =
@@ -76,20 +81,34 @@ class Main(
 
     private companion object {
 
+
         @JvmStatic
         fun main(args: Array<String>) {
-            SpringApplicationBuilder(App::class.java)
-                .web(WebApplicationType.NONE)
-                .bannerMode(Banner.Mode.OFF)
-                .logStartupInfo(false)
-                .headless(false)
-                .application()
-                .run()
+            val koin = startKoin {
+                fixKoinDeepInheritance()
+                modules(DekotpilerModule.module)
+            }.koin
+            val main: Main by koin.inject()
+            main.run(args.toList())
         }
 
-        @Suppress("RedundantModalityModifier") // don't have the allopen plugin for k2 currently
-        @SpringBootApplication
-        open class App
+        private fun fixKoinDeepInheritance() {
+            // this is slow but koin does not do it automatically
+            // with ksp plugin
+            @OptIn(KoinInternalApi::class)
+            DekotpilerModule.module
+                .mappings
+                .map { (_, inst) -> inst.beanDefinition }
+                .forEach { def ->
+                    def.binds(def.primaryType.allSuperclasses.toList())
+                }
+        }
+
+
 
     }
 }
+
+@Module
+@ComponentScan
+object DekotpilerModule

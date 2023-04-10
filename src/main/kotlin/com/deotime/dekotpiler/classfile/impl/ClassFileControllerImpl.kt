@@ -6,9 +6,9 @@ import com.deotime.dekotpiler.model.statements.KtBlockStatement
 import com.deotime.dekotpiler.translation.Translation
 import org.benf.cfr.reader.entities.ClassFile
 import org.benf.cfr.reader.entities.Method
-import org.springframework.stereotype.Component
+import org.koin.core.annotation.Single
 
-@Component
+@Single
 internal class ClassFileControllerImpl(
     private val classWorker: ClassClassFileWorker,
     private val interfaceWorker: InterfaceClassFileWorker,

@@ -4,9 +4,9 @@ import com.deotime.dekotpiler.model.variable.KtLocalVariable
 import com.deotime.dekotpiler.translation.Translation
 import com.deotime.dekotpiler.translation.Translator
 import org.benf.cfr.reader.bytecode.analysis.parse.lvalue.LocalVariable
-import org.springframework.stereotype.Component
+import org.koin.core.annotation.Single
 
-@Component
+@Single
 class LocalVariableTranslator : Translator<LocalVariable, KtLocalVariable> {
     context (Translation.Session)
     override fun translation(value: LocalVariable): KtLocalVariable = KtLocalVariable(

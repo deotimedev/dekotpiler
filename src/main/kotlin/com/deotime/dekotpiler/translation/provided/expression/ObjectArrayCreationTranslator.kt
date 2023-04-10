@@ -4,9 +4,9 @@ import com.deotime.dekotpiler.model.expressions.KtArrayCreation
 import com.deotime.dekotpiler.translation.Translation
 import com.deotime.dekotpiler.translation.Translator
 import org.benf.cfr.reader.bytecode.analysis.parse.expression.NewObjectArray
-import org.springframework.stereotype.Component
+import org.koin.core.annotation.Single
 
-@Component
+@Single
 class ObjectArrayCreationTranslator : Translator<NewObjectArray, KtArrayCreation> {
 
     context (Translation.Session)

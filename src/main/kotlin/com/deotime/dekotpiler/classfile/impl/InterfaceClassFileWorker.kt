@@ -5,9 +5,9 @@ import com.deotime.dekotpiler.jar.KotlinJarPool
 import org.benf.cfr.reader.bytecode.analysis.opgraph.Op04StructuredStatement
 import org.benf.cfr.reader.entities.ClassFile
 import org.benf.cfr.reader.entities.Method
-import org.springframework.stereotype.Component
+import org.koin.core.annotation.Single
 
-@Component
+@Single
 class InterfaceClassFileWorker(
     private val jarPool: KotlinJarPool,
 ) : ClassFileWorker {

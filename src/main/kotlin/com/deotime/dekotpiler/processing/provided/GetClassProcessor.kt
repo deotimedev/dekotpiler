@@ -4,9 +4,9 @@ import com.deotime.dekotpiler.model.expressions.KtGetDynamicKClass
 import com.deotime.dekotpiler.model.expressions.KtJClassExpression
 import com.deotime.dekotpiler.model.expressions.invoke.KtGetterInvoke
 import com.deotime.dekotpiler.processing.PreProcessor
-import org.springframework.stereotype.Component
+import org.koin.core.annotation.Single
 
-@Component
+@Single
 class GetClassProcessor :
     PreProcessor<KtGetterInvoke> {
 

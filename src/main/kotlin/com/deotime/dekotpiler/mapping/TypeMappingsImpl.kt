@@ -5,9 +5,9 @@ import com.deotime.dekotpiler.model.type.KtType
 import org.benf.cfr.reader.bytecode.analysis.types.JavaTypeInstance
 import org.benf.cfr.reader.bytecode.analysis.types.RawJavaType
 import org.benf.cfr.reader.bytecode.analysis.types.TypeConstants
-import org.springframework.stereotype.Component
+import org.koin.core.annotation.Single
 
-@Component
+@Single
 internal class TypeMappingsImpl : TypeMappings {
 
     override fun mapping(java: JavaTypeInstance) = when (java) {
