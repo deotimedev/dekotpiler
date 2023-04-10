@@ -5,9 +5,9 @@ import com.deotime.dekotpiler.model.expressions.conditional.KtConditionalLike
 import com.deotime.dekotpiler.translation.Translation
 import com.deotime.dekotpiler.translation.Translator
 import org.benf.cfr.reader.bytecode.analysis.parse.expression.NotOperation
-import org.springframework.stereotype.Component
+import org.koin.core.annotation.Single
 
-@Component
+@Single
 class NotOperationTranslator : Translator<NotOperation, KtConditional> {
 
     context (Translation.Session)

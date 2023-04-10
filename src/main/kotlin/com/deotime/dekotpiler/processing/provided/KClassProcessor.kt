@@ -8,10 +8,10 @@ import com.deotime.dekotpiler.model.expressions.invoke.KtGetterInvoke
 import com.deotime.dekotpiler.model.expressions.invoke.KtStaticInvoke
 import com.deotime.dekotpiler.model.expressions.invoke.KtStaticInvoke.Companion.staticInvoke
 import com.deotime.dekotpiler.processing.PreProcessor
-import org.springframework.stereotype.Component
+import org.koin.core.annotation.Single
 import kotlin.jvm.internal.Reflection
 
-@Component
+@Single
 class KClassProcessor :
     PreProcessor<KtStaticInvoke>,
     Matcher<KtStaticInvoke> by KClassMatcher {

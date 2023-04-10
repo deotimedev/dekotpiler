@@ -29,13 +29,13 @@ import org.benf.cfr.reader.bytecode.analysis.types.JavaGenericRefTypeInstance
 import org.benf.cfr.reader.bytecode.analysis.types.JavaTypeInstance
 import org.benf.cfr.reader.bytecode.analysis.types.MethodPrototype
 import org.benf.cfr.reader.entities.Method
-import org.springframework.stereotype.Component
+import org.koin.core.annotation.Single
 import java.util.concurrent.ConcurrentHashMap
 import kotlin.reflect.KClass
 
 
 @Suppress("UNCHECKED_CAST")
-@Component
+@Single
 internal class TranslationImpl(
     translators: List<Translator<*, *>>,
     private val processing: Processing,

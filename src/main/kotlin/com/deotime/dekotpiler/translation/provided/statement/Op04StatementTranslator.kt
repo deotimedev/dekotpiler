@@ -4,9 +4,9 @@ import com.deotime.dekotpiler.model.KtStatement
 import com.deotime.dekotpiler.translation.Translation
 import com.deotime.dekotpiler.translation.Translator
 import org.benf.cfr.reader.bytecode.analysis.opgraph.Op04StructuredStatement
-import org.springframework.stereotype.Component
+import org.koin.core.annotation.Single
 
-@Component
+@Single
 class Op04StatementTranslator : Translator<Op04StructuredStatement, KtStatement> {
 
     context (Translation.Session)

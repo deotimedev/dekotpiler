@@ -8,9 +8,9 @@ import com.deotime.dekotpiler.translation.Translator
 import org.benf.cfr.reader.bytecode.analysis.parse.expression.Literal
 import org.benf.cfr.reader.bytecode.analysis.parse.literal.TypedLiteral
 import org.benf.cfr.reader.bytecode.analysis.types.RawJavaType
-import org.springframework.stereotype.Component
+import org.koin.core.annotation.Single
 
-@Component
+@Single
 class LiteralExpressionTranslator : Translator<Literal, KtExpression> {
 
     context (Translation.Session)

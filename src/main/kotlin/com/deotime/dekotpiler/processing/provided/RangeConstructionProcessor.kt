@@ -5,9 +5,9 @@ import com.deotime.dekotpiler.model.expressions.KtRangeExpression
 import com.deotime.dekotpiler.model.expressions.invoke.KtConstructorInvoke
 import com.deotime.dekotpiler.model.type.KtType
 import com.deotime.dekotpiler.processing.PreProcessor
-import org.springframework.stereotype.Component
+import org.koin.core.annotation.Single
 
-@Component
+@Single
 class RangeConstructionProcessor :
     PreProcessor<KtConstructorInvoke>,
     Matcher<KtConstructorInvoke> by RangeConstructionProcessor {

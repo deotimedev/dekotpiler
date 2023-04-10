@@ -2,9 +2,9 @@ package com.deotime.dekotpiler.jar.storage.impl
 
 import com.deotime.dekotpiler.jar.storage.KotlinLibraryProvider
 import com.deotime.dekotpiler.jar.storage.libraries
-import org.springframework.stereotype.Component
+import org.koin.core.annotation.Single
 
-@Component
+@Single
 class KotlinStandardLibrary : KotlinLibraryProvider {
 
 

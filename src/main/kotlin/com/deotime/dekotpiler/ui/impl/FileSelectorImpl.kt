@@ -6,12 +6,12 @@ import javafx.application.Platform
 import javafx.stage.FileChooser
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import org.springframework.stereotype.Component
+import org.koin.core.annotation.Single
 import java.io.File
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 
-@Component
+@Single
 internal class FileSelectorImpl : FileSelector {
 
     override suspend fun selectFile(

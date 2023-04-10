@@ -9,11 +9,11 @@ import org.benf.cfr.reader.bytecode.analysis.parse.Expression
 import org.benf.cfr.reader.bytecode.analysis.parse.expression.ArithmeticOperation
 import org.benf.cfr.reader.bytecode.analysis.parse.expression.Literal
 import org.benf.cfr.reader.bytecode.analysis.parse.literal.TypedLiteral
-import org.springframework.stereotype.Component
+import org.koin.core.annotation.Single
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.contract
 
-@Component
+@Single
 class StringConcatTranslator : Translator<ArithmeticOperation, KtStringExpression> {
 
     override fun ArithmeticOperation.match() = isStringy()

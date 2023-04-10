@@ -5,9 +5,9 @@ import com.deotime.dekotpiler.model.expressions.KtLiteral
 import com.deotime.dekotpiler.translation.Translation
 import com.deotime.dekotpiler.translation.Translator
 import org.benf.cfr.reader.bytecode.analysis.parse.expression.NewAnonymousArray
-import org.springframework.stereotype.Component
+import org.koin.core.annotation.Single
 
-@Component
+@Single
 class AnonymousArrayCreationTranslator : Translator<NewAnonymousArray, KtArrayCreation> {
 
     context(Translation.Session) override fun translation(value: NewAnonymousArray) = KtArrayCreation(

@@ -11,10 +11,10 @@ import com.deotime.dekotpiler.translation.Translator
 import com.deotime.dekotpiler.util.isStringy
 import org.benf.cfr.reader.bytecode.analysis.parse.expression.ArithOp
 import org.benf.cfr.reader.bytecode.analysis.parse.expression.ArithmeticOperation
-import org.springframework.stereotype.Component
+import org.koin.core.annotation.Single
 import java.util.concurrent.ConcurrentHashMap
 
-@Component
+@Single
 class ArithmeticOperationExpressionTranslator :
     Translator<ArithmeticOperation, KtMethodInvoke> {
 

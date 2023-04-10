@@ -1,7 +1,7 @@
 package com.deotime.dekotpiler.processing.provided
 
 // fixme
-//@Component
+//@Single
 //class UnclearConditionalProcessor :
 //    PreProcessor<KtConditional>,
 //    Matcher<KtConditional> by UnclearConditionalMatcher {

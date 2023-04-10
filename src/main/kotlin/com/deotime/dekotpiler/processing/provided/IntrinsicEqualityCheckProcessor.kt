@@ -7,10 +7,10 @@ import com.deotime.dekotpiler.model.expressions.invoke.KtStaticInvoke
 import com.deotime.dekotpiler.model.expressions.invoke.KtStaticInvoke.Companion.staticInvoke
 import com.deotime.dekotpiler.model.structure.KtFunction
 import com.deotime.dekotpiler.processing.PreProcessor
-import org.springframework.stereotype.Component
+import org.koin.core.annotation.Single
 import kotlin.jvm.internal.Intrinsics
 
-@Component
+@Single
 class IntrinsicEqualityCheckProcessor :
     PreProcessor<KtStaticInvoke>,
     Matcher<KtStaticInvoke> by IntrinsicEqualityCheckMatcher {

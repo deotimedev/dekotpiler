@@ -6,9 +6,9 @@ import org.objectweb.asm.AnnotationVisitor
 import org.objectweb.asm.ClassReader
 import org.objectweb.asm.ClassVisitor
 import org.objectweb.asm.Opcodes
-import org.springframework.stereotype.Component
+import org.koin.core.annotation.Single
 
-@Component
+@Single
 internal class MetadataResolverImpl : MetadataResolver {
     override fun resolve(clazz: ByteArray): Metadata {
         val reader = ClassReader(clazz)

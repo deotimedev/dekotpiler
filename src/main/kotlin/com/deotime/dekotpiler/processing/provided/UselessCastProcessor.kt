@@ -4,9 +4,9 @@ import com.deotime.dekotpiler.matching.Matcher
 import com.deotime.dekotpiler.model.expressions.KtCastExpression
 import com.deotime.dekotpiler.model.type.KtType.Companion.usableAs
 import com.deotime.dekotpiler.processing.PreProcessor
-import org.springframework.stereotype.Component
+import org.koin.core.annotation.Single
 
-@Component
+@Single
 class UselessCastProcessor :
     PreProcessor<KtCastExpression>,
     Matcher<KtCastExpression> by UselessCastMatcher {
@@ -14,6 +14,8 @@ class UselessCastProcessor :
     override fun replace(value: KtCastExpression) = value.expression
 
     companion object {
-        val UselessCastMatcher = Matcher<KtCastExpression> { expression.type usableAs cast }
+        val UselessCastMatcher = Matcher<KtCastExpression> {
+            expression.type usableAs cast
+        }
     }
 }
