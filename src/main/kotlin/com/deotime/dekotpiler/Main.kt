@@ -92,10 +92,10 @@ class Main(
             main.run(args.toList())
         }
 
+        @OptIn(KoinInternalApi::class)
         private fun fixKoinDeepInheritance() {
             // this is slow but koin does not do it automatically
             // with ksp plugin
-            @OptIn(KoinInternalApi::class)
             DekotpilerModule.module
                 .mappings
                 .map { (_, inst) -> inst.beanDefinition }
