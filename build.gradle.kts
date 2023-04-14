@@ -79,10 +79,16 @@ tasks.withType<KotlinCompile> {
     )
 }
 
+tasks.withType<Jar> {
+    manifest {
+        attributes["Main-Class"] = "com.deotime.dekotpiler.Main"
+    }
+}
 sourceSets.main {
     java.srcDirs("build/generated/ksp/main")
 }
 
 application {
     mainClass.set("MainKt")
+    applicationName = "dekotpiler"
 }
