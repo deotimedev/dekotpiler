@@ -4,12 +4,9 @@ import com.deotime.dekotpiler.ui.FileSelector
 import com.sun.javafx.util.Logging
 import javafx.application.Platform
 import javafx.stage.FileChooser
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.CompletableDeferred
 import org.koin.core.annotation.Single
 import java.io.File
-import kotlin.coroutines.resume
-import kotlin.coroutines.suspendCoroutine
 
 @Single
 internal class FileSelectorImpl : FileSelector {
@@ -24,16 +21,14 @@ internal class FileSelectorImpl : FileSelector {
             extensionFilters += FileChooser.ExtensionFilter(description, *allowed)
         }
 
-        return withContext(Dispatchers.IO) {
-            suspendCoroutine { cont ->
-                Logging.getJavaFXLogger().disableLogging()
-                Platform.startup { }
-                Platform.runLater {
-                    cont.resume(selector.showOpenDialog(null))
-                    Platform.exit()
-                }
-            }
+        val defer = CompletableDeferred<File?>()
+        Logging.getJavaFXLogger().disableLogging()
+        Platform.startup { }
+        Platform.runLater {
+            defer.complete(selector.showOpenDialog(null))
+            Platform.exit()
         }
+        return defer.await()
     }
 
 }

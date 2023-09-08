@@ -24,4 +24,5 @@ value class Single<T>(val value: T) : Collection<T> {
 
 }
 
-fun <T> singleOf(value: T) = Single(value)
+@Suppress("NOTHING_TO_INLINE")
+inline fun <T> singleOf(value: T) = Single(value)
