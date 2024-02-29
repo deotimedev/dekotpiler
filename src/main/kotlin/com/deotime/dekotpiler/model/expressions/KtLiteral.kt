@@ -78,7 +78,7 @@ sealed interface KtLiteral<T> : KtExpression {
 
     data object Null : KtLiteral<Nothing?> {
         override val type = KtNothingType.Nullable
-        override var value = null
+        override val value = null
     }
 
     @JvmInline
